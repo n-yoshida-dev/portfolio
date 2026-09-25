@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# AI 向けの索引
+# llms.txt: /llms.txt

@@ -1,0 +1,194 @@
+[
+  {
+    "id": "qiita-chatgpt-portfolio-mentor",
+    "title": "ChatGPT ProjectsでAIを\"継続メンター化\"するために作った仕組み",
+    "url": "https://qiita.com/n-yoshida-dev/items/064adc2858ddf40c4b4f",
+    "platform": "qiita",
+    "publishedAt": "2026-03-30",
+    "tags": ["ChatGPT", "個人開発", "プロンプトエンジニアリング"],
+    "series": "AI と進める個人開発",
+    "summary": "人間のメンターなしでポートフォリオを進めるため、ChatGPT Projects で AI を継続メンター化した仕組み"
+  },
+  {
+    "id": "vscode-snippet-git-commit-review",
+    "title": "毎回書くのが面倒なコミットレビュー依頼文を、VSCode snippetで一発展開する",
+    "url": "https://qiita.com/n-yoshida-dev/items/53f0cdc3b42d6588199a",
+    "platform": "qiita",
+    "publishedAt": "2026-03-31",
+    "tags": ["Git", "VSCode", "ChatGPT"],
+    "series": "AI と進める個人開発"
+  },
+  {
+    "id": "portfolio-er-diagram-flow",
+    "title": "ER図から始めようとして詰まったので、データモデリングからやり直した話",
+    "url": "https://qiita.com/n-yoshida-dev/items/3a80d39c2d678e4a3552",
+    "platform": "qiita",
+    "publishedAt": "2026-04-09",
+    "tags": ["ER図", "データモデリング", "DBML"],
+    "series": "OrgFlow の設計",
+    "summary": "ER 図から書き始めて詰まり、データモデリングを経て物理 ER にたどり着くまで"
+  },
+  {
+    "id": "openapi-before-yaml",
+    "title": "OpenAPI YAMLを書く前に、業務操作一覧・API群・path候補を整理した話",
+    "url": "https://qiita.com/n-yoshida-dev/items/f7988ab337f5209226f7",
+    "platform": "qiita",
+    "publishedAt": "2026-04-24",
+    "tags": ["OpenAPI", "REST API", "API設計"],
+    "series": "OrgFlow の設計",
+    "summary": "OpenAPI を書き始める前に必要な準備（業務操作一覧・API 群・path 候補・エラー設計）"
+  },
+  {
+    "id": "spring-boot-valid-422",
+    "title": "Spring Bootで@Validのバリデーションエラーを400ではなく422で返すまでに理解したこと",
+    "url": "https://qiita.com/n-yoshida-dev/items/060a3ed56a5fd9652461",
+    "platform": "qiita",
+    "publishedAt": "2026-04-29",
+    "tags": ["Java", "SpringBoot", "Validation"],
+    "series": "Spring Boot で API を組み立てる"
+  },
+  {
+    "id": "qiita-spring-boot-controller-service-di",
+    "title": "Spring BootでControllerの処理をServiceへ分離しながらDIを理解した話",
+    "url": "https://qiita.com/n-yoshida-dev/items/f175fa79ebca15affb34",
+    "platform": "qiita",
+    "publishedAt": "2026-05-02",
+    "tags": ["Java", "SpringBoot", "DI"],
+    "series": "Spring Boot で API を組み立てる"
+  },
+  {
+    "id": "flyway-spring-boot-postgresql",
+    "title": "Spring Boot + PostgreSQLにFlywayを導入してusersテーブルとseed userを作成する",
+    "url": "https://qiita.com/n-yoshida-dev/items/83c75f1ef8b913435e00",
+    "platform": "qiita",
+    "publishedAt": "2026-05-04",
+    "tags": ["Java", "PostgreSQL", "Flyway", "Docker"],
+    "series": "Spring Boot で API を組み立てる"
+  },
+  {
+    "id": "qiita-bcrypt-passwordencoder-matches",
+    "title": "BCryptのハッシュは毎回変わるのに、PasswordEncoderで照合できる理由",
+    "url": "https://qiita.com/n-yoshida-dev/items/cb415e2a708aa44000e3",
+    "platform": "qiita",
+    "publishedAt": "2026-05-05",
+    "tags": ["Java", "SpringSecurity", "BCrypt", "認証"],
+    "series": "Spring Security と JWT 認証"
+  },
+  {
+    "id": "spring-data-jpa-user-entity-pitfalls",
+    "title": "Spring Data JPAでEntityを書くときに、JPA・Hibernate・DTOとの違いで詰まった話",
+    "url": "https://qiita.com/n-yoshida-dev/items/ff8f689ff9cf4f35ed57",
+    "platform": "qiita",
+    "publishedAt": "2026-05-05",
+    "tags": ["Java", "SpringBoot", "JPA", "Hibernate"],
+    "series": "Spring Boot で API を組み立てる"
+  },
+  {
+    "id": "spring-data-jpa-user-repository-interface",
+    "title": "UserRepositoryを作りながら、Spring Data JPAのRepository interfaceを理解した話",
+    "url": "https://qiita.com/n-yoshida-dev/items/1703fd75116461995219",
+    "platform": "qiita",
+    "publishedAt": "2026-05-10",
+    "tags": ["Java", "SpringBoot", "SpringDataJPA"],
+    "series": "Spring Boot で API を組み立てる"
+  },
+  {
+    "id": "auth-service-optional-orelsethrow",
+    "title": "AuthServiceでログイン判定を書きながら、OptionalとorElseThrowを理解した話",
+    "url": "https://qiita.com/n-yoshida-dev/items/c81ac4a82c57221cb4ea",
+    "platform": "qiita",
+    "publishedAt": "2026-05-11",
+    "tags": ["Java", "SpringBoot", "Optional", "認証"],
+    "series": "Spring Security と JWT 認証"
+  },
+  {
+    "id": "authentication-failed-exception-401-handler",
+    "title": "ログイン失敗時に401を返すため、AuthenticationFailedExceptionとGlobalExceptionHandlerを作った話",
+    "url": "https://qiita.com/n-yoshida-dev/items/0f4a2198eb658fc9cf69",
+    "platform": "qiita",
+    "publishedAt": "2026-05-11",
+    "tags": ["Java", "SpringBoot", "ExceptionHandler", "認証"],
+    "series": "Spring Security と JWT 認証"
+  },
+  {
+    "id": "spring-boot-jwt-bearer-claim-signature-terms",
+    "title": "Spring BootでJWTを発行する前に、Bearer token、JWT、claim、signature を整理した",
+    "url": "https://qiita.com/n-yoshida-dev/items/0194a9ac984ee1bc1533",
+    "platform": "qiita",
+    "publishedAt": "2026-05-16",
+    "tags": ["Java", "SpringSecurity", "JWT", "認証"],
+    "series": "Spring Security と JWT 認証"
+  },
+  {
+    "id": "spring-security-jwt-encoder-login-access-token",
+    "title": "Spring SecurityのJwtEncoderで、ログイン成功時にJWT access tokenを発行する",
+    "url": "https://qiita.com/n-yoshida-dev/items/4ec4a5aa7e51afb72610",
+    "platform": "qiita",
+    "publishedAt": "2026-05-22",
+    "tags": ["Java", "SpringSecurity", "JWT", "認証"],
+    "series": "Spring Security と JWT 認証"
+  },
+  {
+    "id": "spring-boot-jwt-bearer-resource-server",
+    "title": "Spring Bootで発行したJWTをBearer Tokenとして検証し、保護APIを通すまで",
+    "url": "https://qiita.com/n-yoshida-dev/items/b7902025a5c3eca3db79",
+    "platform": "qiita",
+    "publishedAt": "2026-05-22",
+    "tags": ["Java", "SpringSecurity", "JWT", "認証"],
+    "series": "Spring Security と JWT 認証"
+  },
+  {
+    "id": "spring-security-jwt-issuer-validation",
+    "title": "Spring SecurityでJWTのissuer検証を追加し、JwtDecoderの役割を理解した話",
+    "url": "https://qiita.com/n-yoshida-dev/items/d88273d7f24a3146f20b",
+    "platform": "qiita",
+    "publishedAt": "2026-05-23",
+    "tags": ["Java", "SpringSecurity", "JWT", "OAuth2"],
+    "series": "Spring Security と JWT 認証"
+  },
+  {
+    "id": "spring-security-jwt-userid-extract",
+    "title": "Spring SecurityでJWT検証後にsubからuserIdを取り出す流れを理解した",
+    "url": "https://qiita.com/n-yoshida-dev/items/7223f182374776b01935",
+    "platform": "qiita",
+    "publishedAt": "2026-05-30",
+    "tags": ["Java", "SpringSecurity", "JWT", "認証"],
+    "series": "Spring Security と JWT 認証"
+  },
+  {
+    "id": "spring-boot-jwt-tenant-select-api",
+    "title": "Spring BootでJWT認証後のuserIdを使い、tenant選択APIを実装した話",
+    "url": "https://qiita.com/n-yoshida-dev/items/58970875dc444d468adf",
+    "platform": "qiita",
+    "publishedAt": "2026-06-11",
+    "tags": ["Java", "SpringSecurity", "JWT", "マルチテナント"],
+    "series": "マルチテナント"
+  },
+  {
+    "id": "orgflow-current-tenant-jwt",
+    "title": "Spring Boot + JWTで「ログイン済み」と「tenant選択済み」を分けて扱った",
+    "url": "https://qiita.com/n-yoshida-dev/items/f3f7db728206e5bcf1b2",
+    "platform": "qiita",
+    "publishedAt": "2026-06-16",
+    "tags": ["Java", "SpringSecurity", "JWT", "マルチテナント"],
+    "series": "マルチテナント"
+  },
+  {
+    "id": "spring-tenant-service-type-conversion",
+    "title": "Spring Bootで所属Tenant一覧APIを作りながら、Service層の型変換を整理した話",
+    "url": "https://qiita.com/n-yoshida-dev/items/e4b0bde5d5b806eda5c7",
+    "platform": "qiita",
+    "publishedAt": "2026-06-22",
+    "tags": ["Java", "SpringBoot", "SpringDataJPA", "DTO"],
+    "series": "マルチテナント"
+  },
+  {
+    "id": "java-stream-map-methodref-lambda",
+    "title": "Serviceの実装で理解するJavaのstream / map / メソッド参照(::) / ラムダ式(->)",
+    "url": "https://qiita.com/n-yoshida-dev/items/2cff32755c61d039acea",
+    "platform": "qiita",
+    "publishedAt": "2026-06-25",
+    "tags": ["Java", "Stream", "ラムダ式"],
+    "series": "マルチテナント"
+  }
+]

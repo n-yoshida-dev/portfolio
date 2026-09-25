@@ -1,0 +1,18 @@
+---
+// Journey（経歴と学習の歩み）。public-profile/career.md を描画する。
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { getPage } from '../lib/content';
+
+const page = await getPage('career');
+const { Content } = await render(page);
+---
+
+<Base title={page.data.title} description={page.data.description} markdownHref="/journey.md">
+  <h1>{page.data.title}</h1>
+  <p class="lead">{page.data.description}</p>
+  <div class="prose">
+    <Content />
+  </div>
+  <p class="meta">最終確認日: {page.data.updated}</p>
+</Base>

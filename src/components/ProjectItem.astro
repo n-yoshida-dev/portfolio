@@ -1,0 +1,35 @@
+---
+// 一覧に出すプロジェクト 1 件。カードにせず、見出し・要約・リンク・技術の 4 行で構成する。
+import type { Project } from '../lib/content';
+import { visibilityLabel, statusLabel } from '../lib/content';
+
+interface Props {
+  project: Project;
+  /** true なら技術タグを省略する（トップの短い一覧向け） */
+  compact?: boolean;
+}
+const { project, compact = false } = Astro.props;
+const d = project.data;
+const hasDetail = (project.body ?? '').trim().length > 0;
+---
+
+<li>
+  <h3>
+    {hasDetail ? <a href={`/projects/${project.id}`}>{d.title}</a> : d.title}
+    <span class="badge">{visibilityLabel[d.visibility]}</span>
+    <span class="badge">{statusLabel[d.status]}</span>
+  </h3>
+  <p>{d.summary}</p>
+  <div class="entry-links">
+    {d.repo && <a href={d.repo}>GitHub</a>}
+    {d.site && <a href={d.site}>サイト</a>}
+    {d.period && <span class="meta">{d.period}</span>}
+  </div>
+  {!compact && d.stack.length > 0 && (
+    <ul class="tag-list" aria-label="主要技術">
+      {d.stack.map((s) => (
+        <li>{s}</li>
+      ))}
+    </ul>
+  )}
+</li>

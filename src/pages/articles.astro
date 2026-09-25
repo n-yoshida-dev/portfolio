@@ -1,0 +1,46 @@
+---
+// Articles。技術記事へのリンクを連載ごとにまとめる。
+import Base from '../layouts/Base.astro';
+import { getArticles, groupArticlesBySeries } from '../lib/content';
+import { SITE } from '../site';
+
+const articles = await getArticles();
+const groups = groupArticlesBySeries(articles);
+const platformLabel: Record<string, string> = {
+  qiita: 'Qiita',
+  zenn: 'Zenn',
+  note: 'note',
+  blog: 'Blog',
+  other: '',
+};
+---
+
+<Base
+  title="Articles"
+  description="技術記事の一覧。OrgFlow の設計、Spring Boot、Spring Security と JWT 認証、マルチテナントの学習記録を連載で公開しています。"
+  markdownHref="/articles.md"
+>
+  <h1>Articles</h1>
+  <p class="lead">
+    個人開発の過程を学習記録として公開しています。連載ごとに、読む順（公開日の古い順）に並べています。
+    一覧は <a href={SITE.qiitaUrl}>Qiita</a> にもあります。
+  </p>
+  <p class="meta">{articles.length} 本</p>
+  {[...groups.entries()].map(([series, list]) => (
+    <>
+      <h2>{series}</h2>
+      <ul>
+        {list.map((a) => (
+          <li>
+            <a href={a.data.url}>{a.data.title}</a>
+            <span class="meta">
+              {' '}
+              — {a.data.publishedAt}
+              {platformLabel[a.data.platform] ? ` · ${platformLabel[a.data.platform]}` : ''}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </>
+  ))}
+</Base>

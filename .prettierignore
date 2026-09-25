@@ -1,0 +1,12 @@
+# 生成物・依存
+dist/
+.astro/
+node_modules/
+.vercel/
+
+# 公開プロフィールの Markdown は人が読む文書。整形ツールで改行位置を変えない
+public-profile/**/*.md
+
+# 開発ドキュメント（AI 向け）も同様
+*.md
+!README.md

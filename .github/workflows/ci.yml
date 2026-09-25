@@ -14,36 +14,9 @@ permissions:
   contents: read
 
 jobs:
-  # frontend/ backend/ がまだ無い段階でも CI が赤くならないよう、存在を見てから走らせる
-  detect:
-    name: 対象の検出
+  site:
+    name: site (format / 禁止語 / typecheck / test / build)
     runs-on: ubuntu-latest
-    outputs:
-      frontend: ${{ steps.check.outputs.frontend }}
-      backend: ${{ steps.check.outputs.backend }}
-    steps:
-      - uses: actions/checkout@v5
-      - id: check
-        run: |
-          if [ -f frontend/package.json ]; then
-            echo "frontend=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "frontend=false" >> "$GITHUB_OUTPUT"
-          fi
-          if [ -f backend/go.mod ]; then
-            echo "backend=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "backend=false" >> "$GITHUB_OUTPUT"
-          fi
-
-  frontend:
-    name: frontend (lint / typecheck / test / build)
-    needs: detect
-    if: needs.detect.outputs.frontend == 'true'
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend
 
     steps:
       - uses: actions/checkout@v5
@@ -52,7 +25,6 @@ jobs:
         with:
           node-version: 24
           cache: npm
-          cache-dependency-path: frontend/package-lock.json
 
       - name: 依存をインストール
         run: npm ci
@@ -60,7 +32,7 @@ jobs:
       - name: フォーマット崩れがないか
         run: npm run format:check
 
-      - name: Lint
+      - name: public-profile に公開してはいけない情報が無いか
         run: npm run lint
 
       - name: 型チェック
@@ -71,35 +43,16 @@ jobs:
 
       - name: ビルド
         run: npm run build
+        env:
+          SITE_URL: https://example.invalid
 
-  backend:
-    name: backend (vet / test / build)
-    needs: detect
-    if: needs.detect.outputs.backend == 'true'
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: backend
-
-    steps:
-      - uses: actions/checkout@v5
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version-file: backend/go.mod
-          cache-dependency-path: backend/go.sum
-
-      - name: フォーマット崩れがないか
-        run: test -z "$(gofmt -l .)" || { gofmt -l .; exit 1; }
-
-      - name: go vet
-        run: go vet ./...
-
-      - name: テスト
-        run: go test ./...
-
-      - name: ビルド
-        run: go build ./...
+      - name: llms.txt と Markdown 版が生成されているか
+        run: |
+          for f in dist/llms.txt dist/llms-full.txt dist/profile.md dist/skills.md dist/journey.md dist/articles.md dist/projects/orgflow.md; do
+            test -s "$f" || { echo "::error::$f が生成されていません"; exit 1; }
+          done
+          grep -q '^# Naoki Yoshida' dist/llms.txt
+          echo "AI 向けファイルの生成を確認"
 
   no-secrets:
     name: 秘密情報が混入していないか

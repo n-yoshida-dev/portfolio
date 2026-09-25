@@ -1,0 +1,37 @@
+---
+// Projects 一覧。主要プロジェクトと、その他・実験を分ける。
+import Base from '../../layouts/Base.astro';
+import ProjectItem from '../../components/ProjectItem.astro';
+import { getFeaturedProjects, getOtherProjects } from '../../lib/content';
+
+const featured = await getFeaturedProjects();
+const others = await getOtherProjects();
+---
+
+<Base
+  title="Projects"
+  description="自作アプリとリポジトリの一覧。何を作り、何を設計し、何を判断したかを、リポジトリへのリンクとともに示します。"
+>
+  <h1>Projects</h1>
+  <p class="lead">
+    「何を作ったか」の一覧です。組み合わせ方は <a href="/systems">Systems</a> にあります。 Private
+    のものは存在と目的だけを載せています。
+  </p>
+
+  <h2>主なプロジェクト</h2>
+  <ul class="entry-list">
+    {featured.map((p) => (
+      <ProjectItem project={p} />
+    ))}
+  </ul>
+
+  <h2>Other / Experiments</h2>
+  <p class="meta">
+    練習・実験・自分専用のツール。トップレベルには並べないが、存在は示しておくもの。
+  </p>
+  <ul class="entry-list">
+    {others.map((p) => (
+      <ProjectItem project={p} />
+    ))}
+  </ul>
+</Base>
