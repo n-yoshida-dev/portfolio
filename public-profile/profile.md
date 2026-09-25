@@ -1,6 +1,6 @@
 ---
 title: Profile
-description: Naoki Yoshida。業務システムの現場で仕様化・調整・テストを担ってきたソフトウェアエンジニア。Java/Spring Boot と Go/React の個人開発と、AI・GitHub を組み合わせた開発・学習の仕組みづくりを公開しています。
+description: Naoki Yoshida。業務システムの現場で仕様化・調整・テストを担ってきたソフトウェアエンジニア。Java/Spring Boot の個人開発と React の学習、AI・GitHub を組み合わせた開発・学習の仕組みづくりを公開しています。
 updated: 2026-09-25
 tagline: 業務システムの現場で身につけた「仕様を固め、関係者と進める力」を、個人開発と、AI・GitHub・自作ツールを組み合わせた開発・学習の仕組みづくりへ広げています。
 links:
@@ -13,9 +13,6 @@ links:
   - label: Reading Log
     url: https://n-yoshida-dev.github.io/reading-log/
     note: 読書記録の公開サイト（GitHub Pages）
-  - label: AI Study Coach
-    url: https://ai-study-coach-alpha.vercel.app/
-    note: React + Supabase の学習記録アプリ（公開中）
 ---
 
 ## 何の人か
@@ -26,7 +23,7 @@ links:
 
 コードを書く力は、業務ではなく個人開発で積んでいます。
 2026 年 3 月から Java / Spring Boot で業務ワークフローアプリ [OrgFlow](/projects/orgflow) を設計・実装し、
-並行して Go と React を学習中です。
+並行して React を学習中です。
 
 ## 何を作っているか
 

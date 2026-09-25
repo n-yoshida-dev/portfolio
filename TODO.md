@@ -25,9 +25,9 @@ SessionStart フックが `##` 見出しごとに `- [x]` / `- [ ]` を数えて
 
 ## 確認待ち（ユーザーの回答が要るもの）
 
-- [ ] public-profile の記述レビュー（特に career.md と skills.md）。事実と違う点・出したくない点があれば直す
-- [ ] Systems の「Personal AI Context System」は、非公開リポジトリの構造（入口 / 詳細 / 履歴 / メタ）まで書いている。この粒度でよいか
-- [ ] 生活系ブログ・note は載せない判断でよいか（`logs/decisions.md` 2026-09-25）
+- [x] public-profile の記述レビュー（特に career.md と skills.md）。事実と違う点・出したくない点があれば直す（2026-09-26 回答済み。`logs/decisions.md` 2026-09-26）
+- [x] Systems の「Personal AI Context System」は、非公開リポジトリの構造（入口 / 詳細 / 履歴 / メタ）まで書いている。この粒度でよいか（2026-09-26 「このままでよい」）
+- [x] 生活系ブログ・note は載せない判断でよいか（`logs/decisions.md` 2026-09-25。2026-09-26 「載せない」で確定）
 
 ## フェーズ2：Phase 2 候補（保留）
 
