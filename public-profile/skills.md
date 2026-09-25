@@ -1,7 +1,7 @@
 ---
 title: Skills
 description: 技術スキルを「商用実務」「個人開発（根拠あり）」「理解確認済み・学習中」に分けて記載。技術名の羅列ではなく、何を作り、何を設計し、何を判断したかを根拠のプロジェクトとともに示します。
-updated: 2026-09-25
+updated: 2026-09-26
 ---
 
 **読み方**：このページは 4 つの区分を混ぜません。
@@ -23,7 +23,8 @@ updated: 2026-09-25
 - **要件整理・仕様化・設計書**：インフラ製品の導入設計、移行計画、テスト計画、本番作業のタイムチャート
 - **テスト工程**：結合テスト・システムテスト・運用テストの計画とリード
 - **関係者調整・チームリード**：顧客折衝、7〜8 名のアサイン・教育・ドキュメントレビュー、プリセールス
-- **インフラ基礎**：Windows クライアント管理製品の設計・構築、ネットワーク、仮想基盤の保守、Linux 操作（LinuC レベル 1）
+- **インフラ基礎**：IT 資産管理製品（SKYSEA Client View）の導入設計・構築を約 5 年、ネットワーク、仮想基盤の保守、Linux 操作（LinuC レベル 1）
+- **既存コードの読解**：稼働中の Java アプリケーションを読んで設定変更・障害対応・バグの原因調査を行った（機能追加・改修は未経験）
 - **課題管理**：不確実で引き継ぎが弱い状況でも、課題を切り出して前へ進める
 
 ## 個人開発（根拠のあるもの）
@@ -32,7 +33,7 @@ updated: 2026-09-25
 
 | 何をしたか | 具体 |
 |---|---|
-| ドメイン設計 | 申請・承認・監査・マルチテナントを 20 以上の概念に分け、責務を文書化。状態遷移を明示的な状態モデルで表現 |
+| ドメイン設計 | 申請・承認・監査・マルチテナントを 18 の主要概念に分け、責務を文書化。状態遷移を明示的な状態モデルで表現 |
 | DB 設計 | 概念 ER → 論理 ER（DBML）→ 物理 ER の 3 段。shared DB で `tenant_id` により分離し、複合外部キーで境界を強制 |
 | API 契約 | OpenAPI を先に書く契約先行。業務操作カタログ → API 群 → path 候補の順で整理 |
 | 認証 | Spring Security の OAuth2 Resource Server で JWT（HS256）を発行・検証。「ログイン済み」と「tenant 選択済み」を別の状態として claim で表現 |
@@ -42,20 +43,14 @@ updated: 2026-09-25
 | テスト | 単体は Mockito で隔離、DB を伴う検証は Testcontainers の PostgreSQL |
 | 設計判断の記録 | ADR 36 本（1 ファイル 1 決定）、実装対応表、ドキュメント入口 |
 
-### フロントエンド：React / TypeScript
-
-- [AI Study Coach](/projects/ai-study-coach)：React 19 + Vite + Supabase。Google ログイン（OAuth）、行レベルセキュリティ（RLS）でユーザーごとにデータ分離、Vercel の preview / production 分離。**コードの多くは AI エージェントが実装し、自分は設計選択・レビュー・DDL 執筆・動作検証を担当**
-- React の基礎（state / props / データフロー）は学習中の区分（下記）
-
 ### データベース：PostgreSQL
 
 - OrgFlow の DDL・制約設計（CHECK 制約、複合外部キー、text + CHECK による状態列）
-- AI Study Coach のテーブル DDL を自分で執筆（制約の命名、外部キーのインデックス）
 - ORACLE MASTER Silver SQL 2019
 
 ### CI / CD・開発フロー
 
-- GitHub Actions：OrgFlow（Java / Maven）と React アプリの両方で CI を構築。lint / typecheck / test / build と秘密情報スキャン
+- GitHub Actions：OrgFlow（Java / Maven）で CI を構築。lint / test / build と秘密情報スキャン
 - ブランチ保護（Ruleset）を自分で設定し、`gh api` で保存値を検証
 - PR 経由の squash マージ運用、Vercel の自動デプロイ
 - Docker Compose でローカル DB
@@ -65,6 +60,7 @@ updated: 2026-09-25
 - Claude Code のフック（秘密情報のコミット阻止、編集直後の型チェック、起動時の進捗表）とスキル（引き継ぎ、PR フロー）をシェルスクリプトで実装
 - マージ前に差分を「完了条件」と仕様に照らす読み取り専用のレビュー用エージェントを定義
 - PLAN / SPEC / TODO / KNOWLEDGE / HANDOFF / 判断台帳という文書体系で複数のアプリを並行運用（[Systems](/systems/ai-assisted-development)）
+- AI エージェントに実装を任せ、自分は要件・設計選択・レビュー・動作検証を担う練習として [AI Study Coach](/projects/ai-study-coach) を公開まで通した（React / Supabase の実力の根拠には数えない）
 
 ### 静的サイト・ツール
 
@@ -73,15 +69,15 @@ updated: 2026-09-25
 
 ## 理解確認済み・学習中
 
-- **Go**：基本構文、struct / slice / map / ポインタ、メソッドまで学習。skill-matrix のバックエンド（CLI・検証ロジック）を Go で実装中。インターフェース、エラー処理、並行処理、`net/http`、テストはこれから
-- **React**：起動フロー、JSX、state / props / データフロー、Thinking in React の部品分けまで理解を確認。hooks、データ取得、ルーティングはこれから
+- **Go**：基本構文、struct / slice / map / ポインタ、メソッドまで学習し、現在は一時停止中。インターフェース、エラー処理、並行処理、`net/http`、テストは未着手。skill-matrix のバックエンドは Go を採用しているが AI エージェントとの協働で実装しており、Go の実力の根拠には数えない
+- **React**：起動フロー、JSX、state / props / データフロー、Thinking in React の部品分けまで理解を確認。hooks、データ取得、ルーティングはこれから。AI Study Coach と skill-matrix のフロントエンドは AI 協働で実装しており、根拠には数えない
 - **AWS**：Solutions Architect - Associate を学習中
 - **Supabase の認証・RLS**：動作は確認済み。仕組みの言語化はまだ
 - **課金（Stripe）**：未着手
 
 ## 商用実務で扱っていないもの（誤解を避けるため）
 
-- Web バックエンドの商用開発（Java / Go とも）
-- チーム開発でのコードレビュー・デプロイ・運用障害対応の一連の経験
+- Web バックエンドの新規機能の実装・改修（Java / Go とも。既存 Java コードの設定変更・障害対応・バグの原因調査は経験あり）
+- チーム開発でのコードレビュー・デプロイの一連の経験
 
 これらを個人開発と公開リポジトリで補っている段階です。

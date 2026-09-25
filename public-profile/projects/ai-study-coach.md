@@ -7,7 +7,7 @@ visibility: public
 status: paused
 period: 2026-07 〜 2026-08
 stack: [React 19, TypeScript, Vite, Supabase, PostgreSQL, Vitest, Oxlint, GitHub Actions, Vercel]
-featured: true
+featured: false
 order: 4
 systems: [ai-assisted-development, learning-system]
 ---
