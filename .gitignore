@@ -32,3 +32,7 @@ CLAUDE.local.md
 # ログ・一時ファイル
 *.log
 coverage/
+
+# Astro
+.astro/
+.vercel/

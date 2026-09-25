@@ -1,0 +1,54 @@
+---
+// Systems 詳細。
+import { render, getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const systems = await getCollection('systems');
+  return systems.map((system) => ({ params: { slug: system.id }, props: { system } }));
+}
+
+const { system } = Astro.props;
+const d = system.data;
+const { Content } = await render(system);
+const related = await getCollection('projects', (p) => p.data.systems.includes(system.id));
+---
+
+<Base title={d.title} description={d.summary} markdownHref={`/systems/${system.id}.md`}>
+  <p class="meta">
+    <a href="/systems">Systems</a> /
+  </p>
+  <h1>{d.title}</h1>
+  <p class="lead">{d.summary}</p>
+  {d.components.length > 0 && (
+    <ul class="tag-list" aria-label="構成要素">
+      {d.components.map((c) => (
+        <li>{c}</li>
+      ))}
+    </ul>
+  )}
+
+  <div class="prose">
+    <Content />
+  </div>
+
+  {related.length > 0 && (
+    <>
+      <h2>関連するプロジェクト</h2>
+      <ul>
+        {related
+          .sort((a, b) => a.data.order - b.data.order)
+          .map((p) => (
+            <li>
+              {(p.body ?? '').trim() ? (
+                <a href={`/projects/${p.id}`}>{p.data.title}</a>
+              ) : (
+                p.data.title
+              )}
+              <span class="meta"> — {p.data.summary}</span>
+            </li>
+          ))}
+      </ul>
+    </>
+  )}
+</Base>

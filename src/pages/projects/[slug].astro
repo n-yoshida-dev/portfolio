@@ -1,0 +1,59 @@
+---
+// プロジェクト詳細。本文がある（body が空でない）エントリだけページを作る。
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { visibilityLabel, statusLabel } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects', (p) => (p.body ?? '').trim().length > 0);
+  return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const d = project.data;
+const { Content } = await render(project);
+const systems = await getCollection('systems', (s) => d.systems.includes(s.id));
+---
+
+<Base title={d.title} description={d.summary} markdownHref={`/projects/${project.id}.md`}>
+  <p class="meta">
+    <a href="/projects">Projects</a> /
+  </p>
+  <h1>
+    {d.title}
+    <span class="badge">{visibilityLabel[d.visibility]}</span>
+    <span class="badge">{statusLabel[d.status]}</span>
+  </h1>
+  <p class="lead">{d.summary}</p>
+  <div class="entry-links">
+    {d.repo && <a href={d.repo}>GitHub リポジトリ</a>}
+    {d.site && <a href={d.site}>公開サイト</a>}
+    {d.period && <span class="meta">{d.period}</span>}
+  </div>
+  {d.stack.length > 0 && (
+    <ul class="tag-list" aria-label="主要技術">
+      {d.stack.map((s) => (
+        <li>{s}</li>
+      ))}
+    </ul>
+  )}
+
+  <div class="prose">
+    <Content />
+  </div>
+
+  {systems.length > 0 && (
+    <>
+      <h2>関連する仕組み</h2>
+      <ul>
+        {systems.map((s) => (
+          <li>
+            <a href={`/systems/${s.id}`}>{s.data.title}</a>
+            <span class="meta"> — {s.data.summary}</span>
+          </li>
+        ))}
+      </ul>
+    </>
+  )}
+</Base>

@@ -27,10 +27,7 @@
       "Bash(git switch main)",
       "Bash(git pull)"
     ],
-    "deny": [
-      "Bash(git add -f *)",
-      "Bash(git add --force *)"
-    ]
+    "deny": ["Bash(git add -f *)", "Bash(git add --force *)"]
   },
   "enabledPlugins": {
     "apps-workflow@n-yoshida-dev": true,
