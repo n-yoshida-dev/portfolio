@@ -57,3 +57,19 @@ Astro が画像処理のために sharp を同梱しているので、追加の�
 `portfolio-git-main-…` の枝 URL はログインが要る。本番ドメイン（Settings → Domains の `portfolio-self-alpha-….vercel.app`）は
 同じ設定のまま 200 で開き、`llms.txt` のリンクも `VERCEL_PROJECT_PRODUCTION_URL` 由来でこのドメインになっていた。
 回避：本番 URL の確認は必ず Settings → Domains のドメインで行う。デプロイ画面の URL で 302 が返っても設定は変えない。
+
+### 2026-09-26：トップの要点は本文から切り出さず、frontmatter の `highlights` に持つ
+
+Home から profile.md の本文を外すとき、「本文の最初の節を要約して出す」案と「frontmatter に要点 3 行を別に持つ」案があった。
+後者にした。本文は AI 向け（`/profile.md`・`/llms-full.txt`）に詳しいまま残し、人間向けの短い版は別の項目として書く方が、
+「どちらを短くしたか」が frontmatter を見れば分かり、要約の生成ロジックも要らない。`max(3)` で 3 行に制限し、増やしたくなったら型で止まる。
+`pageToMarkdown` でも highlights を先頭に出しているので、AI も同じ 3 行を最初に読む。
+
+### 2026-09-26：「1 画面に収まる」の確認は Playwright で撮る（このリポジトリには入れない）
+
+完了条件が「PC（1280×800）と 375px 幅でスクロールせずに見える」のとき、CSS からの概算では境界付近の判定ができない。
+`astro preview` を起動し、Playwright の Chromium でその大きさのビューポートを撮って目視した。
+Playwright はこのリポジトリの依存に足さず（ライブラリを増やさない方針）、別リポジトリにある既存のインストールを絶対パスで import した。
+撮影スクリプトはセッションの scratchpad に置いた使い捨てで、
+`chromium.launch()` → `newContext({ viewport })` → `page.goto(url, { waitUntil: 'networkidle' })` → `screenshot()` の 4 行で済む。
+参考サイトの比較（23 件）も同じ方法で撮った。
