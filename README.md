@@ -6,6 +6,8 @@
 自作アプリの一覧（Projects）に加えて、AI・GitHub・自作ツールを組み合わせた開発・学習・知識管理の仕組み（Systems）を公開する。
 AI が私について調べるための入口（`/llms.txt`、各ページの Markdown 版、Ask AI ページ）も持つ。
 
+公開 URL：https://portfolio-self-alpha-3i27yvib6q.vercel.app/
+
 ## 構成
 
 ```text
@@ -103,6 +105,9 @@ OGP 画像を作り直すとき：`node scripts/generate-og.mjs`（文言は同�
 2. 本番 URL は Vercel がビルド時に渡す `VERCEL_PROJECT_PRODUCTION_URL` から `astro.config.mjs` が組み立てる。
    独自ドメインにしたら、環境変数 `SITE_URL`（例：`https://example.com`）を設定するだけでよい
 3. `main` へのマージで本番、PR ごとにプレビューが作られる
+4. 外部に知らせる URL は **Settings → Domains にある本番ドメイン**（`portfolio-self-alpha-….vercel.app`）だけ。
+   デプロイ画面に出る `portfolio-<ハッシュ>-….vercel.app` や `portfolio-git-main-….vercel.app` は Vercel のログインが要り、
+   訪問者にも AI にも開けない（Deployment Protection の既定「Standard Protection」の動作。設定は変えない）
 
 `SITE_URL` は `/llms.txt`・各 `.md`・OGP・sitemap の絶対 URL に使う。ローカルでは `http://localhost:4321`。
 
