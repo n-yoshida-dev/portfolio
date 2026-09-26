@@ -10,6 +10,10 @@ stack: [React 19, TypeScript, Vite, Supabase, PostgreSQL, Vitest, Oxlint, GitHub
 featured: false
 order: 4
 systems: [ai-assisted-development, learning-system]
+highlights:
+  - 実装は AI（Codex / Claude Code）。自分はテーブルの DDL、設計の選択、レビュー、動作検証を担当
+  - Google ログインと行レベルセキュリティ（RLS）まで通し、他人のデータを書けないことをブラウザで確認
+  - Phase 4（認証・ユーザー管理）で一区切り。続けるかは未定
 ---
 
 ## 何か

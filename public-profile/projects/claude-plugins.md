@@ -9,6 +9,10 @@ stack: [Shell, Claude Code plugin, GitHub Actions, shellcheck]
 featured: true
 order: 5
 systems: [ai-assisted-development]
+highlights:
+  - 複数のアプリに設定をコピーせず、直す場所を 1 か所にするために作った
+  - 中身はフック 3 つ・スキル 4 つ・エージェント 1 つ
+  - 検査ロジックはシェルスクリプトに置いて単体で試せるようにし、CI で shellcheck とプラグインの検証を通す
 ---
 
 ## なぜ作ったか

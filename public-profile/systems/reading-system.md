@@ -3,6 +3,10 @@ title: Reading System
 summary: iPhone の ChatGPT から登録し、GitHub を正本に、GitHub Pages で閲覧し、週次レビューを AI が回す読書の仕組み。アプリを作らず、既存サービスの組み合わせで成立させた。
 order: 3
 components: [reading-log, ChatGPT Projects, Claude Code, GitHub Pages]
+highlights:
+  - 日常の登録は iPhone の ChatGPT、大量登録や構造変更は Claude Code と、AI ごとに役割を分ける
+  - 全 AI 共通のルールを 1 ファイルに持つ。書誌情報を推測で確定せず、本人の感想を勝手に要約しない
+  - ChatGPT が main に直接コミットするため、ブランチは使わず「作業前に pull、競合したら止めて報告」をルールにした
 ---
 
 ## 流れ

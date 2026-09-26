@@ -1,0 +1,30 @@
+---
+// 詳細ページ（Projects / Systems）の本文。
+// 要点（highlights）があれば要点を先に出し、本文は「詳しく読む」で畳む。要点が無い（本文が短い）エントリは本文をそのまま出す。
+// <details> は開閉を HTML だけで行う標準の要素で、JavaScript を出さずに済む。
+interface Props {
+  /** frontmatter の highlights。3 行まで */
+  highlights?: string[];
+}
+const { highlights = [] } = Astro.props;
+---
+
+{highlights.length > 0 ? (
+  <>
+    <ul class="highlights detail-highlights">
+      {highlights.map((h) => (
+        <li>{h}</li>
+      ))}
+    </ul>
+    <details class="more">
+      <summary>詳しく読む</summary>
+      <div class="prose">
+        <slot />
+      </div>
+    </details>
+  </>
+) : (
+  <div class="prose">
+    <slot />
+  </div>
+)}

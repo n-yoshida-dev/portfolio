@@ -1,7 +1,8 @@
 ---
-// Systems 詳細。
+// Systems 詳細。開いた直後に見えるのは要約・要点・構成要素だけにし、本文は FoldedBody が畳む（全文は Markdown 版が持つ）。
 import { render, getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import FoldedBody from '../../components/FoldedBody.astro';
 
 export async function getStaticPaths() {
   const systems = await getCollection('systems');
@@ -28,27 +29,24 @@ const related = await getCollection('projects', (p) => p.data.systems.includes(s
     </ul>
   )}
 
-  <div class="prose">
+  <FoldedBody highlights={d.highlights}>
     <Content />
-  </div>
+  </FoldedBody>
 
   {related.length > 0 && (
     <>
       <h2>関連するプロジェクト</h2>
-      <ul>
+      <p class="inline-links">
         {related
           .sort((a, b) => a.data.order - b.data.order)
-          .map((p) => (
-            <li>
-              {(p.body ?? '').trim() ? (
-                <a href={`/projects/${p.id}`}>{p.data.title}</a>
-              ) : (
-                p.data.title
-              )}
-              <span class="meta"> — {p.data.summary}</span>
-            </li>
-          ))}
-      </ul>
+          .map((p) =>
+            (p.body ?? '').trim() ? (
+              <a href={`/projects/${p.id}`}>{p.data.title}</a>
+            ) : (
+              <span>{p.data.title}</span>
+            ),
+          )}
+      </p>
     </>
   )}
 </Base>

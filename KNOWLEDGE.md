@@ -73,3 +73,13 @@ Playwright はこのリポジトリの依存に足さず（ライブラリを増
 撮影スクリプトはセッションの scratchpad に置いた使い捨てで、
 `chromium.launch()` → `newContext({ viewport })` → `page.goto(url, { waitUntil: 'networkidle' })` → `screenshot()` の 4 行で済む。
 参考サイトの比較（23 件）も同じ方法で撮った。
+
+### 2026-09-27：詳細ページは「highlights を書いたエントリだけ」本文を畳む
+
+全エントリを一律に畳む案もあったが、本文が 2〜4 行（80〜380 字）のエントリまで「詳しく読む」を押させるのは手間が増えるだけなので、
+`highlights` の有無で切り替えた（部品は `src/components/FoldedBody.astro`）。書き忘れで長い本文が丸見えになるのを防ぐため、
+「本文 400 字超なら highlights 必須」を `tests/public-profile-detail.test.mjs` で検査する。400 字は、見出し・要約・リンク・技術タグが 300〜400 字を使うので、
+完了条件の 800 字から引いた残り。profile と違い、projects / systems の `highlights` は Markdown 版に出さない
+（本文に同じ事実が全部あり、完了条件が「`.md` を変えない」だったため）。関連する仕組み / プロジェクトの一覧は題名だけにした
+（AI-assisted Development は関連が 10 件あり、要約付きだとそれだけで 800 字を超える）。
+開閉は `<details>` なので JavaScript を出さない。Chrome はページ内検索で閉じた `<details>` の中もヒットさせて自動で開く。

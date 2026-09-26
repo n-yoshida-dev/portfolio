@@ -9,6 +9,10 @@ stack: [Java 21, Spring Boot, Spring Security, Spring Data JPA, PostgreSQL, Flyw
 featured: true
 order: 1
 systems: [ai-assisted-development, learning-system]
+highlights:
+  - 設計判断を ADR 36 本で公開（データ分離の方式、HTTP ステータスの選び方など）
+  - 実装済みはログイン・JWT・tenant 選択・申請の下書きまで。承認の状態遷移・フロント・デプロイはこれから
+  - 過程を Qiita に連載。設計・実装は自分で行い、AI は相談相手
 ---
 
 ## 何を作っているか

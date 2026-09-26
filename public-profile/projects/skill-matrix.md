@@ -9,6 +9,10 @@ stack: [Go, TypeScript, React, Vite, JSON, GitHub Actions, GitHub Pages]
 featured: true
 order: 2
 systems: [learning-system, ai-assisted-development]
+highlights:
+  - 理解度は 5 段階。AI の判定をそのまま信用せず、Go の CLI の検証ルールと CI で二重に検査する
+  - 2026-09-23 に「公開する Web サービス」から「自分専用のツール」へ絞り込んだ（6 週間、画面が 0 件だったため）
+  - v1 を実装中。完成後に Public 化し、このサイトの Skills も将来ここから生成する想定
 ---
 
 ## 解きたい課題
