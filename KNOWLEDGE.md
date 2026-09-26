@@ -49,3 +49,11 @@ Astro が画像処理のために sharp を同梱しているので、追加の�
 
 `check-edited.sh` は `frontend/*.ts(x)` と `backend/*.go` しか見ないので、リポジトリ直下に置いた `src/` は対象外。
 編集後は `npm run typecheck`（`astro check`）を自分で回す。`guard-secrets.sh`（コミット前の秘密情報検査）と起動時の進捗表は動く。
+
+### 2026-09-26：Vercel の「デプロイごとの URL」は外から開けない。本番ドメインで確認する
+
+初回デプロイ直後にユーザーが貼った `portfolio-<ハッシュ>-<チーム>.vercel.app` は、`curl` すると 302 で `vercel.com/sso-api` に飛び、
+`/llms.txt` も取れなかった。原因は Deployment Protection の既定「Standard Protection」で、デプロイごとの URL と
+`portfolio-git-main-…` の枝 URL はログインが要る。本番ドメイン（Settings → Domains の `portfolio-self-alpha-….vercel.app`）は
+同じ設定のまま 200 で開き、`llms.txt` のリンクも `VERCEL_PROJECT_PRODUCTION_URL` 由来でこのドメインになっていた。
+回避：本番 URL の確認は必ず Settings → Domains のドメインで行う。デプロイ画面の URL で 302 が返っても設定は変えない。
