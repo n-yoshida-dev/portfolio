@@ -28,7 +28,7 @@ portfolio/
 │   ├── check-public-profile.mjs   ← 禁止語スキャン（npm run lint）
 │   ├── public-profile-rules.json  ← 禁止語パターンと理由
 │   └── generate-og.mjs            ← OGP 画像の生成（public/og.png）
-├── tests/                   ← スキャンの回帰テストと public-profile の参照整合テスト
+├── tests/                   ← スキャンの回帰テスト、public-profile の参照整合と詳細ページの本文の長さのテスト
 └── .github/workflows/ci.yml
 ```
 
@@ -66,13 +66,13 @@ CI と同じ検査をまとめて回す：
 npm run format:check && npm run lint && npm run typecheck && npm run test && npm run build
 ```
 
-| コマンド               | 内容                                                      |
-| ---------------------- | --------------------------------------------------------- |
-| `npm run format:check` | Prettier（`public-profile/` の Markdown は対象外）        |
-| `npm run lint`         | `public-profile/` の禁止語スキャン                        |
-| `npm run typecheck`    | `astro check`（Astro / TypeScript の型検査）              |
-| `npm run test`         | Vitest（スキャンの回帰テスト、public-profile の参照整合） |
-| `npm run build`        | ビルド。frontmatter が型に合わないとここで失敗する        |
+| コマンド               | 内容                                                                              |
+| ---------------------- | --------------------------------------------------------------------------------- |
+| `npm run format:check` | Prettier（`public-profile/` の Markdown は対象外）                                |
+| `npm run lint`         | `public-profile/` の禁止語スキャン                                                |
+| `npm run typecheck`    | `astro check`（Astro / TypeScript の型検査）                                      |
+| `npm run test`         | Vitest（スキャンの回帰テスト、public-profile の参照整合、詳細ページの本文の長さ） |
+| `npm run build`        | ビルド。frontmatter が型に合わないとここで失敗する                                |
 
 OGP 画像を作り直すとき：`node scripts/generate-og.mjs`（文言は同スクリプト内）。
 
@@ -83,6 +83,9 @@ OGP 画像を作り直すとき：`node scripts/generate-og.mjs`（文言は同�
 - **プロジェクトを足す**：`public-profile/projects/<slug>.md` を作る。frontmatter の項目は `src/content.config.ts` を参照。
   `featured: true` で主要プロジェクト、`false` で Other / Experiments。本文が空なら詳細ページは作られない（一覧だけに出る）
 - **仕組みを足す**：`public-profile/systems/<slug>.md` を作る。`order` で並び順
+- **詳細ページの本文が長いとき**（projects / systems で本文 400 字超）：frontmatter に `highlights`（要点。3 行まで、本文に書いた事実だけ）を足す。
+  詳細ページでは要点だけが見え、本文は「詳しく読む」で開く形に畳まれる。Markdown 版（`/projects/<slug>.md` など）は全文のまま。
+  書き忘れると `npm run test` が落ちる
 - **記事を足す**：`public-profile/articles.json` に 1 要素足す。`series` で連載ごとにまとまる
 - **経歴・スキルを直す**：`career.md` / `skills.md` を編集し、frontmatter の `updated` を更新する
 - **トップの文章を直す**：`profile.md` の frontmatter。`tagline`（名前の下の一言 1 文）と `highlights`（何の人かの要点。3 行まで）だけがトップに出る。

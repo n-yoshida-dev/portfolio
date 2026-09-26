@@ -11,6 +11,13 @@ const visibility = z.enum(['public', 'private', 'archived']);
 /** 関わり方。「何を作ったか」より「何を担ったか」を示すために持つ */
 const projectStatus = z.enum(['active', 'paused', 'done', 'archived']);
 
+/**
+ * 詳細ページの先頭に出す要点。1 行 1 項目で 3 つまで。本文に書いてある事実だけから作る。
+ * これを書いたエントリは、HTML の詳細ページで本文を「詳しく読む」に畳む（Markdown 版は全文のまま）。
+ * 本文が短いエントリは書かなくてよい（本文をそのまま出す）
+ */
+const detailHighlights = z.array(z.string()).min(1).max(3).optional();
+
 /** 自作アプリ・リポジトリ（Projects ページ） */
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './public-profile/projects' }),
@@ -33,6 +40,7 @@ const projects = defineCollection({
     order: z.number().default(100),
     /** 関連する Systems の slug */
     systems: z.array(z.string()).default([]),
+    highlights: detailHighlights,
   }),
 });
 
@@ -45,6 +53,7 @@ const systems = defineCollection({
     order: z.number().default(100),
     /** この仕組みを構成する repo / サービス。Projects の slug か、外部名 */
     components: z.array(z.string()).default([]),
+    highlights: detailHighlights,
   }),
 });
 

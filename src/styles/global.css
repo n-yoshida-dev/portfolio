@@ -291,6 +291,25 @@ main.container {
   margin: 0 0 0.5rem;
 }
 
+/* 詳細ページの要点と「詳しく読む」。畳んだ本文は開くまで見えない */
+.detail-highlights {
+  margin-top: 1.25rem;
+}
+.more {
+  margin: 1rem 0 0;
+}
+.more > summary {
+  cursor: pointer;
+  color: var(--link);
+  width: fit-content;
+}
+.more > summary:hover {
+  text-decoration: underline;
+}
+.more[open] > summary {
+  margin-bottom: 1rem;
+}
+
 /* トップの「3 つの入口」 */
 .intro-grid {
   display: grid;

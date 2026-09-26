@@ -3,6 +3,10 @@ title: Learning System
 summary: 学習ログを根拠に理解度を判定し、弱点と次の一手を決める仕組み。「説明を聞いた」と「理解した」を区別し、根拠のない昇格をしない。
 order: 2
 components: [study（非公開）, skill-matrix, orgflow, Claude Code]
+highlights:
+  - 根拠は 4 種類（確認問題の結果・自分の言葉での説明・実装したコミット・記事）。自己申告は「自己申告」と明記
+  - AI が書いたコードは習熟度の根拠にしない。同じ誤解が 3 回出たら弱点として起票し、7 日後・30 日後に再確認
+  - 学習レーンは 2 本。OrgFlow は自分で実装し、AI Dev Journey は AI に任せて自分は判断する
 ---
 
 ## 何を解いているか

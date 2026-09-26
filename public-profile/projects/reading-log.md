@@ -10,6 +10,10 @@ stack: [Markdown, Jekyll, GitHub Pages, ChatGPT Projects, Claude Code]
 featured: true
 order: 3
 systems: [reading-system]
+highlights:
+  - アプリは作らず、GitHub と既存の AI サービスの組み合わせで「仕組み」だけを作った
+  - 1 冊 1 Markdown ファイル。表紙の写真と一言で登録すると、AI が Markdown を書いて GitHub に反映する
+  - 完読を目的にしない。拾い読み・中止も正常な完了とし、同時に読むのは 2 冊まで
 ---
 
 ## 何か
