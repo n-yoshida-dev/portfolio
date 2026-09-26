@@ -12,7 +12,7 @@ order: 4
 systems: [ai-assisted-development, learning-system]
 highlights:
   - 実装は AI（Codex / Claude Code）。自分はテーブルの DDL、設計の選択、レビュー、動作検証を担当
-  - Google ログインと行レベルセキュリティ（RLS）まで通し、他人のデータを書けないことをブラウザで確認
+  - Google ログインと行レベルセキュリティ（RLS）まで通し、他人の user_id を詐称した登録が拒否されることをブラウザで確認
   - Phase 4（認証・ユーザー管理）で一区切り。続けるかは未定
 ---
 

@@ -16,7 +16,7 @@ const projectStatus = z.enum(['active', 'paused', 'done', 'archived']);
  * これを書いたエントリは、HTML の詳細ページで本文を「詳しく読む」に畳む（Markdown 版は全文のまま）。
  * 本文が短いエントリは書かなくてよい（本文をそのまま出す）
  */
-const detailHighlights = z.array(z.string()).max(3).optional();
+const detailHighlights = z.array(z.string()).min(1).max(3).optional();
 
 /** 自作アプリ・リポジトリ（Projects ページ） */
 const projects = defineCollection({

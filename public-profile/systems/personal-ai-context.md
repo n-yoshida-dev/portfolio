@@ -6,7 +6,7 @@ components: [personal-ai-context（非公開）, ChatGPT, Claude.ai, Claude Code
 highlights:
   - 入口・テーマ別の詳細・履歴・メタの 4 層に分け、どの AI にも同じ順序で読ませる
   - 数字には基準日を付け、リポジトリに無い情報を AI に推測で補わせない
-  - このサイトの public-profile は、ここから公開してよい情報だけを手で抜き出したもの（自動同期しない）
+  - このサイトの public-profile は、非公開の正本群から公開してよい情報だけを手で抜き出したもの（自動同期しない）
 ---
 
 ## 何を解いているか
