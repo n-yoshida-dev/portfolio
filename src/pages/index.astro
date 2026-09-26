@@ -1,23 +1,33 @@
 ---
 // トップ。「何の人か」「何を作っているか」「どう仕組み化しているか」を 1 画面で伝える。
-import { render } from 'astro:content';
+// 文章は frontmatter の tagline / highlights だけを出し、profile.md の本文は Markdown 版（/profile.md）に任せる。
 import Base from '../layouts/Base.astro';
 import ProjectItem from '../components/ProjectItem.astro';
 import { getPage, getFeaturedProjects, getSystems } from '../lib/content';
 import { SITE } from '../site';
 
 const profile = await getPage('profile');
-const { Content } = await render(profile);
 const featured = (await getFeaturedProjects()).slice(0, 3);
 const systems = await getSystems();
 ---
 
 <Base description={profile.data.description} markdownHref="/profile.md">
   <h1>{SITE.name}</h1>
-  <p class="lead">
-    Software engineer building personal software and AI-assisted development systems.
-  </p>
-  {profile.data.tagline && <p>{profile.data.tagline}</p>}
+  {profile.data.tagline && <p class="lead">{profile.data.tagline}</p>}
+  {profile.data.highlights && (
+    <ul class="highlights">
+      {profile.data.highlights.map((h) => (
+        <li>{h}</li>
+      ))}
+    </ul>
+  )}
+  {profile.data.links && (
+    <p class="inline-links">
+      {profile.data.links.map((l) => (
+        <a href={l.url}>{l.label}</a>
+      ))}
+    </p>
+  )}
 
   <div class="intro-grid">
     <div>
@@ -51,33 +61,10 @@ const systems = await getSystems();
   </p>
 
   <h2>仕組み</h2>
-  <ul class="entry-list">
+  <p class="inline-links">
     {systems.map((s) => (
-      <li>
-        <h3>
-          <a href={`/systems/${s.id}`}>{s.data.title}</a>
-        </h3>
-        <p>{s.data.summary}</p>
-      </li>
+      <a href={`/systems/${s.id}`}>{s.data.title}</a>
     ))}
-  </ul>
-
-  <div class="prose">
-    <Content />
-  </div>
-
-  {profile.data.links && (
-    <>
-      <h2>リンク</h2>
-      <ul>
-        {profile.data.links.map((l) => (
-          <li>
-            <a href={l.url}>{l.label}</a>
-            {l.note && <span class="meta"> — {l.note}</span>}
-          </li>
-        ))}
-      </ul>
-    </>
-  )}
+  </p>
   <p class="meta">最終確認日: {profile.data.updated}</p>
 </Base>

@@ -85,6 +85,8 @@ OGP 画像を作り直すとき：`node scripts/generate-og.mjs`（文言は同�
 - **仕組みを足す**：`public-profile/systems/<slug>.md` を作る。`order` で並び順
 - **記事を足す**：`public-profile/articles.json` に 1 要素足す。`series` で連載ごとにまとまる
 - **経歴・スキルを直す**：`career.md` / `skills.md` を編集し、frontmatter の `updated` を更新する
+- **トップの文章を直す**：`profile.md` の frontmatter。`tagline`（名前の下の一言 1 文）と `highlights`（何の人かの要点。3 行まで）だけがトップに出る。
+  本文（`## 何の人か` 以下）はトップには出ず、Markdown 版（`/profile.md`）と `/llms-full.txt` で AI と人間の両方が読める
 
 反映は `npm run build` が通れば完了。`main` へマージすると Vercel が自動でデプロイする。
 
