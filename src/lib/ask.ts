@@ -16,7 +16,9 @@ When discussing skills, distinguish professional experience,
 personal development experience, and current learning.
 Do not infer anything that is not stated in those sources.
 
-Cite the sources you relied on.`;
+Cite the sources you relied on.
+
+Answer in Japanese.`;
 }
 
 /** 各 AI サービスの「プロンプト入り新規チャット」URL。対応していないサービスは undefined */
