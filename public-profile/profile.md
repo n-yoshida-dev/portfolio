@@ -2,7 +2,11 @@
 title: Profile
 description: Naoki Yoshida。業務システムの現場で仕様化・調整・テストを担ってきたソフトウェアエンジニア。Java/Spring Boot の個人開発と React の学習、AI・GitHub を組み合わせた開発・学習の仕組みづくりを公開しています。
 updated: 2026-09-26
-tagline: 業務システムの現場で身につけた「仕様を固め、関係者と進める力」を、個人開発と、AI・GitHub・自作ツールを組み合わせた開発・学習の仕組みづくりへ広げています。
+tagline: 「仕様を固め、関係者と進める力」を、個人開発と AI 協働の仕組みづくりへ広げているソフトウェアエンジニア。
+highlights:
+  - 業務システムの現場で約 10 年。要件整理・仕様化・テスト・チームリード（コードは書いていない）
+  - 2026 年から Java / Spring Boot で業務ワークフロー API OrgFlow を設計・実装中。React は学習中
+  - 設計判断を ADR に残し、AI と分業し、公開情報の線引きを機械で検査する
 links:
   - label: GitHub
     url: https://github.com/n-yoshida-dev

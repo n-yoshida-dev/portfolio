@@ -276,6 +276,21 @@ main.container {
   margin-top: 0.4rem;
 }
 
+/* トップの要点 3 行と、1 行に並べるリンク列 */
+.highlights {
+  padding-left: 1.2em;
+  margin: 0 0 0.75rem;
+}
+.highlights li {
+  margin: 0.2rem 0;
+}
+.inline-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  margin: 0 0 0.5rem;
+}
+
 /* トップの「3 つの入口」 */
 .intro-grid {
   display: grid;
