@@ -119,7 +119,10 @@ export function systemToMarkdown(s: System): string {
 /** profile / career / skills を Markdown にする */
 export function pageToMarkdown(p: Page): string {
   const d = p.data;
-  const lines = [`# ${d.title}`, '', d.description, '', `- 最終確認日: ${d.updated}`];
+  const lines = [`# ${d.title}`, '', d.description, ''];
+  // トップに出す要点（profile.md だけ）。AI にも同じ 3 行を先に読ませる
+  if (d.highlights?.length) lines.push(...d.highlights.map((h) => `- ${h}`), '');
+  lines.push(`- 最終確認日: ${d.updated}`);
   if (d.links?.length) {
     lines.push('- リンク:');
     for (const l of d.links) lines.push(`  - ${l.label}: ${l.url}${l.note ? ` — ${l.note}` : ''}`);

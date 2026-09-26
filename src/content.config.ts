@@ -68,8 +68,10 @@ const pages = defineCollection({
         }),
       )
       .optional(),
-    /** profile.md だけが持つ。トップに出す短い自己紹介（3〜4 行） */
+    /** profile.md だけが持つ。トップの名前の直下に出す一言（1 文） */
     tagline: z.string().optional(),
+    /** profile.md だけが持つ。トップに出す「何の人か」の要点。1 行 1 項目で 3 つまで。本文はトップには出さない */
+    highlights: z.array(z.string()).max(3).optional(),
   }),
 });
 

@@ -11,7 +11,7 @@
 |---|---|---|---|
 | `projects` | `projects/*.md` | title / summary / repo / site / visibility（public・private・archived）/ status（active・paused・done・archived）/ period / stack / featured / order / systems | Projects 一覧・詳細。`featured: false` は Other / Experiments。本文が空なら詳細ページを作らない |
 | `systems` | `systems/*.md` | title / summary / order / components | Systems 一覧・詳細 |
-| `pages` | `profile.md` `career.md` `skills.md` | title / description / updated / links（profile のみ）/ tagline（profile のみ） | Home / Journey / Skills |
+| `pages` | `profile.md` `career.md` `skills.md` | title / description / updated / links・tagline・highlights（profile のみ。highlights は 3 行まで） | Home / Journey / Skills |
 | `articles` | `articles.json` | id / title / url / platform / publishedAt / tags / series / summary | Articles。連載（series）ごとにまとめ、連載内は古い順 |
 
 - `updated` は「最終確認日」。YAML の日付は Date として読まれるので、型で `YYYY-MM-DD` の文字列に揃える
@@ -22,7 +22,7 @@
 
 | ルート | 出力 | 元データ |
 |---|---|---|
-| `/` | Home | profile.md + featured 3 件 + systems 全件 |
+| `/` | Home。名前・tagline・highlights・リンク・入口 3 つ・featured 3 件（1 行ずつ）・systems の題名だけ。**profile.md の本文は出さない**（Markdown 版と llms-full.txt が持つ） | profile.md の frontmatter + featured 3 件 + systems 全件 |
 | `/projects`, `/projects/<slug>` | 一覧、詳細 | projects |
 | `/systems`, `/systems/<slug>` | 一覧、詳細 | systems |
 | `/skills`, `/journey`, `/articles`, `/ask` | 単一ページ | skills.md / career.md / articles.json / `src/lib/ask.ts` |
@@ -45,6 +45,8 @@
 
 - 素の CSS 1 ファイル（`src/styles/global.css`）。色は文字・薄い文字・線・リンク・背景の 5 つ。ダークモードは OS 設定に追従
 - カード UI にせず、区切り線で並べる。グラデーション・影・アニメーションを使わない
+- **HTML は人間向けに短く、Markdown 版・llms.txt は AI 向けに詳しく。** 同じ文章を両方に同じ量で出さない。
+  トップは名前 + 一言 + 要点 3 行 + 入口で 1 画面に収める。一覧の 1 件は題名 + 1〜2 文 + リンク（2026-09-26。参考にした個人サイト 23 件の共通パターン）
 - 本文幅は最大 52rem、モバイルは 16px の左右余白。表は横スクロール
 
 ## 5. 検査（CI と同じ）
