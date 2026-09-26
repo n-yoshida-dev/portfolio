@@ -30,7 +30,7 @@
 
 - フェーズ：**Phase 2「文章の減量」の 1/3 が済んだ**（Home を 1 画面に。PR #7、本番反映済み）。残り 2 本は `TODO.md` フェーズ2
 - 方針の原則は `SPEC.md` §4「HTML は人間向けに短く、Markdown 版・llms.txt は AI 向けに詳しく」。決めた経緯は `logs/decisions.md` 2026-09-26
-- 参考にした個人サイト 23 件の画像と共通パターン：https://claude.ai/artifact/1zG7KYsQUpx4GjegU5rMZQ（減量 PR 2・3 の表現はこれに沿う）
+- 参考にした個人サイト 23 件の画像と共通パターン：https://claude.ai/artifact/1zG7KYsQUpx4GjegU5rMZQ（本人限定のリンク。減量 PR 2・3 の表現はこれに沿う）
 - main：クリーン。作業中のブランチは無い
 - 確認待ち 1 件（GitHub の bio の食い違い。`TODO.md`「確認待ち」、Beads ops-urz.6）
 - 自動化の候補（skill-matrix 連携・GitHub / Qiita 取得ほか）は減量 3 本が終わるまで着手しない

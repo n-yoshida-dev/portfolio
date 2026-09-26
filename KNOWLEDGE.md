@@ -69,7 +69,7 @@ Home から profile.md の本文を外すとき、「本文の最初の節を要
 
 完了条件が「PC（1280×800）と 375px 幅でスクロールせずに見える」のとき、CSS からの概算では境界付近の判定ができない。
 `astro preview` を起動し、Playwright の Chromium でその大きさのビューポートを撮って目視した。
-Playwright はこのリポジトリの依存に足さず（ライブラリを増やさない方針）、`~/workspace/writing/apps/note-publish/node_modules/playwright` と
-`~/.cache/ms-playwright` の既存インストールを絶対パスで import した。撮影スクリプトはセッションの scratchpad に置いた使い捨てで、
+Playwright はこのリポジトリの依存に足さず（ライブラリを増やさない方針）、別リポジトリにある既存のインストールを絶対パスで import した。
+撮影スクリプトはセッションの scratchpad に置いた使い捨てで、
 `chromium.launch()` → `newContext({ viewport })` → `page.goto(url, { waitUntil: 'networkidle' })` → `screenshot()` の 4 行で済む。
 参考サイトの比較（23 件）も同じ方法で撮った。
