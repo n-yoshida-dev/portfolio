@@ -35,14 +35,14 @@
 - 残りは 年表と表 → 仕上げ（`TODO.md` フェーズ3）
 - ボタンは文字色の塗り（主なボタンと追従ボタン）+ 線（ほか）。CSS は `src/styles/global.css` の `.button` / `.button-primary` / `.ask-fab`、言葉は `src/site.ts` の `ASK_BUTTON_LABEL`
 - Skills / Journey のページは `src/pages/skills.astro` / `journey.astro`（本文は `public-profile/skills.md` / `career.md`）。表の CSS は `global.css` の `.label-tables`
-- ユーザー待ち：なし。保留の改善候補に「`/ask` の見出し・タブの題名とボタンの言葉のずれ」を入れた（揃えるかは未確認。`TODO.md` 小さな改善の候補）
+- ユーザー待ち：`TODO.md` の確認待ちは 0 件。Beads ops-urz.16 だけ開いている（ポート 4329 に 2026-09-27 の昼から置き去りの `astro preview` を止めてよいか。親プロセスなし）。
+  保留の改善候補に「`/ask` の見出し・タブの題名とボタンの言葉のずれ」を入れた（揃えるかは未確認。`TODO.md` 小さな改善の候補）
 - 画面の確認は Playwright で撮る（`KNOWLEDGE.md` 2026-09-26。preview が 1 本しか立たないことと、止めるときの注意も同じファイル）
-- ポート 4329 に、2026-09-27 14:12 から置き去りの `astro preview` が残っている（親プロセスなし）。止めてよいかはユーザーに聞いたまま、答えはまだ
 - 状況の確認：`node dashboard/update.mjs --serve --open`
 - main：クリーン。作業中のブランチは無い
 
 ## 次セッションで最初にやること
 
-1. フェーズ3「年表と表」に着手する。Journey の経歴表を年を左端に置いた年表に、Skills の表を「ラベル + 値」の並びに、CSS だけで積み替える（本文の Markdown は変えない。完了条件は `TODO.md`）
+1. フェーズ3「年表と表」に着手する。Journey の経歴表を年を左端に置いた年表に、Skills の表を「ラベル + 値」の並びに、CSS で積み替える（本文の Markdown は変えない。完了条件は `TODO.md`）
 
 `TODO.md` の先頭と一致させる。書くのは最初の一手だけで、一覧は `TODO.md` が持つ。
