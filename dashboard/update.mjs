@@ -411,7 +411,10 @@ function readProduction() {
 /** デプロイ記録をタイルの状態 1 つと、必要なら帯 1 本にする。main の先端と違うときは、main に入ってからの経過時間で「反映待ち」と「未反映」を分ける */
 function productionStatus(p) {
   const tile = '本番（Vercel）'
-  if (p.error) return { status: { kind: 'na', label: '取得できず', tile, sub: p.error }, alert: null }
+  // gh が丸ごと使えないときは共通の「GitHub の情報を取得できず」の帯も出るが、GraphQL だけの失敗や記録 0 件はここでしか分からないので帯を出す
+  if (p.error) {
+    return { status: { kind: 'na', label: '取得できず', tile, sub: p.error }, alert: { level: 'warn', text: `本番の反映を取得できず（${p.error}）` } }
+  }
   const sha = p.sha.slice(0, 7)
   const main = p.mainSha.slice(0, 7)
   if (['failure', 'error'].includes(p.state)) {
