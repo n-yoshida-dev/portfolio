@@ -44,7 +44,7 @@
 ## 次セッションで最初にやること
 
 1. フェーズ3「カード」に着手する。先に設計を提示する：`ProjectItem.astro` と Systems 一覧・トップの Projects / Systems 節を薄枠のカード
-   （`--bg-subtle` + `--line`、PC 2 列 / 375px 1 列）にする。一覧の summary を一文にする方法（見本の一文は最初の文を取り出したものではなく、手で縮めた文。
-   `gen-mock.mjs` の `one`。詳細ページと Markdown 版の情報は減らさない）を決める。カードの CSS の下敷きは `docs/design-candidates/gen-mock.mjs` の `cssC`
+   （`--bg-subtle` + `--line`、PC 2 列 / 375px 1 列）にする。一覧の summary を一文にする方法（見本の一文は `gen-mock.mjs` の `one`。最初の文そのままと手で縮めた文が混ざり、
+   archived は 2 文のまま。詳細ページと Markdown 版の情報は減らさない）を決める。カードの CSS の下敷きは `docs/design-candidates/gen-mock.mjs` の `cssC`
 
 `TODO.md` の先頭と一致させる。書くのは最初の一手だけで、一覧は `TODO.md` が持つ。
