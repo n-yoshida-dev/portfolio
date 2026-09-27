@@ -29,6 +29,7 @@ portfolio/
 │   ├── public-profile-rules.json  ← 禁止語パターンと理由
 │   └── generate-og.mjs            ← OGP 画像の生成（public/og.png）
 ├── tests/                   ← スキャンの回帰テスト、public-profile の参照整合・詳細ページの本文の長さ・Skills / Journey の表のテスト
+├── dashboard/               ← 開発ダッシュボード（開発状況を 1 画面で見る。サイトには含まれない。dashboard/README.md）
 └── .github/workflows/ci.yml
 ```
 
@@ -75,6 +76,8 @@ npm run format:check && npm run lint && npm run typecheck && npm run test && npm
 | `npm run build`        | ビルド。frontmatter が型に合わないとここで失敗する                                                                       |
 
 OGP 画像を作り直すとき：`node scripts/generate-og.mjs`（文言は同スクリプト内）。
+
+開発状況（進捗・判断待ち・CI・本番の反映）を見るとき：`node dashboard/update.mjs --serve --open`（詳しくは [dashboard/README.md](dashboard/README.md)）。
 
 ## コンテンツの更新
 

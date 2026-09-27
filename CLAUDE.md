@@ -55,6 +55,12 @@ Astro の静的サイトで、コンテンツは `public-profile/` の Markdown 
 | `guard-secrets.sh` | 秘密情報・ローカル専用ファイルのコミットを阻止（PreToolUse） | プラグイン |
 | `session-briefing.sh` | 進捗表と TODO.md の未完タスクを起動時に提示（SessionStart） | プラグイン |
 
+## 開発ダッシュボード（`dashboard/`）
+
+- 起動：`node dashboard/update.mjs --serve --open`。進捗・あなた待ち・CI・本番の反映・禁止語スキャンを 1 画面で見る（中身と取得元は `dashboard/README.md`）
+- 正本（TODO / HANDOFF / decisions / git / GitHub / Beads / public-profile）を読んで描くだけ。独自の状態を持たせない。サイトの一部ではない（ビルド・配信に含まれない）
+- TODO の見出し規約・「確認待ち」に Beads の ID を書く書き方・HANDOFF の節名・CI のジョブ名・Beads の題名規約・README の「公開 URL：」を変えたら `dashboard/update.mjs` も直す
+
 ## 共通ルール
 
 自作プロダクト共通の開発ルール（Git 運用・コーディング規則）は `../CLAUDE.md` にある。上位ディレクトリの CLAUDE.md は自動でロードされる。
