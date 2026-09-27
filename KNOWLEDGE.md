@@ -156,3 +156,16 @@ Phase 1 からこれに気づかず、canonical と `og:url` が `.html` 付き�
 追従ボタンと本文の重なりを Playwright で数えたとき、375px 幅の詳細 5 ページで「重なりあり」と出た。重なったとされたのは「詳しく読む」に畳まれた本文の表や図で、画面には出ていない。
 閉じた `<details>` の中身でも `getBoundingClientRect()` は位置を返した（Chrome が中身を `content-visibility: hidden` で隠しているため、というのは Claude の推定で未確認）。
 要素を `el.checkVisibility({ contentVisibilityAuto: true })` で絞ってから数えると、誤検知が消えた。
+
+### 2026-09-27：`astro preview` は 1 つのプロジェクトで 1 本しか立たない。見本は `dist` の写しを別のサーバーで配る
+
+Astro 7 の `astro preview --port <別の番号>` は、同じプロジェクトの preview が既に動いていると
+「Preview server already running at http://localhost:4329」と出してすぐ終わる（終了コード 0 なので失敗に見えない）。
+ボタンの見本を撮ったときは、`dist` を scratchpad に写して `python3 -m http.server` で配った。この方法は既存の preview に触らず、ビルドし直しても見本の中身が変わらない。
+ただし `build.format: 'file'` なので、`/ask` は `/ask.html` と拡張子を付けて開く（Python のサーバーは拡張子を補わない）。
+見本の見た目は、撮るときに `page.addStyleTag()` で CSS を差し込んで切り替えた。リポジトリのファイルは変えずに済む。
+
+### 2026-09-27：ビルド後の CSS では `#ffffff` が `#fff` になる。色を突き合わせるときは 3 桁も読む
+
+ボタンの色が CSS 変数の色だけかを Playwright で確かめたとき、`getComputedStyle(document.documentElement).getPropertyValue('--bg')` が `#fff` を返した。
+ビルドの圧縮で 6 桁が 3 桁に縮められるためで、6 桁を前提にした変換では白が「変数にない色」と誤検知された。3 桁を 6 桁に戻してから比べる。

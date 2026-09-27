@@ -12,6 +12,12 @@ export const SITE = {
   locale: 'ja_JP',
 } as const;
 
+/**
+ * Ask AI（/ask）への入口のボタンの言葉。トップの Ask AI 節と右下の追従ボタンで同じ言葉を使う。
+ * 名前も「me」も使わずに、何について聞くかが分かる言葉（2026-09-27 ユーザーが選択。logs/decisions.md）
+ */
+export const ASK_BUTTON_LABEL = 'Ask AI about this portfolio';
+
 /** トップの 1 節。目次（左の固定目次）と、トップの見出し・「すべて →」の行き先を同じ定義から作る */
 export interface Section {
   /** `<section id>` と目次リンクの `#id`。変えるときは index.astro の `<HomeSection id>` も一緒に変える */

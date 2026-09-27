@@ -456,45 +456,55 @@ main.container {
   gap: 0.5rem;
   margin: 0.5rem 0 1.5rem;
 }
+/*
+  ボタン（SPEC.md §4）。青はリンク専用にし、ボタンは文字色で描く。
+  塗る（文字色の地 + 背景色の文字）のは主なボタン（.button-primary）と右下の追従ボタン（.ask-fab）だけで、ほかは線だけ。
+  ダークモードでは変数が入れ替わるので、塗りは明るい地 + 暗い文字になる
+*/
 .button {
   display: inline-block;
   font: inherit;
   font-size: 0.95rem;
   color: var(--fg);
-  background: var(--bg-subtle);
+  background: transparent;
   border: 1px solid var(--line);
-  border-radius: 6px;
+  border-radius: 4px;
   padding: 0.35em 0.9em;
   cursor: pointer;
   text-decoration: none;
 }
 .button:hover {
   text-decoration: none;
-  border-color: var(--fg-muted);
+  border-color: var(--fg);
 }
 .button-primary {
-  background: var(--link);
-  border-color: var(--link);
-  color: #fff;
+  background: var(--fg);
+  border-color: var(--fg);
+  color: var(--bg);
+  font-weight: 600;
+}
+.button-primary:hover {
+  text-decoration: underline;
 }
 
 /*
   Ask AI の追従ボタン（SPEC.md §4）。position: fixed で画面の右下に留める（JavaScript は使わない）。
-  影は使わず、背景色の縁取りでカードや本文の上に重なったときの境目を見せる
+  影は使わず、背景色の縁取りでカードや本文の上に重なったときの境目を見せる。言葉は 1 行に収める
 */
 .ask-fab {
   position: fixed;
   right: 16px;
   bottom: 16px;
   z-index: 10;
-  background: var(--link);
-  color: #fff;
+  background: var(--fg);
+  color: var(--bg);
   border: 2px solid var(--bg);
-  border-radius: 999px;
+  border-radius: 4px;
   padding: 0.45em 1.1em;
   font-size: 0.95rem;
   font-weight: 600;
   line-height: 1.5;
+  white-space: nowrap;
 }
 .ask-fab:hover {
   text-decoration: underline;
