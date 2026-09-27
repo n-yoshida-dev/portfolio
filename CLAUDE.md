@@ -35,7 +35,7 @@ Astro の静的サイトで、コンテンツは `public-profile/` の Markdown 
 - **HTML は人間向けに短く、Markdown 版・llms.txt は AI 向けに詳しく。** 長い本文は `highlights`（要点 3 行）を書いて HTML では畳み、Markdown 版は全文のまま（`SPEC.md` §4）
 - **frontmatter の項目を増やすときは `src/content.config.ts` と `README.md`「コンテンツの更新」を同時に直す**
 - **習熟度・経歴の記述は根拠と区分（商用実務 / 個人開発 / 理解確認済み / 学習中）を混ぜない。** 「触ったことがある」を「できる」と書かない
-- **ライブラリを増やさない。** 素の CSS、JavaScript は Ask AI のコピーだけ。追加するなら `KNOWLEDGE.md` に理由を書く
+- **ライブラリを増やさない。** 素の CSS、JavaScript は Ask AI のコピーと目次のスクロール監視（`SPEC.md` §4）だけ。追加するなら `KNOWLEDGE.md` に理由を書く
 - `frontend/` `backend/` には分けない（サイトがリポジトリ直下。`PLAN.md`「技術的な方針」）。
   そのため apps-workflow の `check-edited.sh` は効かない。編集後は `npm run typecheck` を自分で回す
 

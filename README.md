@@ -33,7 +33,7 @@ portfolio/
 └── .github/workflows/ci.yml
 ```
 
-技術：[Astro](https://astro.build)（静的出力）+ TypeScript + 素の CSS。ライブラリは最小限にし、JavaScript は Ask AI のコピーボタンだけ。
+技術：[Astro](https://astro.build)（静的出力）+ TypeScript + 素の CSS。ライブラリは最小限にし、JavaScript は Ask AI のコピーボタンと目次のスクロール監視だけ。
 ホスティングは Vercel（設定ファイル不要。`vercel.json` は URL の末尾スラッシュを揃えるためだけにある）。
 
 ## ページ
