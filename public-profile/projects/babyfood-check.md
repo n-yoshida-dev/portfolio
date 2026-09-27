@@ -1,5 +1,6 @@
 ---
 title: babyfood-check
+tagline: 離乳食の食材チェックの進捗を管理する Web アプリ
 summary: 離乳食の食材チェックの進捗を管理し、未チェックの食材を試せる市販品を探せる Web アプリ。
 repo: https://github.com/n-yoshida-dev/babyfood-check
 visibility: private

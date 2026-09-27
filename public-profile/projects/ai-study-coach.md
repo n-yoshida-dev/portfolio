@@ -1,5 +1,6 @@
 ---
 title: AI Study Coach
+tagline: 学習記録を管理する React + TypeScript + Supabase のアプリ（AI 協働開発の練習題材）
 summary: 学習記録を管理する React + TypeScript + Supabase のアプリ。AI コーディングエージェントと協働して「要件 → 実装依頼 → レビュー → CI → デプロイ → 認証」を一通り公開まで持っていく訓練の題材。
 repo: https://github.com/n-yoshida-dev/ai-study-coach
 site: https://ai-study-coach-alpha.vercel.app/

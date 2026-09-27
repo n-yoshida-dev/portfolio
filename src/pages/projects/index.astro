@@ -1,7 +1,7 @@
 ---
 // Projects 一覧。主要プロジェクトと、その他・実験を分ける。
 import Base from '../../layouts/Base.astro';
-import ProjectItem from '../../components/ProjectItem.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
 import { getFeaturedProjects, getOtherProjects } from '../../lib/content';
 
 const featured = await getFeaturedProjects();
@@ -19,9 +19,9 @@ const others = await getOtherProjects();
   </p>
 
   <h2>主なプロジェクト</h2>
-  <ul class="entry-list">
+  <ul class="card-grid">
     {featured.map((p) => (
-      <ProjectItem project={p} />
+      <ProjectCard project={p} />
     ))}
   </ul>
 
@@ -29,9 +29,9 @@ const others = await getOtherProjects();
   <p class="meta">
     練習・実験・自分専用のツール。トップレベルには並べないが、存在は示しておくもの。
   </p>
-  <ul class="entry-list">
+  <ul class="card-grid">
     {others.map((p) => (
-      <ProjectItem project={p} />
+      <ProjectCard project={p} />
     ))}
   </ul>
 </Base>

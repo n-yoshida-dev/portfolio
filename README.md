@@ -86,6 +86,8 @@ OGP 画像を作り直すとき：`node scripts/generate-og.mjs`（文言は同�
 - **プロジェクトを足す**：`public-profile/projects/<slug>.md` を作る。frontmatter の項目は `src/content.config.ts` を参照。
   `featured: true` で主要プロジェクト、`false` で Other / Experiments。本文が空なら詳細ページは作られない（一覧だけに出る）
 - **仕組みを足す**：`public-profile/systems/<slug>.md` を作る。`order` で並び順
+- **一覧のカードの一文**（projects / systems 共通）：`tagline` に一文で書く（句点「。」なし・60 字以内。破ると `npm run build` が落ちる）。
+  `summary`（1〜2 文）は詳細ページの冒頭・Markdown 版・`/llms.txt` に出て、カードには出ない
 - **詳細ページの本文が長いとき**（projects / systems で本文 400 字超）：frontmatter に `highlights`（要点。3 行まで、本文に書いた事実だけ）を足す。
   詳細ページでは要点だけが見え、本文は「詳しく読む」で開く形に畳まれる。Markdown 版（`/projects/<slug>.md` など）は全文のまま。
   書き忘れると `npm run test` が落ちる

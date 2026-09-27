@@ -1,5 +1,6 @@
 ---
 title: Reading System
+tagline: iPhone の ChatGPT から登録し、GitHub を正本に、週次レビューを AI が回す読書の仕組み
 summary: iPhone の ChatGPT から登録し、GitHub を正本に、GitHub Pages で閲覧し、週次レビューを AI が回す読書の仕組み。アプリを作らず、既存サービスの組み合わせで成立させた。
 order: 3
 components: [reading-log, ChatGPT Projects, Claude Code, GitHub Pages]

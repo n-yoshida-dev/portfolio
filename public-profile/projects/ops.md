@@ -1,5 +1,6 @@
 ---
 title: ops
+tagline: 家計・タスク・メールなどの定型雑務を、Claude Code と半自動で回すモノレポ
 summary: 家計・タスク・メールなど、コーディング以外の定型雑務を Claude Code と半自動で回すモノレポ。業務ごとに手順書と作業メモを持ち、検算だけを機械に任せる。
 repo: https://github.com/n-yoshida-dev/ops
 visibility: private

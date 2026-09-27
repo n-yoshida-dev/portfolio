@@ -4,7 +4,8 @@
 // 文章は frontmatter の tagline / highlights と各コレクションの要約だけを出し、profile.md の本文は Markdown 版（/profile.md）に任せる。
 import Base from '../layouts/Base.astro';
 import HomeSection from '../components/HomeSection.astro';
-import ProjectItem from '../components/ProjectItem.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import SystemCard from '../components/SystemCard.astro';
 import {
   getPage,
   getFeaturedProjects,
@@ -49,22 +50,17 @@ const series = [...groupArticlesBySeries(articles).entries()];
   </HomeSection>
 
   <HomeSection id="projects" note={`${featured.length} / ${projectCount} 件`}>
-    <ul class="entry-list">
+    <ul class="card-grid">
       {featured.map((p) => (
-        <ProjectItem project={p} compact />
+        <ProjectCard project={p} compact />
       ))}
     </ul>
   </HomeSection>
 
   <HomeSection id="systems" note={`${systems.length} 件`}>
-    <ul class="entry-list">
+    <ul class="card-grid">
       {systems.map((s) => (
-        <li>
-          <h3>
-            <a href={`/systems/${s.id}`}>{s.data.title}</a>
-          </h3>
-          <p>{s.data.summary}</p>
-        </li>
+        <SystemCard system={s} compact />
       ))}
     </ul>
   </HomeSection>

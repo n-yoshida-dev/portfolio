@@ -1,0 +1,27 @@
+---
+// Systems 1 件のカード（SPEC.md §4）。題名と一文（tagline）だけを置き、構成要素のタグは一覧ページでだけ出す。
+// 親は <ul class="card-grid">。トップの節と /systems で同じ見た目にするための部品。
+import type { System } from '../lib/content';
+
+interface Props {
+  system: System;
+  /** true なら構成要素のタグを省略する（トップの短い一覧向け） */
+  compact?: boolean;
+}
+const { system, compact = false } = Astro.props;
+const d = system.data;
+---
+
+<li class="card">
+  <h3>
+    <a href={`/systems/${system.id}`}>{d.title}</a>
+  </h3>
+  <p>{d.tagline}</p>
+  {!compact && d.components.length > 0 && (
+    <ul class="tag-list" aria-label="構成要素">
+      {d.components.map((c) => (
+        <li>{c}</li>
+      ))}
+    </ul>
+  )}
+</li>

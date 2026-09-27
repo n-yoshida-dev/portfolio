@@ -1,5 +1,6 @@
 ---
 title: home-site-finder
+tagline: 戸建てを建てる場所を、町丁目の単位で比較する判断資料アプリ
 summary: 戸建てを建てる場所を、駅ではなく町丁目の単位で比較するための判断資料アプリ。公開データを集計し、NG 条件で足切りしたうえで重み付きスコアを地図に塗り分ける。
 repo: https://github.com/n-yoshida-dev/home-site-finder
 visibility: private

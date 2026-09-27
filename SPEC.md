@@ -9,14 +9,16 @@
 
 | コレクション | 場所 | 主な項目 | 用途 |
 |---|---|---|---|
-| `projects` | `projects/*.md` | title / summary / repo / site / visibility（public・private・archived）/ status（active・paused・done・archived）/ period / stack / featured / order / systems / highlights | Projects 一覧・詳細。`featured: false` は Other / Experiments。本文が空なら詳細ページを作らない |
-| `systems` | `systems/*.md` | title / summary / order / components / highlights | Systems 一覧・詳細 |
+| `projects` | `projects/*.md` | title / tagline / summary / repo / site / visibility（public・private・archived）/ status（active・paused・done・archived）/ period / stack / featured / order / systems / highlights | Projects 一覧・詳細。`featured: false` は Other / Experiments。本文が空なら詳細ページを作らない |
+| `systems` | `systems/*.md` | title / tagline / summary / order / components / highlights | Systems 一覧・詳細 |
 | `pages` | `profile.md` `career.md` `skills.md` | title / description / updated / links・tagline・highlights（profile のみ。highlights は 3 行まで） | Home / Journey / Skills |
 | `articles` | `articles.json` | id / title / url / platform / publishedAt / tags / series / summary | Articles。連載（series）ごとにまとめ、連載内は古い順 |
 
 - `updated` は「最終確認日」。YAML の日付は Date として読まれるので、型で `YYYY-MM-DD` の文字列に揃える
 - `projects.systems` は `systems` の slug（ファイル名）を指す。壊れていないことをテストで確認する
 - Private の repo は `visibility: private` で載せ、存在と目的だけを書く
+- `tagline`（projects / systems）は一覧のカードに出す一文。句点なし・60 字以内（スキーマで確認）。`summary`（1〜2 文）は詳細ページの冒頭・Markdown 版・llms.txt に出し、カードには出さない。
+  カードのために summary を削ると AI 向けの情報が減るので、別の項目に分けた（2026-09-27）
 - `highlights`（projects / systems）は詳細ページの要点。3 行まで。本文に書いた事実だけから作る。本文が 400 字を超えるエントリは必須（テストで確認）
 
 ## 2. ページとルート

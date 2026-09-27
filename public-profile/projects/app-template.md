@@ -1,5 +1,6 @@
 ---
 title: app-template
+tagline: 自作アプリを新しく始めるときのテンプレートリポジトリ
 summary: 自作アプリを新しく始めるときのテンプレートリポジトリ。開発ドキュメントの雛形、CI、Claude Code の設定を含む。
 repo: https://github.com/n-yoshida-dev/app-template
 visibility: public

@@ -1,5 +1,6 @@
 ---
 title: Reading Log
+tagline: GitHub を正本に、ChatGPT / Claude / Claude Code を横断して使う読書管理システム
 summary: GitHub を正本に、ChatGPT / Claude / Claude Code を横断して使う読書管理システム。iPhone から登録し、GitHub Pages で閲覧し、週次レビューを AI が回す。
 repo: https://github.com/n-yoshida-dev/reading-log
 site: https://n-yoshida-dev.github.io/reading-log/

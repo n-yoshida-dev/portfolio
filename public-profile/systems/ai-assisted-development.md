@@ -1,5 +1,6 @@
 ---
 title: AI-assisted Development Workflow
+tagline: 文書・CI・レビューで複数の自作アプリを並行して進める開発の仕組み（判断は人間、検算は機械）
 summary: Claude Code / ChatGPT / GitHub を使い、PLAN・SPEC・TODO・HANDOFF・KNOWLEDGE・判断台帳・CI・レビューで複数の自作アプリを並行して進める開発の仕組み。判断は人間、検算は機械。
 order: 4
 components: [claude-plugins, app-template, orgflow, ai-study-coach, ops（非公開）, Claude Code, ChatGPT, GitHub Actions]

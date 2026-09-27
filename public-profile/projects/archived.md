@@ -1,5 +1,6 @@
 ---
 title: 過去の練習リポジトリ（Archive）
+tagline: 2026 年前半の練習用リポジトリ（現在は更新していない）
 summary: 2026 年前半の練習用リポジトリ。現在は更新していない。
 visibility: archived
 status: archived

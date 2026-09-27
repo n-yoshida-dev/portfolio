@@ -1,5 +1,6 @@
 ---
 title: skill-matrix
+tagline: 学習ログを AI に読ませて理解度を判定し、マトリクスとして可視化する個人用システム
 summary: 学習ログを AI に読ませて「分野 × 詳細項目」の理解度を判定し、マトリクスとして可視化する個人用システム。自己申告ではなく根拠で理解度を決める。
 repo: https://github.com/n-yoshida-dev/skill-matrix
 visibility: private
