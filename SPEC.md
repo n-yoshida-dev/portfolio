@@ -23,7 +23,7 @@
 
 | ルート | 出力 | 元データ |
 |---|---|---|
-| `/` | Home。名前・tagline・highlights・リンク・入口 3 つ・featured 3 件（1 行ずつ）・systems の題名だけ。**profile.md の本文は出さない**（Markdown 版と llms-full.txt が持つ） | profile.md の frontmatter + featured 3 件 + systems 全件 |
+| `/` | Home。1 枚のページに 7 節（§4）。名前・tagline・highlights・リンク、主なプロジェクト（カード）、systems、skills と journey の短い版、articles、Ask AI。**profile.md の本文は出さない**（Markdown 版と llms-full.txt が持つ） | profile.md の frontmatter + 各コレクション |
 | `/projects`, `/projects/<slug>` | 一覧、詳細。詳細は題名・summary・リンク・技術・`highlights` を出し、**本文は `<details>`（「詳しく読む」）で畳む**。`highlights` が無いエントリは本文をそのまま出す。関連する仕組みは題名だけ | projects |
 | `/systems`, `/systems/<slug>` | 一覧、詳細。詳細の出し方は projects と同じ。関連するプロジェクトは題名だけ | systems |
 | `/skills`, `/journey`, `/articles`, `/ask` | 単一ページ | skills.md / career.md / articles.json / `src/lib/ask.ts` |
@@ -45,7 +45,11 @@
 ## 4. デザイン
 
 - 素の CSS 1 ファイル（`src/styles/global.css`）。色は文字・薄い文字・線・リンク・背景の 5 つ。ダークモードは OS 設定に追従
-- カード UI にせず、区切り線で並べる。グラデーション・影・アニメーションを使わない
+- **構成は「1 枚のページ + 左の固定目次」**（2026-09-27。`logs/decisions.md`）。トップに 7 節（何の人か / Projects / Systems / Skills / Journey / Articles / Ask AI）を縦に並べ、
+  左の目次はその節へ移動する。スクロールに合わせて今いる節の項目を強調する（この JavaScript だけ例外として持つ）。375px 幅では目次を上部に畳む。
+  トップの各節は**短い版**（主なプロジェクト 4 件、区分ごとの項目名だけのスキル、年表）で、詳しい版は各ページに残して「すべて →」で行く
+- 一覧は**薄枠のカード**（地色 `--bg-subtle`、線 `--line`。PC 2 列、375px で 1 列）。年・区分・題名・一文・リンクを定位置に置く。
+  経歴は年を左端に置いた年表。グラデーション・影・アニメーションは使わない。色は足さず、リンク色だけを効かせる
 - **HTML は人間向けに短く、Markdown 版・llms.txt は AI 向けに詳しく。** 同じ文章を両方に同じ量で出さない。
   トップは名前 + 一言 + 要点 3 行 + 入口で 1 画面に収める。一覧の 1 件は題名 + 1〜2 文 + リンク（2026-09-26。参考にした個人サイト 23 件の共通パターン）。
   詳細ページは開いた直後に見える文字数を 800 字以下にする（長い本文は畳む）。
