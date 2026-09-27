@@ -35,6 +35,8 @@
 - 本文の書き分けの原則は `SPEC.md` §4（HTML は短く、Markdown 版は詳しく。Skills / Journey だけは本文共有の例外）
 - 参考にした個人サイト 23 件の画像と共通パターン：https://claude.ai/artifact/1zG7KYsQUpx4GjegU5rMZQ（本人限定のリンク）。
   感想で挙がった 3 件（taniarascia.com/projects・koki.me・okojomoeko.github.io）をデザインの起点にする予定。好きかどうかは未確認（`TODO.md` 確認待ちの参考サイト 3 件の行）
+- デザインの構成案 A / B / C の比較ページ（PC・スマホの画像を案ごとに並べたもの。本人限定のリンク）：https://claude.ai/artifact/VfsDRpyV5NxygZHnp8Wdvj
+  文字情報は `docs/design-candidates/README.md`
 - main：クリーン。作業中のブランチは無い。Beads の人間待ちは確認待ちと同じ 2 件（ops-urz.9 / ops-urz.10）
 
 ## 次セッションで最初にやること

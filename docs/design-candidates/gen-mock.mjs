@@ -3,6 +3,10 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 
 const OUT = process.argv[2];
+if (!OUT) {
+  console.error('使い方: node gen-mock.mjs <出力先ディレクトリ>');
+  process.exit(1);
+}
 
 // ---------- 共通データ（public-profile/ から転記） ----------
 const NAME = 'Naoki Yoshida';
@@ -368,6 +372,7 @@ const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 const featured = PROJECTS.filter((p) => p.featured);
 const others = PROJECTS.filter((p) => !p.featured);
 
+// 1 ページ分の HTML を組み立てる（<head> と CSS を共通化）
 function page(title, css, body) {
   return `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)} — ${NAME}</title><style>${css}</style></head><body>${body}</body></html>`;
 }
@@ -403,9 +408,11 @@ h3{font-size:1rem;margin:1.4rem 0 .5rem}h3 .ev{font-weight:400;color:var(--muted
 main{padding:3rem 3rem 4rem}}
 @media(max-width:40rem){.about div,.kv li,.kv3 li{grid-template-columns:1fr}.about dt{margin-top:.3rem}}
 `;
+// 案 A のサイドバー（名前・肩書・目次・SNS）。cur は現在ページ名
 function sideA(cur) {
   return `<aside class="side"><a class="name" href="index.html">${NAME}</a><div class="role">Software Engineer · Java / Spring Boot</div><nav>${NAV.map((n) => `<a href="${n.href}" class="${n.label === cur ? 'cur' : ''}">${n.label}</a>`).join('')}</nav><div class="social">${LINKS.map((l) => `<a href="${l.url}">${l.label}</a>`).join('')}<a href="#">llms.txt</a></div></aside>`;
 }
+// 案 A のプロジェクト一覧（年を左端に置いたタイムライン）
 function tlProjectsA(list, withTags) {
   return `<ul class="tl">${list.map((p) => `<li><div class="y">${p.year}</div><div class="t"><a href="#">${p.title}</a> <span class="chip">${p.vis}</span> <span class="chip">${p.st}</span></div><p class="d">${esc(p.one)}</p><div class="m"><a href="#">GitHub</a>${p.num ? `<span>${p.num}</span>` : ''}</div>${withTags && p.stack.length ? `<ul class="tags">${p.stack.map((s) => `<li>${s}</li>`).join('')}</ul>` : ''}</li>`).join('')}</ul>`;
 }
@@ -471,9 +478,11 @@ ul{list-style:none;padding:0;margin:0}
 p.note{color:var(--muted);margin:.4rem 0 0;font-size:.9rem}
 @media(max-width:40rem){body{font-size:14px}.rows li{grid-template-columns:1fr}.rows .r{text-align:left;white-space:normal}.plain .y{display:block;min-width:0}}
 `;
+// 案 B の上ナビ（等幅・現在ページに下線）
 function headB(cur) {
   return `<header><a href="index.html" class="${cur === '' ? 'cur' : ''}">Home</a>${NAV.map((n) => `<a href="${n.href}" class="${n.label === cur ? 'cur' : ''}">${n.label}</a>`).join('')}</header>`;
 }
+// 案 B のプロジェクト一覧（題名 / 一文 / 年・区分 の 3 カラム行）
 function rowsB(list) {
   return `<ul class="rows">${list.map((p) => `<li><span class="k"><a href="#">${p.title}</a></span><span class="v">${esc(p.one)}</span><span class="r">${p.year}<span class="b">${p.vis}</span></span></li>`).join('')}</ul>`;
 }
@@ -550,9 +559,11 @@ h2{font-size:1.2rem;margin:2.5rem 0 1rem;display:flex;align-items:baseline;gap:.
 p.note{color:var(--muted);font-size:.93rem;margin:.6rem 0 0;max-width:44rem}
 @media(max-width:40rem){.stats,.grid{grid-template-columns:1fr}.kv li,.tl li{grid-template-columns:1fr;gap:.1rem}h1{font-size:1.7rem}}
 `;
+// 案 C のヘッダー（名前 + 上ナビ、現在ページをアクセント色に）
 function headC(cur) {
   return `<header><div class="in"><a class="brand" href="index.html">${NAME}</a><nav>${NAV.map((n) => `<a href="${n.href}" class="${n.label === cur ? 'cur' : ''}">${n.label}</a>`).join('')}</nav></div></header>`;
 }
+// 案 C のプロジェクト一覧（年・数字・題名・一文・リンクを定位置に置いた薄枠カード 2 列）
 function cardsC(list, withTags) {
   return `<div class="grid">${list.map((p) => `<div class="card"><div class="top"><span>${p.year}</span><span class="num">${p.num}</span></div><div class="t"><a href="#">${p.title}</a> <span class="chip">${p.vis}</span> <span class="chip">${p.st}</span></div><p class="d">${esc(p.one)}</p><div class="links"><a href="#">GitHub</a><a href="#">詳細</a></div>${withTags && p.stack.length ? `<ul class="tags">${p.stack.map((s) => `<li>${s}</li>`).join('')}</ul>` : ''}</div>`).join('')}</div>`;
 }
