@@ -117,3 +117,28 @@ Website 欄は API では `blog` という名前。
 - 本番の反映は、Vercel が GitHub に残すデプロイ記録（environment=Production）と main の先端を比べて判定する。REST だと 3 回・約 4.5 秒かかるので、GraphQL 1 回（約 1.3 秒）にまとめた
 - 生成は約 7 秒。大半はテンプレート共通の `gh` 4 回（各 1.5 秒前後）と `bd list`（2〜9 秒。初回が遅い）
 - 他の選択肢：Prettier で整形してから使う（テンプレートとの差分が全行に出るので採らなかった）
+
+### 2026-09-27：目次の「今いる節」はスクロール位置の計算で決める（IntersectionObserver にしない）
+
+トップを 1 枚のページ + 左の固定目次にした（`logs/decisions.md` 2026-09-27）。目次の固定は CSS の `position: sticky` だけで済むが、
+「今いる節」の強調はスクロール位置を見ないと決まらないので、ここだけ JavaScript を持つ（サイトで 2 つ目。もう 1 つは Ask AI のコピー）。
+実装は `src/pages/index.astro` の `<script>` で約 20 行。画面の上から 1/3 の線を最後に通過した節を今いる節とし、目次リンクの `aria-current="location"` を付け替える。
+IntersectionObserver で節の出入りを見る案は、最後の節（Ask AI はボタンだけで短い）がページ末尾で線に届かず一度も「今いる節」にならないので、
+末尾判定を別に足すことになる。スクロール位置の計算なら「末尾まで来たら最後の節」を 1 行で書けるので、こちらにした。
+`scroll` イベントは `requestAnimationFrame` で 1 フレーム 1 回にまとめる。
+目次と節の対応は `src/site.ts` の `SECTIONS` 1 か所に置き、目次（`Base.astro`）・節の枠（`HomeSection.astro`）・テスト（`tests/home-sections.test.mjs`）が同じ配列を読む。
+`HomeSection` は `SECTIONS` に無い id を渡すとビルドを失敗させる（目次に無い節を作らせない）。
+
+### 2026-09-27：トップの Skills / Journey の短い版は本文（Markdown）を解析して作る
+
+Skills / Journey は HTML と Markdown 版が同じ本文から作られる（SPEC §4 の例外）。トップの短い版（区分ごとの項目名、時期 + 役割）を frontmatter に別に持つと
+表の中身を 2 か所で管理することになるので、`src/lib/outline.ts` が本文を解析して取り出す。`##` を区分、`###` か箇条書き先頭の `**太字**` を項目名、
+`## 経歴` の表の 1〜2 列目を年表にする。汎用の Markdown パーサではなく `skills.md` / `career.md` の書き方に依存した最小限の解析なので、
+書き方を変えると項目が消える。`tests/home-sections.test.mjs` が実データで空にならないことを検査する。
+項目名の区切りは「、」にした（項目名に「Java / Spring Boot」「CI / CD」のように「 / 」が含まれるため）。
+
+### 2026-09-27：`build.format: 'file'` だと `Astro.url.pathname` が `.html` 付きになる
+
+ビルド時の `Astro.url.pathname` は `/index.html` `/projects.html` のように拡張子付きで渡る（公開 URL は拡張子なし）。
+Phase 1 からこれに気づかず、canonical と `og:url` が `.html` 付きで本番に出ていて、ナビの「今のページ」の強調も一度も効いていなかった。
+`Base.astro` で `.html` と末尾の `/index` を落として公開 URL の形にそろえてから、canonical と目次の強調に使う。

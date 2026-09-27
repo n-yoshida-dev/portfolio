@@ -41,6 +41,6 @@ skill-matrix → `public-profile/skills.md` の自動生成、GitHub からの�
   `/llms.txt` や各ページの `.md` 版を「1 ファイル 1 エンドポイント」で作れるため。React は必要になったら部分的に足せる
 - **サイトをリポジトリ直下に置く**。`frontend/` `backend/` に分けない。バックエンドが無く、Vercel の設定を減らせるため。
   代わりに apps-workflow の編集直後チェックは効かないので、`npm run typecheck` を自分で回す
-- **ライブラリは最小限**。CSS はフレームワークなし、JavaScript は Ask AI のコピーボタンだけ
+- **ライブラリは最小限**。CSS はフレームワークなし、JavaScript は Ask AI のコピーボタンと目次のスクロール監視だけ
 - **ホスティングは Vercel**。GitHub Pages ではない（PR ごとのプレビューと将来の独自ドメインのため）
 - **公開情報の線引きを機械化する**。`scripts/check-public-profile.mjs` が禁止語を検査し、CI で必ず走る（ops の原則「判断は人間、検算は機械」）

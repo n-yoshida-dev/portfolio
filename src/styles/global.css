@@ -153,18 +153,44 @@ hr {
   margin: 2em 0;
 }
 
-/* レイアウト */
-.site-header,
-.site-footer {
-  border-color: var(--line);
-  border-style: solid;
-  border-width: 0;
+/*
+  レイアウト：左の固定目次 + 本文（SPEC.md §4）。
+  狭い画面では目次を上部の横並びに畳み、64rem 以上で左に固定する（position: sticky。JavaScript は使わない）。
+  本文の幅は目次の 16rem を除いて最大 52rem（--max-width）
+*/
+.side {
+  border-bottom: 1px solid var(--line);
+  padding: 1rem 16px;
 }
-.site-header {
-  border-bottom-width: 1px;
+.side .brand {
+  display: block;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--fg);
+}
+.side nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 1rem;
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+}
+.side nav a {
+  color: var(--fg-muted);
+}
+.side nav a[aria-current] {
+  color: var(--fg);
+  font-weight: 600;
+}
+.side-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 1rem;
+  margin-top: 0.6rem;
+  font-size: 0.875rem;
 }
 .site-footer {
-  border-top-width: 1px;
+  border-top: 1px solid var(--line);
   color: var(--fg-muted);
   font-size: 0.875rem;
 }
@@ -172,32 +198,6 @@ hr {
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 0 16px;
-}
-.site-header .container {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem 1.25rem;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-}
-.site-header .brand {
-  font-weight: 600;
-  color: var(--fg);
-  margin-right: auto;
-}
-.site-header nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem 1rem;
-  font-size: 0.95rem;
-}
-.site-header nav a {
-  color: var(--fg-muted);
-}
-.site-header nav a[aria-current='page'] {
-  color: var(--fg);
-  font-weight: 600;
 }
 .site-footer .container {
   display: flex;
@@ -209,6 +209,96 @@ hr {
 main.container {
   padding-top: 2rem;
   padding-bottom: 3rem;
+}
+@media (min-width: 64rem) {
+  body {
+    display: grid;
+    grid-template-columns: 16rem minmax(0, 1fr);
+    min-height: 100vh;
+  }
+  .side {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 0;
+    border-right: 1px solid var(--line);
+    padding: 2.5rem 1.5rem;
+  }
+  .side .brand {
+    font-size: 1.25rem;
+  }
+  .side nav {
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-top: 1.5rem;
+    font-size: 1rem;
+  }
+  .side-links {
+    margin-top: auto;
+    padding-top: 1.5rem;
+  }
+  .page {
+    min-width: 0;
+  }
+  .page .container {
+    margin-left: 0;
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+  main.container {
+    padding-top: 3rem;
+  }
+}
+
+/* トップの節。目次から飛んだとき見出しが上端に張り付かないよう、少しだけ余白を取る */
+.home-section {
+  scroll-margin-top: 1rem;
+}
+.home-section:first-child > h2 {
+  /* About は h1（名前）が見出しの役目をするので、節名は画面から隠して目次の対応だけ残す */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+.home-section > h2 {
+  margin-top: 2.5rem;
+}
+.section-note {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--fg-muted);
+  margin-left: 0.6rem;
+}
+.more-link {
+  margin: 0.75rem 0 0;
+  font-size: 0.95rem;
+}
+
+/* 「ラベル + 値」の並び（トップの Skills / Journey / Articles の短い版）。狭い画面では縦に積む */
+.kv-list {
+  margin: 0;
+  display: grid;
+  /* ラベル列は中身に合わせて広がる（上限 16rem）。dl 全体を 1 つの grid にして、行をまたいで列をそろえる */
+  grid-template-columns: fit-content(16rem) minmax(0, 1fr);
+  gap: 0.5rem 1rem;
+}
+.kv-list > div {
+  display: contents;
+}
+.kv-list dt {
+  font-weight: 600;
+}
+.kv-list dd {
+  margin: 0;
+  color: var(--fg-muted);
 }
 
 /* ページ共通の部品 */
@@ -310,25 +400,6 @@ main.container {
   margin-bottom: 1rem;
 }
 
-/* トップの「3 つの入口」 */
-.intro-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-  gap: 1rem 2rem;
-  margin: 1.5rem 0 2rem;
-}
-.intro-grid h2 {
-  border: 0;
-  font-size: 1.05rem;
-  margin: 0 0 0.35rem;
-  padding: 0;
-}
-.intro-grid p {
-  margin: 0;
-  font-size: 0.95rem;
-  color: var(--fg-muted);
-}
-
 /* Ask AI のプロンプト枠 */
 .prompt-box {
   position: relative;
@@ -393,6 +464,13 @@ main.container {
 @media (max-width: 40rem) {
   body {
     font-size: 15.5px;
+  }
+  .kv-list,
+  .kv-list > div {
+    display: block;
+  }
+  .kv-list > div + div {
+    margin-top: 0.6rem;
   }
   h1 {
     font-size: 1.5rem;

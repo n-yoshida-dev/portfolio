@@ -1,0 +1,29 @@
+---
+// トップの 1 節。目次（SECTIONS）と同じ id・見出しを使い、末尾に詳しい版への「すべて →」を置く。
+// 見出しと目次の名前を別々に書かないための部品。id が SECTIONS に無ければビルドを失敗させる（目次に無い節を作らせない）。
+import { SECTIONS } from '../site';
+
+interface Props {
+  id: string;
+  /** 見出しの右に添える件数など（例：「11 件」）。無ければ出さない */
+  note?: string;
+}
+const { id, note } = Astro.props;
+const section = SECTIONS.find((s) => s.id === id);
+if (!section) {
+  throw new Error(`トップの節 "${id}" が src/site.ts の SECTIONS にありません`);
+}
+---
+
+<section id={id} class="home-section" aria-labelledby={`${id}-heading`}>
+  <h2 id={`${id}-heading`}>
+    {section.label}
+    {note && <span class="section-note">{note}</span>}
+  </h2>
+  <slot />
+  {section.more && (
+    <p class="more-link">
+      <a href={section.more.href}>{section.more.label} →</a>
+    </p>
+  )}
+</section>

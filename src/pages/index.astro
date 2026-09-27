@@ -1,70 +1,147 @@
 ---
-// トップ。「何の人か」「何を作っているか」「どう仕組み化しているか」を 1 画面で伝える。
-// 文章は frontmatter の tagline / highlights だけを出し、profile.md の本文は Markdown 版（/profile.md）に任せる。
+// トップ。1 枚のページに 7 節（About / Projects / Systems / Skills / Journey / Articles / Ask AI）を縦に並べ、
+// 左の目次がその節へ移動する（SPEC.md §4）。各節は短い版で、詳しい版は各ページに残して「すべて →」で行く。
+// 文章は frontmatter の tagline / highlights と各コレクションの要約だけを出し、profile.md の本文は Markdown 版（/profile.md）に任せる。
 import Base from '../layouts/Base.astro';
+import HomeSection from '../components/HomeSection.astro';
 import ProjectItem from '../components/ProjectItem.astro';
-import { getPage, getFeaturedProjects, getSystems } from '../lib/content';
+import {
+  getPage,
+  getFeaturedProjects,
+  getOtherProjects,
+  getSystems,
+  getArticles,
+  groupArticlesBySeries,
+} from '../lib/content';
+import { skillGroups, careerTimeline } from '../lib/outline';
 import { SITE } from '../site';
 
 const profile = await getPage('profile');
-const featured = (await getFeaturedProjects()).slice(0, 3);
+// 主なプロジェクトは 4 件まで（SPEC.md §4）。総数は切る前の件数で数える
+const allFeatured = await getFeaturedProjects();
+const featured = allFeatured.slice(0, 4);
+const projectCount = allFeatured.length + (await getOtherProjects()).length;
 const systems = await getSystems();
+const skills = skillGroups((await getPage('skills')).body ?? '');
+const career = careerTimeline((await getPage('career')).body ?? '');
+const articles = await getArticles();
+const series = [...groupArticlesBySeries(articles).entries()];
 ---
 
 <Base description={profile.data.description} markdownHref="/profile.md">
-  <h1>{SITE.name}</h1>
-  {profile.data.tagline && <p class="lead">{profile.data.tagline}</p>}
-  {profile.data.highlights && (
-    <ul class="highlights">
-      {profile.data.highlights.map((h) => (
-        <li>{h}</li>
+  <HomeSection id="about">
+    <h1>{SITE.name}</h1>
+    {profile.data.tagline && <p class="lead">{profile.data.tagline}</p>}
+    {profile.data.highlights && (
+      <ul class="highlights">
+        {profile.data.highlights.map((h) => (
+          <li>{h}</li>
+        ))}
+      </ul>
+    )}
+    {profile.data.links && (
+      <p class="inline-links">
+        {profile.data.links.map((l) => (
+          <a href={l.url}>{l.label}</a>
+        ))}
+      </p>
+    )}
+  </HomeSection>
+
+  <HomeSection id="projects" note={`${featured.length} / ${projectCount} 件`}>
+    <ul class="entry-list">
+      {featured.map((p) => (
+        <ProjectItem project={p} compact />
       ))}
     </ul>
-  )}
-  {profile.data.links && (
-    <p class="inline-links">
-      {profile.data.links.map((l) => (
-        <a href={l.url}>{l.label}</a>
+  </HomeSection>
+
+  <HomeSection id="systems" note={`${systems.length} 件`}>
+    <ul class="entry-list">
+      {systems.map((s) => (
+        <li>
+          <h3>
+            <a href={`/systems/${s.id}`}>{s.data.title}</a>
+          </h3>
+          <p>{s.data.summary}</p>
+        </li>
       ))}
+    </ul>
+  </HomeSection>
+
+  <HomeSection id="skills">
+    <dl class="kv-list">
+      {skills.map((g) => (
+        <div>
+          <dt>{g.name}</dt>
+          <dd>{g.items.join('、')}</dd>
+        </div>
+      ))}
+    </dl>
+  </HomeSection>
+
+  <HomeSection id="journey">
+    <dl class="kv-list">
+      {career.map((row) => (
+        <div>
+          <dt>{row.period}</dt>
+          <dd>{row.title}</dd>
+        </div>
+      ))}
+    </dl>
+  </HomeSection>
+
+  <HomeSection id="articles" note={`${articles.length} 本`}>
+    <dl class="kv-list">
+      {series.map(([name, list]) => (
+        <div>
+          <dt>{name}</dt>
+          <dd>{list.length} 本</dd>
+        </div>
+      ))}
+    </dl>
+  </HomeSection>
+
+  <HomeSection id="ask">
+    <p>あなたの AI に、このサイトと公開リポジトリを読ませて私について質問できます。</p>
+    <p class="button-row">
+      <a class="button button-primary" href="/ask">
+        プロンプトを開く
+      </a>
     </p>
-  )}
+  </HomeSection>
 
-  <div class="intro-grid">
-    <div>
-      <h2>
-        <a href="/projects">Projects</a>
-      </h2>
-      <p>何を作ったか。業務アプリ、自分のためのツール、開発の道具</p>
-    </div>
-    <div>
-      <h2>
-        <a href="/systems">Systems</a>
-      </h2>
-      <p>それらをどう組み合わせて、開発・学習・生活を仕組み化しているか</p>
-    </div>
-    <div>
-      <h2>
-        <a href="/ask">Ask AI</a>
-      </h2>
-      <p>あなたの AI に私のことを調べさせるためのプロンプト</p>
-    </div>
-  </div>
-
-  <h2>主なプロジェクト</h2>
-  <ul class="entry-list">
-    {featured.map((p) => (
-      <ProjectItem project={p} compact />
-    ))}
-  </ul>
-  <p>
-    <a href="/projects">すべてのプロジェクト →</a>
-  </p>
-
-  <h2>仕組み</h2>
-  <p class="inline-links">
-    {systems.map((s) => (
-      <a href={`/systems/${s.id}`}>{s.data.title}</a>
-    ))}
-  </p>
   <p class="meta">最終確認日: {profile.data.updated}</p>
+
+  <script>
+    // 目次の「今いる節」。画面の上から 1/3 の線を最後に通過した節を今いる節とし、目次の aria-current を付け替える。
+    // ページ末尾までスクロールしたときは、短くて線に届かない最後の節（Ask AI）を今いる節にする。理由は KNOWLEDGE.md
+    const links = [...document.querySelectorAll<HTMLAnchorElement>('.side nav a[href^="#"]')];
+    const sections = links.map((a) => document.getElementById(a.hash.slice(1)));
+    let scheduled = false;
+    function update() {
+      scheduled = false;
+      const line = window.innerHeight / 3;
+      const atBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1;
+      let current = 0;
+      sections.forEach((s, i) => {
+        if (s && s.getBoundingClientRect().top <= line) current = i;
+      });
+      if (atBottom) current = sections.length - 1;
+      links.forEach((a, i) => {
+        if (i === current) a.setAttribute('aria-current', 'location');
+        else a.removeAttribute('aria-current');
+      });
+    }
+    const schedule = () => {
+      if (!scheduled) {
+        scheduled = true;
+        requestAnimationFrame(update);
+      }
+    };
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    update();
+  </script>
 </Base>

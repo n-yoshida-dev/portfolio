@@ -1,7 +1,8 @@
 ---
-// すべてのページの共通枠。<head> のメタ情報（SEO / OGP）、ヘッダー、フッターを持つ。
+// すべてのページの共通枠。<head> のメタ情報（SEO / OGP）、左の固定目次、フッターを持つ。
+// 目次はトップの 7 節（SECTIONS）へのリンク。トップではページ内の `#id`、他のページでは `/#id` に飛ぶ（SPEC.md §4）。
 import '../styles/global.css';
-import { SITE, NAV } from '../site';
+import { SITE, SECTIONS, sectionIdForPath } from '../site';
 
 interface Props {
   /** ページ固有のタイトル。トップは省略してサイト名だけにする */
@@ -13,9 +14,20 @@ interface Props {
 
 const { title, description = SITE.description, markdownHref } = Astro.props;
 const fullTitle = title ? `${title} — ${SITE.name}` : SITE.title;
-const canonical = new URL(Astro.url.pathname, Astro.site);
+/**
+ * 公開 URL の形にそろえたパス。`build.format: 'file'` のため、ビルド時の Astro.url.pathname は
+ * `/projects.html` `/index.html` のように拡張子付きになる（公開 URL は拡張子なし。astro.config.mjs）
+ */
+const currentPath =
+  Astro.url.pathname
+    .replace(/\.html$/, '')
+    .replace(/\/index$/, '')
+    .replace(/\/$/, '') || '/';
+const canonical = new URL(currentPath, Astro.site);
 const ogImage = new URL('/og.png', Astro.site);
-const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isHome = currentPath === '/';
+/** 詳しい版のページを見ているとき、その節の目次項目を強調する（トップでは JavaScript が今いる節に付け替える） */
+const currentSection = isHome ? undefined : sectionIdForPath(currentPath);
 ---
 
 <!doctype html>
@@ -42,41 +54,39 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     <meta name="twitter:image" content={ogImage} />
   </head>
   <body>
-    <header class="site-header">
-      <div class="container">
-        <a class="brand" href="/">
-          {SITE.name}
-        </a>
-        <nav aria-label="主要ページ">
-          {NAV.map((item) => (
-            <a
-              href={item.href}
-              aria-current={
-                currentPath === item.href || currentPath.startsWith(item.href + '/')
-                  ? 'page'
-                  : undefined
-              }
-            >
-              {item.label}
-            </a>
-          ))}
-        </nav>
-      </div>
-    </header>
-    <main class="container">
-      <slot />
-    </main>
-    <footer class="site-footer">
-      <div class="container">
-        <span>
-          © {new Date().getFullYear()} {SITE.name}
-        </span>
+    <header class="side">
+      <a class="brand" href="/">
+        {SITE.name}
+      </a>
+      <nav aria-label="目次">
+        {SECTIONS.map((s) => (
+          <a
+            href={isHome ? `#${s.id}` : `/#${s.id}`}
+            aria-current={currentSection === s.id ? 'true' : undefined}
+          >
+            {s.label}
+          </a>
+        ))}
+      </nav>
+      <div class="side-links">
         <a href={SITE.githubUrl}>GitHub</a>
         <a href={SITE.qiitaUrl}>Qiita</a>
         <a href="/llms.txt">llms.txt</a>
-        {markdownHref && <a href={markdownHref}>このページの Markdown</a>}
-        <a href={SITE.repoUrl}>このサイトのソース</a>
       </div>
-    </footer>
+    </header>
+    <div class="page">
+      <main class="container">
+        <slot />
+      </main>
+      <footer class="site-footer">
+        <div class="container">
+          <span>
+            © {new Date().getFullYear()} {SITE.name}
+          </span>
+          {markdownHref && <a href={markdownHref}>このページの Markdown</a>}
+          <a href={SITE.repoUrl}>このサイトのソース</a>
+        </div>
+      </footer>
+    </div>
   </body>
 </html>
