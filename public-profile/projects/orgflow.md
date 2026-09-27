@@ -31,7 +31,7 @@ highlights:
 | できていること | まだのもの |
 |---|---|
 | ログイン（DB の users と BCrypt で照合）→ JWT 発行 | 申請の submit / 承認 / 差し戻しの状態遷移 |
-| JWT の検証（署名・issuer・期限）と保護 API | アプリ層での権限チェック（スキーマと設計は済み） |
+| JWT の検証（Spring Security の OAuth2 Resource Server、署名・issuer・期限）と保護 API | アプリ層での権限チェック（スキーマと設計は済み） |
 | tenant の選択（所属確認 → `current_tenant_id` claim 入りの JWT 再発行） | フロントエンド |
 | 所属 tenant 一覧、申請の下書き作成 API | デプロイ（AWS を想定） |
 | 例外ハンドラによる HTTP ステータスの一元管理、ログ出力 | |
@@ -63,4 +63,4 @@ highlights:
 
 - ER 図から書き始めると詰まる。先に「概念が何を表すか」を文章で固定する必要があった
 - 例外と HTTP ステータスの対応は、実装より「誰が次に何をするか」で決めると迷わない
-- Flyway は起動のたびに走る。seed を本体から分離しないと本番にも seed が入る問題を自分で見つけて直した
+- Flyway は起動のたびに走る。seed を本体から分離しないと本番にも seed が入る問題を自分で見つけて直した（`locations` で環境ごとに切り替え）

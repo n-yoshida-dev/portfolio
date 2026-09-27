@@ -11,7 +11,7 @@ const { Content } = await render(page);
 <Base title={page.data.title} description={page.data.description} markdownHref="/skills.md">
   <h1>{page.data.title}</h1>
   <p class="lead">{page.data.description}</p>
-  <div class="prose">
+  <div class="prose label-tables">
     <Content />
   </div>
   <p class="meta">最終確認日: {page.data.updated}</p>

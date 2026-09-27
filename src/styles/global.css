@@ -365,6 +365,11 @@ main.container {
   color: #fff;
 }
 
+/* 1 列目がラベル（時期・項目名）の表。ラベルを折り返さない（Skills / Journey）。狭い画面では表の中が横スクロールになる */
+.label-tables td:first-child {
+  white-space: nowrap;
+}
+
 /* 記事の本文（Markdown から生成された HTML） */
 .prose > :first-child {
   margin-top: 0;
