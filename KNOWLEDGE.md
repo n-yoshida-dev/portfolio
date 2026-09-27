@@ -96,3 +96,14 @@ AI 向けの情報を減らさないよう、表から削った技術の細部�
 3 列の表は、auto レイアウトだと 1 列目の「2016〜2018」が「〜」の後ろで折れる。Skills / Journey の本文を `.label-tables` で囲み、1 列目だけ `white-space: nowrap` にした
 （全ページの表に掛けると、OrgFlow 詳細の「できていること」のように 1 列目が長い表で横幅があふれる）。
 セルの折り返しは、行の高さではなく `Range.getClientRects()` の上端の種類で数える。行の高さは隣のセルの折り返しに引きずられて、折れていないセルまで 2 行に見える。
+
+### 2026-09-27：GitHub のプロフィールは Claude から変えられない
+
+`gh` のトークンのスコープは `repo` / `workflow` / `gist` / `read:org` / `delete_repo` で、`user` が無い。`gh api -X PATCH /user` で bio を書き換えられないので、
+プロフィール（bio・Website 欄）の変更は文案を渡して https://github.com/settings/profile でユーザーが行う。反映の確認は `gh api /user --jq '{bio, blog}'`（読み取りはできる）。
+Website 欄は API では `blog` という名前。
+
+### 2026-09-27：`astro preview` を止めるときは `pkill -f` を使わない
+
+`pkill -f "astro preview --port 4399"` は、そのコマンドを含む自分のシェル（Bash ツールの実行）にも一致し、シェルごと終了して preview は残る（終了コード 144）。
+`ps -eo pid,args | grep 'astro.mjs preview --port 4399' | grep -v grep` で PID を引いて `kill` する。
