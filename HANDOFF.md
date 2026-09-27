@@ -34,8 +34,8 @@
   自動化の候補（保留節）とどちらを先にやるかは確認待ち
 - 本文の書き分けの原則は `SPEC.md` §4（HTML は短く、Markdown 版は詳しく。Skills / Journey だけは本文共有の例外）
 - 参考にした個人サイト 23 件の画像と共通パターン：https://claude.ai/artifact/1zG7KYsQUpx4GjegU5rMZQ（本人限定のリンク）。
-  ユーザーが好きと答えた 3 件（taniarascia.com/projects・koki.me・okojomoeko.github.io）がデザインの起点
-- main：クリーン。作業中のブランチは無い。Beads の人間待ちは無し
+  感想で挙がった 3 件（taniarascia.com/projects・koki.me・okojomoeko.github.io）をデザインの起点にする予定。好きかどうかは未確認（`TODO.md` 確認待ち 2 件目）
+- main：クリーン。作業中のブランチは無い。Beads の人間待ちは確認待ちと同じ 2 件（ops-urz.8 / ops-urz.9）
 
 ## 次セッションで最初にやること
 
