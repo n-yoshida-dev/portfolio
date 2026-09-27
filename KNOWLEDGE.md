@@ -107,6 +107,7 @@ Website 欄は API では `blog` という名前。
 
 `pkill -f "astro preview --port 4399"` は、そのコマンドを含む自分のシェル（Bash ツールの実行）にも一致し、シェルごと終了して preview は残る（終了コード 144）。
 `ps -eo pid,args | grep 'astro.mjs preview --port 4399' | grep -v grep` で PID を引いて `kill` する。
+同じ日のカードの PR の確認でも、この項目を読まずに `pkill -f "astro preview --port 4329"` を打って 2 回目が起きた。preview を立て直す前にこの項目を見る。
 
 ### 2026-09-27：開発ダッシュボード（`dashboard/`）はテンプレートの写し。整形の対象から外し、テンプレートとの違いは 3 か所だけ
 
@@ -142,3 +143,16 @@ Skills / Journey は HTML と Markdown 版が同じ本文から作られる（SP
 ビルド時の `Astro.url.pathname` は `/index.html` `/projects.html` のように拡張子付きで渡る（公開 URL は拡張子なし）。
 Phase 1 からこれに気づかず、canonical と `og:url` が `.html` 付きで本番に出ていて、ナビの「今のページ」の強調も一度も効いていなかった。
 `Base.astro` で `.html` と末尾の `/index` を落として公開 URL の形にそろえてから、canonical と目次の強調に使う。
+
+### 2026-09-27：カードの一文は `summary` を削らず、別の項目 `tagline` に書く。一文の検査はスキーマに置く
+
+`summary` は詳細ページの冒頭・meta description・Markdown 版・`/llms.txt` の 4 か所で使っている。カードのために 1 文へ削ると AI 向けの情報まで減るので、カード専用の `tagline` を足した（定義は SPEC §1）。
+`summary` の最初の 1 文を自動で切り出す案は捨てた。OrgFlow は「Java / Spring Boot」が、AI Study Coach は「AI 協働の練習題材」という但し書き（`logs/decisions.md` 2026-09-26）が落ちるため。
+「句点なし・60 字以内」はテストではなくスキーマ（`src/content.config.ts` の `cardTagline`）で検査する。ビルドのエラーにエントリ名と項目名が出るので、どこを直すか分かる。
+「！」「？」で 2 文にした場合は通る（今の 16 件には無い）。
+
+### 2026-09-27：画面の重なりを数えるときは、畳まれた `<details>` の中身を除く（`checkVisibility()`）
+
+追従ボタンと本文の重なりを Playwright で数えたとき、375px 幅の詳細 5 ページで「重なりあり」と出た。重なったとされたのは「詳しく読む」に畳まれた本文の表や図で、画面には出ていない。
+閉じた `<details>` の中身でも `getBoundingClientRect()` は位置を返した（Chrome が中身を `content-visibility: hidden` で隠しているため、というのは Claude の推定で未確認）。
+要素を `el.checkVisibility({ contentVisibilityAuto: true })` で絞ってから数えると、誤検知が消えた。
