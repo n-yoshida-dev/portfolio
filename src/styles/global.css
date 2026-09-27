@@ -204,7 +204,8 @@ hr {
   flex-wrap: wrap;
   gap: 0.5rem 1.5rem;
   padding-top: 1.25rem;
-  padding-bottom: 2rem;
+  /* 右下の追従ボタン（.ask-fab）の高さ分を空け、ページ末尾までスクロールしてもフッターの文字が隠れないようにする */
+  padding-bottom: 5rem;
 }
 main.container {
   padding-top: 2rem;
@@ -475,6 +476,28 @@ main.container {
   background: var(--link);
   border-color: var(--link);
   color: #fff;
+}
+
+/*
+  Ask AI の追従ボタン（SPEC.md §4）。position: fixed で画面の右下に留める（JavaScript は使わない）。
+  影は使わず、背景色の縁取りでカードや本文の上に重なったときの境目を見せる
+*/
+.ask-fab {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 10;
+  background: var(--link);
+  color: #fff;
+  border: 2px solid var(--bg);
+  border-radius: 999px;
+  padding: 0.45em 1.1em;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.ask-fab:hover {
+  text-decoration: underline;
 }
 
 /* 1 列目がラベル（時期・項目名）の表。ラベルを折り返さない（Skills / Journey）。狭い画面では表の中が横スクロールになる */

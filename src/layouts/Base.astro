@@ -88,5 +88,13 @@ const currentSection = isHome ? undefined : sectionIdForPath(currentPath);
         </div>
       </footer>
     </div>
+    {
+      /* Ask AI の追従ボタン。どのページからでも /ask へ行けるよう右下に留める。/ask 自身では出さない（SPEC.md §4） */
+      currentPath !== '/ask' && (
+        <a class="ask-fab" href="/ask">
+          AI に聞く
+        </a>
+      )
+    }
   </body>
 </html>
