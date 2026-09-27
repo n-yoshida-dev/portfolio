@@ -4,6 +4,9 @@ dist/
 node_modules/
 .vercel/
 
+# 開発ダッシュボードは apps-workflow のテンプレートの写し。テンプレートと差分を出さないため整形しない（KNOWLEDGE.md）
+dashboard/
+
 # 公開プロフィールの Markdown は人が読む文書。整形ツールで改行位置を変えない
 public-profile/**/*.md
 

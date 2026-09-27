@@ -36,3 +36,7 @@ coverage/
 # Astro
 .astro/
 .vercel/
+
+# 開発ダッシュボードの生成物（開くたびに正本から作り直す派生物）
+dashboard/data.js
+dashboard/data.js.tmp
