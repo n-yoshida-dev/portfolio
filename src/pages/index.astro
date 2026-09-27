@@ -17,8 +17,10 @@ import { skillGroups, careerTimeline } from '../lib/outline';
 import { SITE } from '../site';
 
 const profile = await getPage('profile');
-const featured = (await getFeaturedProjects()).slice(0, 4);
-const projectCount = featured.length + (await getOtherProjects()).length;
+// 主なプロジェクトは 4 件まで（SPEC.md §4）。総数は切る前の件数で数える
+const allFeatured = await getFeaturedProjects();
+const featured = allFeatured.slice(0, 4);
+const projectCount = allFeatured.length + (await getOtherProjects()).length;
 const systems = await getSystems();
 const skills = skillGroups((await getPage('skills')).body ?? '');
 const career = careerTimeline((await getPage('career')).body ?? '');
