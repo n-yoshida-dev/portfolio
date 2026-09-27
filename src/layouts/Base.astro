@@ -2,7 +2,7 @@
 // すべてのページの共通枠。<head> のメタ情報（SEO / OGP）、左の固定目次、フッターを持つ。
 // 目次はトップの 7 節（SECTIONS）へのリンク。トップではページ内の `#id`、他のページでは `/#id` に飛ぶ（SPEC.md §4）。
 import '../styles/global.css';
-import { SITE, SECTIONS, sectionIdForPath } from '../site';
+import { SITE, SECTIONS, sectionIdForPath, ASK_BUTTON_LABEL } from '../site';
 
 interface Props {
   /** ページ固有のタイトル。トップは省略してサイト名だけにする */
@@ -92,7 +92,7 @@ const currentSection = isHome ? undefined : sectionIdForPath(currentPath);
       /* Ask AI の追従ボタン。どのページからでも /ask へ行けるよう右下に留める。/ask 自身では出さない（SPEC.md §4） */
       currentPath !== '/ask' && (
         <a class="ask-fab" href="/ask">
-          AI に聞く
+          {ASK_BUTTON_LABEL}
         </a>
       )
     }

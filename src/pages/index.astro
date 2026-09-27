@@ -15,7 +15,7 @@ import {
   groupArticlesBySeries,
 } from '../lib/content';
 import { skillGroups, careerTimeline } from '../lib/outline';
-import { SITE } from '../site';
+import { SITE, ASK_BUTTON_LABEL } from '../site';
 
 const profile = await getPage('profile');
 // 主なプロジェクトは 4 件まで（SPEC.md §4）。総数は切る前の件数で数える
@@ -102,7 +102,7 @@ const series = [...groupArticlesBySeries(articles).entries()];
     <p>あなたの AI に、このサイトと公開リポジトリを読ませて私について質問できます。</p>
     <p class="button-row">
       <a class="button button-primary" href="/ask">
-        プロンプトを開く
+        {ASK_BUTTON_LABEL}
       </a>
     </p>
   </HomeSection>
