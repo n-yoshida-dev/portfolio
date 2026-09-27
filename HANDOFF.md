@@ -35,14 +35,14 @@
 - 残りは ボタンの言葉と見た目 → 年表と表 → 仕上げ（`TODO.md` フェーズ3）
 - カードは `src/components/ProjectCard.astro` / `SystemCard.astro`、一文は frontmatter の `tagline`（SPEC §1）。追従ボタンは `src/layouts/Base.astro` の `.ask-fab`
 - ボタンの見た目は `src/styles/global.css` の `.button` / `.button-primary` / `.ask-fab`。使っているのは `src/pages/index.astro`（Ask AI 節）と `src/pages/ask.astro`（コピーと各 AI で開く）
-- ユーザー待ち：Ask AI の 2 つのボタンの言葉（Claude 案「AI に私のことを聞く」に揃える。`TODO.md` 確認待ち、Beads ops-urz.14）
+- ユーザー待ち：Ask AI の 2 つのボタンの言葉（Claude 案「AI に私のことを聞く」に揃える）と、追従ボタンの位置が右下でよいか（`TODO.md` 確認待ち、Beads ops-urz.14）
 - 画面の確認は Playwright で撮る（`KNOWLEDGE.md` 2026-09-26。preview を止めるときの注意も同じファイル）
 - 状況の確認：`node dashboard/update.mjs --serve --open`
 - main：クリーン。作業中のブランチは無い
 
 ## 次セッションで最初にやること
 
-1. フェーズ3「ボタンの言葉と見た目」に着手する。言葉はユーザーの答え（ops-urz.14）を使う。見た目は見本 2〜3 案（線だけ / 文字リンク + 矢印 / 黒の塗り など）を
+1. フェーズ3「ボタンの言葉と見た目」に着手する。言葉はユーザーの答え（ops-urz.14）を使う（答えが無ければ見本づくりから始める）。見た目は見本 2〜3 案（線だけ / 文字リンク + 矢印 / 黒の塗り など）を
    トップの Ask AI 節・右下の追従ボタン・`/ask` のボタン列で作り、PC とスマホの画像で並べてユーザーに選んでもらう（影・グラデーションなし、色は足さない）
 
 `TODO.md` の先頭と一致させる。書くのは最初の一手だけで、一覧は `TODO.md` が持つ。
