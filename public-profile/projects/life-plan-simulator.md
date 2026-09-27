@@ -1,5 +1,6 @@
 ---
 title: life-plan-simulator
+tagline: 希望するライフイベントから、いつ・いくらの世帯年収が必要かを年次で逆算するアプリ
 summary: 家族構成と希望するライフイベント（住宅・車・教育・老後）から「いつの時点で世帯年収がいくら必要か」を年次で逆算するアプリ。入力データはブラウザ内だけで扱う。
 repo: https://github.com/n-yoshida-dev/life-plan-simulator
 visibility: private

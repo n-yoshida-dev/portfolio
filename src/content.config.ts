@@ -18,12 +18,25 @@ const projectStatus = z.enum(['active', 'paused', 'done', 'archived']);
  */
 const detailHighlights = z.array(z.string()).min(1).max(3).optional();
 
+/**
+ * 一覧のカードに出す一文（SPEC.md §4）。句点（。）を含めず、60 字以内。
+ * summary（詳細ページの冒頭・Markdown 版・llms.txt に出す 1〜2 文）とは別に持ち、AI 向けの情報を削らずにカードだけを短くする
+ */
+const cardTagline = z
+  .string()
+  .max(60, { error: 'tagline は 60 字以内にする（一覧のカードに出す一文）' })
+  .refine((s) => !s.includes('。'), {
+    error: 'tagline は一文にする（句点「。」を含めない）',
+  });
+
 /** 自作アプリ・リポジトリ（Projects ページ） */
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './public-profile/projects' }),
   schema: z.object({
     title: z.string(),
-    /** 一覧カードに出す 1〜2 文 */
+    /** 一覧のカードに出す一文 */
+    tagline: cardTagline,
+    /** 詳細ページの冒頭・Markdown 版・llms.txt に出す 1〜2 文 */
     summary: z.string(),
     repo: z.url().optional(),
     /** 公開サイトがあれば */
@@ -49,6 +62,9 @@ const systems = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './public-profile/systems' }),
   schema: z.object({
     title: z.string(),
+    /** 一覧のカードに出す一文 */
+    tagline: cardTagline,
+    /** 詳細ページの冒頭・Markdown 版・llms.txt に出す 1〜2 文 */
     summary: z.string(),
     order: z.number().default(100),
     /** この仕組みを構成する repo / サービス。Projects の slug か、外部名 */

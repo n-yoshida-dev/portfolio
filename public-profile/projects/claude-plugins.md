@@ -1,5 +1,6 @@
 ---
 title: claude-plugins
+tagline: 自作アプリで使い回す Claude Code プラグインのマーケットプレイス
 summary: 自作アプリで使い回す Claude Code プラグインのマーケットプレイス。秘密情報のコミット阻止、編集直後の型チェック、進捗表、引き継ぎ、PR フロー、マージ前の受け入れレビュー役をまとめている。
 repo: https://github.com/n-yoshida-dev/claude-plugins
 visibility: public

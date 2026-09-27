@@ -338,26 +338,67 @@ main.container {
   vertical-align: middle;
 }
 
-/* 一覧（カードではなく、区切り線で並べる） */
-.entry-list {
+/*
+  一覧のカード（Projects / Systems。SPEC.md §4）。地色 --bg-subtle と線 --line だけで囲み、影・グラデーションは使わない。
+  PC は 2 列、40rem 未満は 1 列。リンク行は margin-top: auto でカードの下端に寄せ、同じ行のカード同士で位置をそろえる
+*/
+.card-grid {
   list-style: none;
   padding: 0;
   margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
 }
-.entry-list > li {
-  padding: 1.1rem 0;
-  border-top: 1px solid var(--line);
+.card {
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  background: var(--bg-subtle);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1rem 1.1rem;
 }
-.entry-list > li:last-child {
-  border-bottom: 1px solid var(--line);
+.card-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--fg-muted);
 }
-.entry-list h3 {
-  margin: 0 0 0.25rem;
+.card-badges {
+  display: flex;
+  gap: 0.3rem;
+  margin-left: auto;
+  font-family: var(--font-sans);
 }
-.entry-list p {
-  margin: 0.25rem 0 0;
+.card .badge {
+  background: var(--bg);
 }
+.card h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+.card p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+.card .tag-list {
+  margin-top: 0.2rem;
+}
+.card-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  margin-top: auto;
+  padding-top: 0.35rem;
+  font-size: 0.9rem;
+}
+
+/* 詳細ページの題名の下のリンク行 */
 .entry-links {
   display: flex;
   flex-wrap: wrap;
@@ -464,6 +505,9 @@ main.container {
 @media (max-width: 40rem) {
   body {
     font-size: 15.5px;
+  }
+  .card-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
   .kv-list,
   .kv-list > div {

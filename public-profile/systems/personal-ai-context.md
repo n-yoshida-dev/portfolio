@@ -1,5 +1,6 @@
 ---
 title: Personal AI Context System
+tagline: 複数の AI を跨いで、自分の長期コンテキストを 1 つの非公開リポジトリで管理する仕組み
 summary: ChatGPT / Claude / Claude Code / Gemini を跨いで、自分に関する長期コンテキストを 1 つの非公開リポジトリ（Markdown）で管理する仕組み。各 AI のメモリに依存しない。
 order: 1
 components: [personal-ai-context（非公開）, ChatGPT, Claude.ai, Claude Code]

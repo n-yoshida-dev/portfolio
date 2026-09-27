@@ -1,0 +1,41 @@
+---
+// 一覧に出すプロジェクト 1 件のカード（SPEC.md §4）。上段に期間と区分、続けて題名・一文、下端にリンクを定位置に置く。
+// 一文は tagline。summary（1〜2 文）は詳細ページと Markdown 版に任せ、カードには出さない。
+// 親は <ul class="card-grid">。
+import type { Project } from '../lib/content';
+import { visibilityLabel, statusLabel } from '../lib/content';
+
+interface Props {
+  project: Project;
+  /** true なら技術タグを省略する（トップの短い一覧向け） */
+  compact?: boolean;
+}
+const { project, compact = false } = Astro.props;
+const d = project.data;
+const hasDetail = (project.body ?? '').trim().length > 0;
+---
+
+<li class="card">
+  <div class="card-top">
+    {d.period && <span>{d.period}</span>}
+    <span class="card-badges">
+      <span class="badge">{visibilityLabel[d.visibility]}</span>
+      <span class="badge">{statusLabel[d.status]}</span>
+    </span>
+  </div>
+  <h3>{hasDetail ? <a href={`/projects/${project.id}`}>{d.title}</a> : d.title}</h3>
+  <p>{d.tagline}</p>
+  {!compact && d.stack.length > 0 && (
+    <ul class="tag-list" aria-label="主要技術">
+      {d.stack.map((s) => (
+        <li>{s}</li>
+      ))}
+    </ul>
+  )}
+  {(d.repo || d.site) && (
+    <div class="card-links">
+      {d.repo && <a href={d.repo}>GitHub</a>}
+      {d.site && <a href={d.site}>サイト</a>}
+    </div>
+  )}
+</li>

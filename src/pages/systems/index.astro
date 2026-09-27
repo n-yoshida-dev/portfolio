@@ -1,6 +1,7 @@
 ---
 // Systems 一覧。「何を作ったか」ではなく「どう組み合わせて仕組みにしているか」。
 import Base from '../../layouts/Base.astro';
+import SystemCard from '../../components/SystemCard.astro';
 import { getSystems } from '../../lib/content';
 
 const systems = await getSystems();
@@ -16,21 +17,9 @@ const systems = await getSystems();
     自分の開発・学習・生活改善を仕組みにしているか」です。
     どれもアプリではなく運用で、非公開のリポジトリを含みます。ここには設計の考え方だけを書いています。
   </p>
-  <ul class="entry-list">
+  <ul class="card-grid">
     {systems.map((s) => (
-      <li>
-        <h3>
-          <a href={`/systems/${s.id}`}>{s.data.title}</a>
-        </h3>
-        <p>{s.data.summary}</p>
-        {s.data.components.length > 0 && (
-          <ul class="tag-list" aria-label="構成要素">
-            {s.data.components.map((c) => (
-              <li>{c}</li>
-            ))}
-          </ul>
-        )}
-      </li>
+      <SystemCard system={s} />
     ))}
   </ul>
 </Base>

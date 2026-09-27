@@ -1,5 +1,6 @@
 ---
 title: Learning System
+tagline: 学習ログを根拠に理解度を判定し、根拠のない昇格をしない学習の仕組み
 summary: 学習ログを根拠に理解度を判定し、弱点と次の一手を決める仕組み。「説明を聞いた」と「理解した」を区別し、根拠のない昇格をしない。
 order: 2
 components: [study（非公開）, skill-matrix, orgflow, Claude Code]
