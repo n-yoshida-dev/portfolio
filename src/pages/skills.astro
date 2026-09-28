@@ -1,5 +1,6 @@
 ---
 // Skills。public-profile/skills.md をそのまま描画する（Phase 1 は手動管理）。
+// 表は Markdown のまま、.kv-tables の CSS で「ラベル + 値」の並びに積み替える（SPEC.md §4。Markdown 版は表のまま）
 import { render } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import { getPage } from '../lib/content';
@@ -11,7 +12,7 @@ const { Content } = await render(page);
 <Base title={page.data.title} description={page.data.description} markdownHref="/skills.md">
   <h1>{page.data.title}</h1>
   <p class="lead">{page.data.description}</p>
-  <div class="prose label-tables">
+  <div class="prose kv-tables">
     <Content />
   </div>
   <p class="meta">最終確認日: {page.data.updated}</p>
