@@ -551,15 +551,15 @@ h1 .badge {
 .timeline-tables td {
   display: block;
 }
-.timeline-tables tr {
+.timeline-tables tbody tr {
   position: relative;
   padding: 0 0 1.1rem 1.25rem;
 }
-.timeline-tables tr:last-child {
+.timeline-tables tbody tr:last-child {
   padding-bottom: 0.25rem;
 }
-/* 点。縦線（2px）の中心に 12px の円の中心を合わせ、時期の行の高さの中ほどに置く */
-.timeline-tables tr::before {
+/* 点。縦線（2px）の中心に 12px の円の中心を合わせ、時期の行の高さの中ほどに置く。画面から隠した見出し行（thead）には付けない */
+.timeline-tables tbody tr::before {
   content: '';
   position: absolute;
   left: -7px;

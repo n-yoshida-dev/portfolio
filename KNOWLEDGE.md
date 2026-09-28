@@ -109,7 +109,7 @@ Website 欄は API では `blog` という名前。
 `pkill -f "astro preview --port 4399"` は、そのコマンドを含む自分のシェル（Bash ツールの実行）にも一致し、シェルごと終了して preview は残る（終了コード 144）。
 `ps -eo pid,args | grep 'astro.mjs preview --port 4399' | grep -v grep` で PID を引いて `kill` する。
 同じ日のカードの PR の確認でも、この項目を読まずに `pkill -f "astro preview --port 4329"` を打って 2 回目が起きた。preview を立て直す前にこの項目を見る。
-→ 2026-09-28 に分かった正しい止め方：**`npx astro preview stop`**。Astro 7 の `astro preview` は起動すると自分で裏に回り（親プロセスが `/init` になる）、
+→ 2026-09-28 に分かった正しい止め方：**`npx astro preview stop`**。Astro 7 の `astro preview` は、AI エージェントから起動されたと判定すると（`node_modules/astro/dist/cli/preview/index.js` の `isRunByAgent()`。人が端末で起動したときは手前で動き Ctrl+C で止まる）自分で裏に回り（親プロセスが `/init` になる）、
 起動したコマンドは「Preview server running at …（pid …）Stop: astro preview stop」と出してすぐ終わる。
 なので起動したシェルやバックグラウンドのタスクを止めても preview は残る。2026-09-27 の昼から 1 日近く preview が置き去りになったのはこのため。
 使い終わったら `npx astro preview stop` を打ち、`ps` で `astro.mjs preview` が残っていないことを確かめてから区切る

@@ -39,19 +39,19 @@ portfolio/
 
 ## ページ
 
-| URL                | 内容                                                                                                                                               | Markdown 版           |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
-| `/`                | Home。1 枚のページに 7 節（About / Projects / Systems / Skills / Journey / Articles / Ask AI）を短い版で並べ、各節から「すべて →」で下の詳しい版へ | `/profile.md`         |
-| `/projects`        | Projects 一覧（薄枠のカード。主要 + Other / Experiments）                                                                                          | —                     |
-| `/projects/<slug>` | Projects 詳細（本文があるものだけ。長い本文は要点 + 「詳しく読む」）                                                                               | `/projects/<slug>.md` |
-| `/systems`         | Systems 一覧（薄枠のカード）                                                                                                                       | —                     |
-| `/systems/<slug>`  | Systems 詳細                                                                                                                                       | `/systems/<slug>.md`  |
-| `/skills`          | Skills（区分ごとのカード。説明と根拠は「項目ごとの説明と根拠を読む」に畳む）                                                                       | `/skills.md`          |
-| `/journey`         | Journey（経歴と学習の歩みの年表）                                                                                                                  | `/journey.md`         |
-| `/articles`        | Articles（連載ごと）                                                                                                                               | `/articles.md`        |
-| `/ask`             | Ask AI（プロンプトのコピーと各 AI へのリンク）                                                                                                     | —                     |
-| `/llms.txt`        | AI 向け索引（[llmstxt.org](https://llmstxt.org) 形式）                                                                                             | —                     |
-| `/llms-full.txt`   | 主要ページの Markdown を 1 ファイルに連結                                                                                                          | —                     |
+| URL                | 内容                                                                                                                                                                   | Markdown 版           |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| `/`                | Home。1 枚のページに 7 節（About / Projects / Systems / Skills / Journey / Articles / Ask AI）を短い版で並べ、About と Ask AI 以外の節から「すべて →」で下の詳しい版へ | `/profile.md`         |
+| `/projects`        | Projects 一覧（薄枠のカード。主要 + Other / Experiments）                                                                                                              | —                     |
+| `/projects/<slug>` | Projects 詳細（本文があるものだけ。長い本文は要点 + 「詳しく読む」）                                                                                                   | `/projects/<slug>.md` |
+| `/systems`         | Systems 一覧（薄枠のカード）                                                                                                                                           | —                     |
+| `/systems/<slug>`  | Systems 詳細                                                                                                                                                           | `/systems/<slug>.md`  |
+| `/skills`          | Skills（区分ごとのカード。説明と根拠は「項目ごとの説明と根拠を読む」に畳む）                                                                                           | `/skills.md`          |
+| `/journey`         | Journey（経歴と学習の歩みの年表）                                                                                                                                      | `/journey.md`         |
+| `/articles`        | Articles（連載ごと）                                                                                                                                                   | `/articles.md`        |
+| `/ask`             | Ask AI（プロンプトのコピーと各 AI へのリンク）                                                                                                                         | —                     |
+| `/llms.txt`        | AI 向け索引（[llmstxt.org](https://llmstxt.org) 形式）                                                                                                                 | —                     |
+| `/llms-full.txt`   | 主要ページの Markdown を 1 ファイルに連結                                                                                                                              | —                     |
 
 どのページにも左の目次（375px 幅では上部に横並び）があり、トップの各節（`/#projects` など）へ飛べる。詳しい版のページでは、今いる節の項目が太字になる。
 `/ask` 以外のページの右下には、`/ask` へ行く追従ボタン「Ask AI about this portfolio」がある。
@@ -62,7 +62,7 @@ portfolio/
 npm ci
 npm run dev          # http://localhost:4321
 npm run build        # dist/ に静的出力
-npm run preview      # ビルド結果の確認。裏で動き続けるので、止めるときは npx astro preview stop
+npm run preview      # ビルド結果の確認。手で起動したら Ctrl+C で止まる。AI エージェントから起動すると裏で動き続けるので npx astro preview stop で止める
 ```
 
 CI と同じ検査をまとめて回す：

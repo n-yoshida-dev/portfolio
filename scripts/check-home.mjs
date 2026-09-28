@@ -4,6 +4,7 @@
 // 使い方：node scripts/check-home.mjs [dist ディレクトリ]   欠けていれば exit 1
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 /** 3 点と、それを読み取れる節（SPEC.md §4。tests/home-sections.test.mjs の THREE_POINTS と同じ対応） */
 const THREE_POINTS = [
@@ -11,7 +12,8 @@ const THREE_POINTS = [
     point: '何の人か',
     id: 'about',
     need: '名前（h1）と一言',
-    ok: (html) => /<h1[\s>]/.test(html) && textOf(html).length >= 20,
+    // 一言は名前の下の段落（class="lead"。profile.md の tagline）。隠した節名やリンクの文字では合格させない
+    ok: (html) => /<h1[\s>]/.test(html) && leadText(html).length >= 5,
   },
   {
     point: '何を作ったか',
@@ -33,6 +35,12 @@ function textOf(html) {
     .replace(/<[^>]+>/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
+}
+
+/** 最初の `class="lead"` の段落の本文。無ければ空 */
+function leadText(html) {
+  const m = html.match(/<p[^>]*\sclass="(?:[^"]*\s)?lead(?:\s[^"]*)?"[^>]*>([\s\S]*?)<\/p>/);
+  return m ? textOf(m[1]) : '';
 }
 
 /** カード（class="card"）の数。card-grid や card-top などの部品は数えない */
@@ -65,7 +73,8 @@ export function checkHome(page) {
 }
 
 // コマンドとして実行されたときだけ検査する（テストから関数を読むときは走らせない）
-if (import.meta.url === `file://${process.argv[1]}`) {
+// パスに空白や日本語があっても一致するよう、実行されたファイルを URL に直してから比べる
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const dist = process.argv[2] ?? 'dist';
   let page;
   try {

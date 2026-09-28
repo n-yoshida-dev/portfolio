@@ -74,7 +74,7 @@
 
 ## 5. 検査（CI と同じ）
 
-`format:check` → `lint`（禁止語スキャン）→ `typecheck` → `test` → `build` → AI 向けファイルの存在確認、および秘密情報スキャン。
+`format:check` → `lint`（禁止語スキャン）→ `typecheck` → `test` → `build` → `check:home`（ビルドしたトップに 3 点の節が中身つきで出ているか）→ AI 向けファイルの存在確認、および秘密情報スキャン。
 禁止語のパターンは `scripts/public-profile-rules.json`。ヒットは書き直しで解消し、許可リストを作らない。
 
 ## 6. Phase 1 でやらないこと
