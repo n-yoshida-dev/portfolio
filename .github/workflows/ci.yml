@@ -46,6 +46,9 @@ jobs:
         env:
           SITE_URL: https://example.invalid
 
+      - name: トップに 3 点（何の人か・何を作ったか・どう開発しているか）が中身つきで出ているか
+        run: npm run check:home
+
       - name: llms.txt と Markdown 版が生成されているか
         run: |
           for f in dist/llms.txt dist/llms-full.txt dist/profile.md dist/skills.md dist/journey.md dist/articles.md dist/projects/orgflow.md; do

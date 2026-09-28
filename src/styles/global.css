@@ -338,6 +338,11 @@ main.container {
   color: var(--fg-muted);
   vertical-align: middle;
 }
+/* 見出しの横のバッジ（詳細ページの題名）。Astro が要素間の空白を落とすので、隙間は余白で作る。見出しの太字は継がない */
+h1 .badge {
+  margin-left: 0.5rem;
+  font-weight: 400;
+}
 
 /*
   一覧のカード（Projects / Systems。SPEC.md §4）。地色 --bg-subtle と線 --line だけで囲み、影・グラデーションは使わない。
@@ -530,7 +535,7 @@ main.container {
 
 /*
   Journey の年表。1 行を「時期 → 役割（太字）→ 担当（薄い文字）」の縦積みにし、左の縦線と点で時間の流れを見せる。
-  点は薄い文字色（青はリンク専用。2026-09-27 logs/decisions.md）。2 列の表（時期・出来事）は出来事を太字にしない
+  点はリンク色の青（「青はリンク専用」の例外。2026-09-28 ユーザーが選択、logs/decisions.md）。2 列の表（時期・出来事）は出来事を太字にしない
 */
 .timeline-tables table {
   display: block;
@@ -562,7 +567,7 @@ main.container {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: var(--fg-muted);
+  background: var(--link);
   border: 2px solid var(--bg);
 }
 .timeline-tables td:first-child {

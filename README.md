@@ -27,7 +27,8 @@ portfolio/
 ├── scripts/
 │   ├── check-public-profile.mjs   ← 禁止語スキャン（npm run lint）
 │   ├── public-profile-rules.json  ← 禁止語パターンと理由
-│   └── generate-og.mjs            ← OGP 画像の生成（public/og.png）
+│   ├── generate-og.mjs            ← OGP 画像の生成（public/og.png）
+│   └── check-home.mjs             ← ビルドしたトップに 3 点が中身つきで出ているかの検査
 ├── tests/                   ← スキャンの回帰テスト、public-profile の参照整合・詳細ページの本文の長さ・Skills / Journey の表・Skills のカードの読み取りのテスト
 ├── dashboard/               ← 開発ダッシュボード（開発状況を 1 画面で見る。サイトには含まれない。dashboard/README.md）
 └── .github/workflows/ci.yml
@@ -38,19 +39,22 @@ portfolio/
 
 ## ページ
 
-| URL                | 内容                                                     | Markdown 版           |
-| ------------------ | -------------------------------------------------------- | --------------------- |
-| `/`                | Home。何の人か・何を作っているか・どう仕組み化しているか | `/profile.md`         |
-| `/projects`        | Projects 一覧（主要 + Other / Experiments）              | —                     |
-| `/projects/<slug>` | Projects 詳細（本文があるものだけ）                      | `/projects/<slug>.md` |
-| `/systems`         | Systems 一覧                                             | —                     |
-| `/systems/<slug>`  | Systems 詳細                                             | `/systems/<slug>.md`  |
-| `/skills`          | Skills                                                   | `/skills.md`          |
-| `/journey`         | Journey（経歴・学習の歩み）                              | `/journey.md`         |
-| `/articles`        | Articles（連載ごと）                                     | `/articles.md`        |
-| `/ask`             | Ask AI about me（プロンプトのコピーと各 AI へのリンク）  | —                     |
-| `/llms.txt`        | AI 向け索引（[llmstxt.org](https://llmstxt.org) 形式）   | —                     |
-| `/llms-full.txt`   | 主要ページの Markdown を 1 ファイルに連結                | —                     |
+| URL                | 内容                                                                                                                                               | Markdown 版           |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| `/`                | Home。1 枚のページに 7 節（About / Projects / Systems / Skills / Journey / Articles / Ask AI）を短い版で並べ、各節から「すべて →」で下の詳しい版へ | `/profile.md`         |
+| `/projects`        | Projects 一覧（薄枠のカード。主要 + Other / Experiments）                                                                                          | —                     |
+| `/projects/<slug>` | Projects 詳細（本文があるものだけ。長い本文は要点 + 「詳しく読む」）                                                                               | `/projects/<slug>.md` |
+| `/systems`         | Systems 一覧（薄枠のカード）                                                                                                                       | —                     |
+| `/systems/<slug>`  | Systems 詳細                                                                                                                                       | `/systems/<slug>.md`  |
+| `/skills`          | Skills（区分ごとのカード。説明と根拠は「項目ごとの説明と根拠を読む」に畳む）                                                                       | `/skills.md`          |
+| `/journey`         | Journey（経歴と学習の歩みの年表）                                                                                                                  | `/journey.md`         |
+| `/articles`        | Articles（連載ごと）                                                                                                                               | `/articles.md`        |
+| `/ask`             | Ask AI（プロンプトのコピーと各 AI へのリンク）                                                                                                     | —                     |
+| `/llms.txt`        | AI 向け索引（[llmstxt.org](https://llmstxt.org) 形式）                                                                                             | —                     |
+| `/llms-full.txt`   | 主要ページの Markdown を 1 ファイルに連結                                                                                                          | —                     |
+
+どのページにも左の目次（375px 幅では上部に横並び）があり、トップの各節（`/#projects` など）へ飛べる。詳しい版のページでは、今いる節の項目が太字になる。
+`/ask` 以外のページの右下には、`/ask` へ行く追従ボタン「Ask AI about this portfolio」がある。
 
 ## 開発
 
@@ -58,13 +62,13 @@ portfolio/
 npm ci
 npm run dev          # http://localhost:4321
 npm run build        # dist/ に静的出力
-npm run preview      # ビルド結果の確認
+npm run preview      # ビルド結果の確認。裏で動き続けるので、止めるときは npx astro preview stop
 ```
 
 CI と同じ検査をまとめて回す：
 
 ```bash
-npm run format:check && npm run lint && npm run typecheck && npm run test && npm run build
+npm run format:check && npm run lint && npm run typecheck && npm run test && npm run build && npm run check:home
 ```
 
 | コマンド               | 内容                                                                                                                                                |
@@ -74,6 +78,7 @@ npm run format:check && npm run lint && npm run typecheck && npm run test && npm
 | `npm run typecheck`    | `astro check`（Astro / TypeScript の型検査）                                                                                                        |
 | `npm run test`         | Vitest（スキャンの回帰テスト、public-profile の参照整合、詳細ページの本文の長さ、Skills / Journey の表に句点が無いこと、Skills のカードの読み取り） |
 | `npm run build`        | ビルド。frontmatter が型に合わないとここで失敗する                                                                                                  |
+| `npm run check:home`   | ビルドしたトップに、3 点（何の人か・何を作ったか・どう開発しているか）の節が中身つきで出ているか（`scripts/check-home.mjs`。build の後に回す）      |
 
 OGP 画像を作り直すとき：`node scripts/generate-og.mjs`（文言は同スクリプト内）。
 
