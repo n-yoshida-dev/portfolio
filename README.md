@@ -28,7 +28,7 @@ portfolio/
 │   ├── check-public-profile.mjs   ← 禁止語スキャン（npm run lint）
 │   ├── public-profile-rules.json  ← 禁止語パターンと理由
 │   └── generate-og.mjs            ← OGP 画像の生成（public/og.png）
-├── tests/                   ← スキャンの回帰テスト、public-profile の参照整合・詳細ページの本文の長さ・Skills / Journey の表のテスト
+├── tests/                   ← スキャンの回帰テスト、public-profile の参照整合・詳細ページの本文の長さ・Skills / Journey の表・Skills のカードの読み取りのテスト
 ├── dashboard/               ← 開発ダッシュボード（開発状況を 1 画面で見る。サイトには含まれない。dashboard/README.md）
 └── .github/workflows/ci.yml
 ```
@@ -72,7 +72,7 @@ npm run format:check && npm run lint && npm run typecheck && npm run test && npm
 | `npm run format:check` | Prettier（`public-profile/` の Markdown は対象外）                                                                       |
 | `npm run lint`         | `public-profile/` の禁止語スキャン                                                                                       |
 | `npm run typecheck`    | `astro check`（Astro / TypeScript の型検査）                                                                             |
-| `npm run test`         | Vitest（スキャンの回帰テスト、public-profile の参照整合、詳細ページの本文の長さ、Skills / Journey の表に句点が無いこと） |
+| `npm run test`         | Vitest（スキャンの回帰テスト、public-profile の参照整合、詳細ページの本文の長さ、Skills / Journey の表に句点が無いこと、Skills のカードの読み取り） |
 | `npm run build`        | ビルド。frontmatter が型に合わないとここで失敗する                                                                       |
 
 OGP 画像を作り直すとき：`node scripts/generate-og.mjs`（文言は同スクリプト内）。
@@ -95,7 +95,8 @@ OGP 画像を作り直すとき：`node scripts/generate-og.mjs`（文言は同�
 - **経歴・スキルを直す**：`career.md` / `skills.md` を編集し、frontmatter の `updated` を更新する。
   本文がそのまま HTML にも Markdown 版にも出るので、表のセルは 1 フレーズ・体言止め（句点を入れると `npm run test` が落ちる）。
   `skills.md` は、`/skills` の区分のカードとトップの Skills 節が本文から作られる。カードに出るのは `##` 見出し、冒頭の「区分（定義）／区分（定義）」の行、
-  `###` 見出し（「分類：項目名 — [根拠](/projects/…)」）か箇条書き先頭の `**太字**`。この形を崩すと `npm run test` が落ちる
+  `###` 見出し（「分類：項目名 — [根拠](/projects/…)」）か箇条書き先頭の `**太字**`。どちらも無い節は、箇条書きの本文の括弧の手前まで（括弧書きはカードに出ない）。
+  この形を崩すと `npm run test` が落ちる
 - **トップの文章を直す**：`profile.md` の frontmatter。`tagline`（名前の下の一言 1 文）と `highlights`（何の人かの要点。3 行まで）だけがトップに出る。
   本文（`## 何の人か` 以下）はトップには出ず、Markdown 版（`/profile.md`）と `/llms-full.txt` で AI と人間の両方が読める
 
