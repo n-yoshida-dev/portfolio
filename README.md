@@ -93,7 +93,9 @@ OGP 画像を作り直すとき：`node scripts/generate-og.mjs`（文言は同�
   書き忘れると `npm run test` が落ちる
 - **記事を足す**：`public-profile/articles.json` に 1 要素足す。`series` で連載ごとにまとまる
 - **経歴・スキルを直す**：`career.md` / `skills.md` を編集し、frontmatter の `updated` を更新する。
-  本文がそのまま HTML にも Markdown 版にも出るので、表のセルは 1 フレーズ・体言止め（句点を入れると `npm run test` が落ちる）
+  本文がそのまま HTML にも Markdown 版にも出るので、表のセルは 1 フレーズ・体言止め（句点を入れると `npm run test` が落ちる）。
+  `skills.md` は、`/skills` の区分のカードとトップの Skills 節が本文から作られる。カードに出るのは `##` 見出し、冒頭の「区分（定義）／区分（定義）」の行、
+  `###` 見出し（「分類：項目名 — [根拠](/projects/…)」）か箇条書き先頭の `**太字**`。この形を崩すと `npm run test` が落ちる
 - **トップの文章を直す**：`profile.md` の frontmatter。`tagline`（名前の下の一言 1 文）と `highlights`（何の人かの要点。3 行まで）だけがトップに出る。
   本文（`## 何の人か` 以下）はトップには出ず、Markdown 版（`/profile.md`）と `/llms-full.txt` で AI と人間の両方が読める
 

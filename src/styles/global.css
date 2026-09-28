@@ -602,6 +602,39 @@ main.container {
   color: var(--fg-muted);
 }
 
+/*
+  Skills のカード（SPEC.md §4）。区分ごとに見出し・区分の定義・項目名・根拠のリンクを並べ、説明はカードの下の「項目ごとの説明と根拠を読む」に畳む。
+  見た目は Projects のカード（.card-grid / .card）を使い、見出し（h2）はページ全体の h2 の下線と余白を打ち消す
+*/
+.skill-cards {
+  margin-bottom: 1rem;
+}
+.skill-cards .card h2 {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 1.05rem;
+}
+.skill-cards .card .skill-def {
+  font-size: 0.85rem;
+  color: var(--fg-muted);
+}
+.skill-items {
+  list-style: disc;
+  margin: 0.2rem 0 0;
+  padding-left: 1.2em;
+  font-size: 0.95rem;
+}
+.skill-cards .card .skill-evidence {
+  margin-top: auto;
+  padding-top: 0.35rem;
+  font-size: 0.9rem;
+}
+.skill-note {
+  font-size: 0.9rem;
+  color: var(--fg-muted);
+}
+
 /* 記事の本文（Markdown から生成された HTML） */
 .prose > :first-child {
   margin-top: 0;
