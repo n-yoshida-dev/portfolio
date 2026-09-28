@@ -109,7 +109,7 @@ Website 欄は API では `blog` という名前。
 `pkill -f "astro preview --port 4399"` は、そのコマンドを含む自分のシェル（Bash ツールの実行）にも一致し、シェルごと終了して preview は残る（終了コード 144）。
 `ps -eo pid,args | grep 'astro.mjs preview --port 4399' | grep -v grep` で PID を引いて `kill` する。
 同じ日のカードの PR の確認でも、この項目を読まずに `pkill -f "astro preview --port 4329"` を打って 2 回目が起きた。preview を立て直す前にこの項目を見る。
-→ 2026-09-28 に分かった正しい止め方：**`npx astro preview stop`**。Astro 7 の `astro preview` は起動すると自分で裏に回り（親プロセスが `/init` になる）、
+→ 2026-09-28 に分かった正しい止め方：**`npx astro preview stop`**。Astro 7 の `astro preview` は、AI エージェントから起動されたと判定すると（`node_modules/astro/dist/cli/preview/index.js` の `isRunByAgent()`。人が端末で起動したときは手前で動き Ctrl+C で止まる）自分で裏に回り（親プロセスが `/init` になる）、
 起動したコマンドは「Preview server running at …（pid …）Stop: astro preview stop」と出してすぐ終わる。
 なので起動したシェルやバックグラウンドのタスクを止めても preview は残る。2026-09-27 の昼から 1 日近く preview が置き去りになったのはこのため。
 使い終わったら `npx astro preview stop` を打ち、`ps` で `astro.mjs preview` が残っていないことを確かめてから区切る
@@ -203,5 +203,20 @@ Journey と Skills の表を、Markdown（`career.md` / `skills.md`）もマー�
 - **2 列の表（時期・出来事）と 3 列の表（時期・役割・担当）を、同じクラスの中で `td:nth-child(2):not(:last-child)` で分けた。** 3 列の表の役割だけを太字にするため。ページごとにクラスを分ける案は、Markdown 側に目印が要るので採らなかった
 - **年表の点は `--fg-muted`（薄い文字色）。** 見本 A は紫、SPEC §4 の方向は「リンク色だけを効かせる」だが、2026-09-27 のボタンの判断で「青はリンク専用」にしたので、リンクでない点に青を使わなかった。
   ただし同日のデザインの判断には「リンク色（青）だけを効かせる」ともあり、見本 A の紫の点を青に置き換える読み方もできる。灰色か青かはユーザー未確認（`TODO.md` 確認待ち）
-  → 2026-09-28 にユーザーが青を選んだ（`logs/decisions.md` 2026-09-28。実装はフェーズ3「仕上げ」）
+  → 2026-09-28 にユーザーが青を選んだ（`logs/decisions.md` 2026-09-28）。2026-09-29 のフェーズ3「仕上げ」で `--link` にした
 - 確かめ方：表ごとに各セルの `getBoundingClientRect()` を取り、年表は「上端が行ごとに下がり、左端がそろう」、「ラベル + 値」は「PC で同じ高さ・値が右、375px で値が下・左端がそろう」を数えた
+
+### 2026-09-29：トップの 3 点は、ビルドの後に `dist/index.html` を読んで検査する
+
+骨組みの PR で足した単体テスト（`tests/home-sections.test.mjs`）は、目次の定義に `about` `projects` `systems` の節があるかしか見ておらず、節が空でも通っていた。
+単体テストはビルドの前に走るので出来上がったページを読めない。Astro の Container API で単体テストの中にページを描く案もあったが、
+コンテンツコレクションを読むために Vite の設定をテストへ持ち込むことになるので採らなかった。
+代わりに `scripts/check-home.mjs`（`npm run check:home`）で、ビルドした `dist/index.html` の節を切り出し、About に名前（h1）と一言、Projects と Systems にカードが 1 枚以上あるかを見る。
+CI では「AI 向けファイルがあるか」と同じくビルドの後の段に置いた。判定の規則は作り物の HTML で単体テストしている（`tests/check-home.test.mjs`）。
+書いたときに、節を切り出す位置を 1 文字ずらして開始タグの `<` を落とし、タグが本文扱いになって文字数が水増しされる不具合があった。その単体テストが見つけた
+
+### 2026-09-29：検査をパイプでつなぐと、最後のコマンドの成否で判定される
+
+2026-09-28 に `npm run format:check 2>&1 | tail -1 && git commit …` と打ち、整形の指摘が出たのにコミットと push まで進んだ。
+シェルはパイプの終了コードを最後のコマンド（`tail`）で決めるので、`format:check` の失敗が `&&` に伝わらない。
+止めたい検査は、パイプにつながず単独で `&&` につなぐ（出力を短くしたいときは `> /dev/null 2>&1` で捨てる）。`set -o pipefail` でも防げる

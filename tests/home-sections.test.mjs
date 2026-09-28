@@ -40,6 +40,7 @@ describe('トップの 7 節', () => {
     }
   });
 
+  // ここでは節の定義があることだけを見る。節に中身が出ているかは、ビルドの後に scripts/check-home.mjs（npm run check:home）が見る
   it('3 点（何の人か・何を作ったか・どう開発しているか）に当たる節がある', () => {
     for (const [point, id] of Object.entries(THREE_POINTS)) {
       expect(
