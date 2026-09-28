@@ -534,6 +534,8 @@ main.container {
 */
 .timeline-tables table {
   display: block;
+  /* 左の余白（margin-left）の分だけ幅を縮め、右端を本文の幅に収める（table の width: 100% を打ち消す） */
+  width: auto;
   overflow: visible;
   font-size: 1rem;
   border-left: 2px solid var(--line);
