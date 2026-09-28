@@ -67,13 +67,13 @@ CI と同じ検査をまとめて回す：
 npm run format:check && npm run lint && npm run typecheck && npm run test && npm run build
 ```
 
-| コマンド               | 内容                                                                                                                     |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `npm run format:check` | Prettier（`public-profile/` の Markdown は対象外）                                                                       |
-| `npm run lint`         | `public-profile/` の禁止語スキャン                                                                                       |
-| `npm run typecheck`    | `astro check`（Astro / TypeScript の型検査）                                                                             |
+| コマンド               | 内容                                                                                                                                                |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run format:check` | Prettier（`public-profile/` の Markdown は対象外）                                                                                                  |
+| `npm run lint`         | `public-profile/` の禁止語スキャン                                                                                                                  |
+| `npm run typecheck`    | `astro check`（Astro / TypeScript の型検査）                                                                                                        |
 | `npm run test`         | Vitest（スキャンの回帰テスト、public-profile の参照整合、詳細ページの本文の長さ、Skills / Journey の表に句点が無いこと、Skills のカードの読み取り） |
-| `npm run build`        | ビルド。frontmatter が型に合わないとここで失敗する                                                                       |
+| `npm run build`        | ビルド。frontmatter が型に合わないとここで失敗する                                                                                                  |
 
 OGP 画像を作り直すとき：`node scripts/generate-og.mjs`（文言は同スクリプト内）。
 
