@@ -510,9 +510,96 @@ main.container {
   text-decoration: underline;
 }
 
-/* 1 列目がラベル（時期・項目名）の表。ラベルを折り返さない（Skills / Journey）。狭い画面では表の中が横スクロールになる */
-.label-tables td:first-child {
-  white-space: nowrap;
+/*
+  Skills / Journey の表（SPEC.md §4）。本文は Markdown の表のまま（Markdown 版・llms-full.txt と共有）で、HTML だけ CSS で積み替える。
+  列の見出し（時期・役割など）は画面から隠し、読み上げには残す。どちらも横スクロールさせない
+*/
+.timeline-tables thead,
+.kv-tables thead {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.timeline-tables td,
+.kv-tables td {
+  border: 0;
+  padding: 0;
+}
+
+/*
+  Journey の年表。1 行を「時期 → 役割（太字）→ 担当（薄い文字）」の縦積みにし、左の縦線と点で時間の流れを見せる。
+  点は薄い文字色（青はリンク専用。2026-09-27 logs/decisions.md）。2 列の表（時期・出来事）は出来事を太字にしない
+*/
+.timeline-tables table {
+  display: block;
+  /* 左の余白（margin-left）の分だけ幅を縮め、右端を本文の幅に収める（table の width: 100% を打ち消す） */
+  width: auto;
+  overflow: visible;
+  font-size: 1rem;
+  border-left: 2px solid var(--line);
+  margin-left: 0.4rem;
+}
+.timeline-tables tbody,
+.timeline-tables tr,
+.timeline-tables td {
+  display: block;
+}
+.timeline-tables tr {
+  position: relative;
+  padding: 0 0 1.1rem 1.25rem;
+}
+.timeline-tables tr:last-child {
+  padding-bottom: 0.25rem;
+}
+/* 点。縦線（2px）の中心に 12px の円の中心を合わせ、時期の行の高さの中ほどに置く */
+.timeline-tables tr::before {
+  content: '';
+  position: absolute;
+  left: -7px;
+  top: 0.4rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--fg-muted);
+  border: 2px solid var(--bg);
+}
+.timeline-tables td:first-child {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--fg-muted);
+}
+.timeline-tables td:nth-child(2):not(:last-child) {
+  font-weight: 600;
+}
+.timeline-tables td:nth-child(3) {
+  font-size: 0.95rem;
+  color: var(--fg-muted);
+}
+
+/* Skills の表を「ラベル（太字）+ 値（薄い文字）」の並びにする。トップの .kv-list と同じ見た目。狭い画面ではラベルの下に値を積む */
+.kv-tables table {
+  display: block;
+  overflow: visible;
+  font-size: 1rem;
+}
+.kv-tables tbody {
+  display: block;
+}
+.kv-tables tr {
+  display: grid;
+  grid-template-columns: 10rem minmax(0, 1fr);
+  gap: 0.2rem 1rem;
+}
+.kv-tables tr + tr {
+  margin-top: 0.5rem;
+}
+.kv-tables td:first-child {
+  font-weight: 600;
+}
+.kv-tables td + td {
+  color: var(--fg-muted);
 }
 
 /* 記事の本文（Markdown から生成された HTML） */
@@ -547,6 +634,12 @@ main.container {
     display: block;
   }
   .kv-list > div + div {
+    margin-top: 0.6rem;
+  }
+  .kv-tables tr {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .kv-tables tr + tr {
     margin-top: 0.6rem;
   }
   h1 {
