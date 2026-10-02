@@ -96,13 +96,16 @@ OGP 画像を作り直すとき：`node scripts/generate-og.mjs`（文言は同�
 - **詳細ページの本文が長いとき**（projects / systems で本文 400 字超）：frontmatter に `highlights`（要点。3 行まで、本文に書いた事実だけ）を足す。
   詳細ページでは要点だけが見え、本文は「詳しく読む」で開く形に畳まれる。Markdown 版（`/projects/<slug>.md` など）は全文のまま。
   書き忘れると `npm run test` が落ちる
-- **記事を足す**：`public-profile/articles.json` に 1 要素足す。`series` で連載ごとにまとまる
+- **記事を足す**：`public-profile/articles.json` に 1 要素足す。`series` で連載ごとにまとまる。
+  トップの Articles 節の図（連載 × 公開月）は `series` と `publishedAt` から作られる
 - **経歴・スキルを直す**：`career.md` / `skills.md` を編集し、frontmatter の `updated` を更新する。
   本文がそのまま HTML にも Markdown 版にも出るので、表のセルは 1 フレーズ・体言止め（句点を入れると `npm run test` が落ちる）。
   `skills.md` は、`/skills` の区分のカードとトップの Skills 節が本文から作られる。カードに出るのは `##` 見出し、冒頭の「区分（定義）／区分（定義）」の行、
   `###` 見出し（「分類：項目名 — [根拠](/projects/…)」）か箇条書き先頭の `**太字**`。どちらも無い節は、箇条書きの本文の括弧の手前まで（括弧書きはカードに出ない）。
-  この形を崩すと `npm run test` が落ちる
-- **トップの文章を直す**：`profile.md` の frontmatter。`tagline`（名前の下の一言。1〜2 文）と `highlights`（何の人かの要点。3 行まで）だけがトップに出る。
+  この形を崩すと `npm run test` が落ちる。トップの Journey 節には `career.md` の経歴表の 3 列（時期・役割・主な担当）がそのまま出る
+- **トップの文章を直す**：`profile.md` の frontmatter。`tagline`（名前の下の一言。1〜2 文）・`highlights`・`links` だけがトップに出る。
+  `highlights` は 3 つまでで、1 つを `label`（小見出し）・`title`（太字の見出し）・`detail`（補足。省略可）に分けて書く（トップでは 1 つが 1 列）。
+  `links` の `icon`（`code` / `pen` / `book` / `case` / `sprout`。省略可）はトップのリンクカードに添える線のアイコン（形は `src/lib/icons.ts`）。
   本文（`## 何の人か` 以下）はトップには出ず、Markdown 版（`/profile.md`）と `/llms-full.txt` で AI と人間の両方が読める
 
 反映は `npm run build` が通れば完了。`main` へマージすると Vercel が自動でデプロイする。

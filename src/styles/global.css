@@ -283,22 +283,347 @@ main.container {
   font-size: 0.95rem;
 }
 
-/* 「ラベル + 値」の並び（トップの Skills / Journey / Articles の短い版）。狭い画面では縦に積む */
-.kv-list {
-  margin: 0;
+/*
+  トップの About / Skills / Journey / Articles の短い版（SPEC.md §4。2026-10-03 ユーザーが見本 3 案から節ごとに選択、logs/decisions.md）。
+  About・Journey は見本 B、Skills・Articles は見本 C の形（docs/design-candidates/2026-10-03-top-sections/）。色は足さない
+*/
+
+/* 日本語の短い見出しは文節で折り返す（「情報システ／ム担当」のような語の途中の改行を防ぐ。未対応のブラウザは今までどおりの折り返し） */
+.fact-title,
+.link-note,
+.skill-def,
+.step-role,
+.s-name {
+  word-break: auto-phrase;
+}
+/* 節の見出しの直下に置く、節の読み方の一言 */
+.section-lead {
+  color: var(--fg-muted);
+  font-size: 0.95rem;
+  margin: -0.1rem 0 1rem;
+}
+/* 画面から隠し、読み上げにだけ渡す文字 */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+/* 線のアイコン（src/components/Icon.astro）。ロゴではない汎用の形で、薄い文字色の線だけで描く */
+.icon {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--fg-muted);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* About の要点。1 つを 1 列にし、小見出し → 太字の見出し → 薄い文字の補足の順に積む */
+.facts {
   display: grid;
-  /* ラベル列は中身に合わせて広がる（上限 16rem）。dl 全体を 1 つの grid にして、行をまたいで列をそろえる */
-  grid-template-columns: fit-content(16rem) minmax(0, 1fr);
-  gap: 0.5rem 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  list-style: none;
 }
-.kv-list > div {
-  display: contents;
-}
-.kv-list dt {
-  font-weight: 600;
-}
-.kv-list dd {
+.facts > li {
   margin: 0;
+  border-top: 2px solid var(--line);
+  padding-top: 0.6rem;
+}
+.fact-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+}
+.fact-title {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.5;
+  margin: 0.15rem 0 0.35rem;
+}
+.fact-detail {
+  display: block;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--fg-muted);
+}
+
+/* About の外部リンク。アイコン・名前・そこに何があるか（links の note）のカード */
+.link-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0 0 0.5rem;
+  padding: 0;
+  list-style: none;
+}
+.link-cards > li {
+  margin: 0;
+}
+.link-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  height: 100%;
+  padding: 0.75rem 0.9rem;
+  color: var(--fg);
+  background: var(--bg-subtle);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.link-card:hover {
+  text-decoration: none;
+  border-color: var(--fg-muted);
+}
+.link-card:hover .link-label {
+  text-decoration: underline;
+}
+.link-card .icon {
+  width: 1.4rem;
+  height: 1.4rem;
+  margin-top: 0.2rem;
+}
+.link-label {
+  display: block;
+  color: var(--link);
+  font-weight: 600;
+  line-height: 1.4;
+}
+.link-note {
+  display: block;
+  color: var(--fg-muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  margin-top: 0.15rem;
+}
+
+/* Skills。Skills ページと同じ区分ごとのカード。項目はタグにし、実装の根拠がまだない区分は全幅・破線・地色なし */
+.skill-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.skill-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 1rem 1.1rem;
+  background: var(--bg-subtle);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.skill-card.is-tentative {
+  grid-column: 1 / -1;
+  background: transparent;
+  border-style: dashed;
+}
+.skill-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.skill-head h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+.skill-span {
+  margin-left: auto;
+  font-size: 0.8rem;
+  color: var(--fg-muted);
+  white-space: nowrap;
+}
+.skill-card .skill-def {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--fg-muted);
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.3rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.chips > li {
+  margin: 0;
+  padding: 0.05rem 0.55rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+.is-tentative .chips > li {
+  background: transparent;
+  border-style: dashed;
+}
+.skill-card .skill-evidence {
+  margin: auto 0 0;
+  padding-top: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--fg-muted);
+}
+
+/*
+  Journey。横の年表で、時期 → 役割（太字）→ 担当（薄い文字）を縦に積む。点は青（年表の点の例外）。
+  行の数だけ列を作る（grid-auto-flow: column）。狭い画面では Journey ページと同じ縦の年表にする
+*/
+.steps {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  margin: 0.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.steps > li {
+  position: relative;
+  margin: 0;
+  padding: 1.3rem 1rem 0 0;
+}
+.steps > li::before {
+  /* 点をつなぐ横線 */
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--line);
+}
+.steps > li::after {
+  /* 点 */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--link);
+  border: 2px solid var(--bg);
+}
+.step-when {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--fg-muted);
+}
+.step-role {
+  display: block;
+  font-weight: 600;
+  line-height: 1.5;
+  margin-top: 0.1rem;
+}
+.step-detail {
+  display: block;
+  color: var(--fg-muted);
+  font-size: 0.85rem;
+  line-height: 1.55;
+  margin-top: 0.2rem;
+}
+
+/*
+  Articles。連載 × 公開月の図で、■ 1 つが記事 1 本（色は薄い文字色）。列の数は月の数（--months。index.astro が渡す）。
+  月が増えて入りきらないときは、この図だけを横にスクロールさせる（ページ全体は横スクロールさせない）
+*/
+.sq {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--fg-muted);
+}
+.series {
+  margin: 0 0 0.9rem;
+  overflow-x: auto;
+}
+.series-row {
+  display: grid;
+  grid-template-columns: 14.5rem 3rem repeat(var(--months), minmax(2.75rem, 1fr));
+}
+.series-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.series-list > li {
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+.series-list > li:last-child {
+  border-bottom: 1px solid var(--line);
+}
+.s-name {
+  align-self: center;
+  padding: 0.45rem 0.75rem 0.45rem 0;
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+.s-count {
+  align-self: center;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.m {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  gap: 2px;
+  padding: 0.45rem 0.4rem;
+  border-left: 1px dashed var(--line);
+}
+.m > i {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--fg-muted);
+}
+.m-label {
+  padding: 0 0.4rem 0.15rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+  border-left: 1px dashed var(--line);
+}
+.latest {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.15rem 0.6rem;
+  margin: 0;
+  font-size: 0.95rem;
+}
+.latest-label {
+  font-size: 0.8rem;
+  color: var(--fg-muted);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0 0.4rem;
+  line-height: 1.6;
+}
+.latest-meta {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
   color: var(--fg-muted);
 }
 
@@ -413,7 +738,7 @@ h1 .badge {
   margin-top: 0.4rem;
 }
 
-/* トップの要点 3 行と、1 行に並べるリンク列 */
+/* 詳細ページの要点 3 行と、1 行に並べるリンク列 */
 .highlights {
   padding-left: 1.2em;
   margin: 0 0 0.75rem;
@@ -583,7 +908,7 @@ h1 .badge {
   color: var(--fg-muted);
 }
 
-/* Skills の表を「ラベル（太字）+ 値（薄い文字）」の並びにする。トップの .kv-list と同じ見た目。狭い画面ではラベルの下に値を積む */
+/* Skills の表を「ラベル（太字）+ 値（薄い文字）」の並びにする。狭い画面ではラベルの下に値を積む */
 .kv-tables table {
   display: block;
   overflow: visible;
@@ -667,12 +992,61 @@ h1 .badge {
   .card-grid {
     grid-template-columns: minmax(0, 1fr);
   }
-  .kv-list,
-  .kv-list > div {
-    display: block;
+  /* トップの About・Skills は 1 列に積む */
+  .facts {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.85rem;
+    margin-bottom: 1.25rem;
   }
-  .kv-list > div + div {
-    margin-top: 0.6rem;
+  .link-cards,
+  .skill-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.5rem;
+  }
+  /* トップの Journey は Journey ページと同じ縦の年表にする */
+  .steps {
+    grid-auto-flow: row;
+    grid-template-columns: minmax(0, 1fr);
+    margin-left: 0.4rem;
+    border-left: 2px solid var(--line);
+  }
+  .steps > li {
+    padding: 0 0 1rem 1.25rem;
+  }
+  .steps > li:last-child {
+    padding-bottom: 0.25rem;
+  }
+  .steps > li::before {
+    display: none;
+  }
+  .steps > li::after {
+    top: 0.4rem;
+    left: -7px;
+  }
+  /* トップの Articles は連載名と本数を 1 行目、公開月の図を 2 行目にする */
+  .series-row {
+    grid-template-columns: repeat(var(--months), minmax(2rem, 1fr));
+  }
+  .series-head > span:nth-child(-n + 2) {
+    display: none;
+  }
+  .s-name {
+    grid-column: 1 / -2;
+    padding: 0.5rem 0 0.1rem;
+  }
+  .s-count {
+    grid-column: -2 / -1;
+    justify-self: end;
+    align-self: start;
+    padding-top: 0.5rem;
+  }
+  .m {
+    padding: 0.2rem 0.2rem 0.55rem;
+    min-height: 1.7rem;
+  }
+  .m > i {
+    width: 8px;
+    height: 8px;
   }
   .kv-tables tr {
     grid-template-columns: minmax(0, 1fr);

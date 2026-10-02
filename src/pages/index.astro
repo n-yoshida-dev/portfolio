@@ -4,6 +4,7 @@
 // 文章は frontmatter の tagline / highlights と各コレクションの要約だけを出し、profile.md の本文は Markdown 版（/profile.md）に任せる。
 import Base from '../layouts/Base.astro';
 import HomeSection from '../components/HomeSection.astro';
+import Icon from '../components/Icon.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import SystemCard from '../components/SystemCard.astro';
 import {
@@ -12,9 +13,10 @@ import {
   getOtherProjects,
   getSystems,
   getArticles,
-  groupArticlesBySeries,
+  platformLabel,
 } from '../lib/content';
-import { skillGroups, careerTimeline } from '../lib/outline';
+import { topSkillCards, careerTimeline, articleCalendar, type TopSkillCard } from '../lib/outline';
+import type { IconName } from '../lib/icons';
 import { SITE, ASK_BUTTON_LABEL } from '../site';
 
 const profile = await getPage('profile');
@@ -23,10 +25,20 @@ const allFeatured = await getFeaturedProjects();
 const featured = allFeatured.slice(0, 4);
 const projectCount = allFeatured.length + (await getOtherProjects()).length;
 const systems = await getSystems();
-const skills = skillGroups((await getPage('skills')).body ?? '');
+const skills = topSkillCards((await getPage('skills')).body ?? '');
 const career = careerTimeline((await getPage('career')).body ?? '');
 const articles = await getArticles();
-const series = [...groupArticlesBySeries(articles).entries()];
+const calendar = articleCalendar(articles.map((a) => a.data));
+// 掲載先が 1 つだけなら「Qiita に書いた」と名前を出す（複数になったら名前を出さない）
+const platforms = [...new Set(articles.map((a) => platformLabel[a.data.platform]))];
+const articleSource =
+  platforms.length === 1 && platforms[0] ? `${platforms[0]} に書いた` : '書いた';
+
+/** Skills の区分見出しに添えるアイコン。根拠がまだない区分は芽、商用実務はかばん、それ以外（個人開発）はコード */
+function skillIcon(card: TopSkillCard): IconName {
+  if (card.tentative) return 'sprout';
+  return card.name === '商用実務' ? 'case' : 'code';
+}
 ---
 
 <Base description={profile.data.description} markdownHref="/profile.md">
@@ -34,18 +46,30 @@ const series = [...groupArticlesBySeries(articles).entries()];
     <h1>{SITE.name}</h1>
     {profile.data.tagline && <p class="lead">{profile.data.tagline}</p>}
     {profile.data.highlights && (
-      <ul class="highlights">
+      <ul class="facts">
         {profile.data.highlights.map((h) => (
-          <li>{h}</li>
+          <li>
+            <span class="fact-label">{h.label}</span>
+            <span class="fact-title">{h.title}</span>
+            {h.detail && <span class="fact-detail">{h.detail}</span>}
+          </li>
         ))}
       </ul>
     )}
     {profile.data.links && (
-      <p class="inline-links">
+      <ul class="link-cards" aria-label="外部のページ">
         {profile.data.links.map((l) => (
-          <a href={l.url}>{l.label}</a>
+          <li>
+            <a class="link-card" href={l.url}>
+              {l.icon && <Icon name={l.icon} />}
+              <span>
+                <span class="link-label">{l.label}</span>
+                {l.note && <span class="link-note">{l.note}</span>}
+              </span>
+            </a>
+          </li>
         ))}
-      </p>
+      </ul>
     )}
   </HomeSection>
 
@@ -66,36 +90,98 @@ const series = [...groupArticlesBySeries(articles).entries()];
   </HomeSection>
 
   <HomeSection id="skills">
-    <dl class="kv-list">
-      {skills.map((g) => (
-        <div>
-          <dt>{g.name}</dt>
-          <dd>{g.items.join('、')}</dd>
-        </div>
+    <p class="section-lead">根拠の種類で {skills.length} つに分けています。区分は混ぜません。</p>
+    <ul class="skill-grid">
+      {skills.map((c) => (
+        <li class:list={['skill-card', { 'is-tentative': c.tentative }]}>
+          <div class="skill-head">
+            <Icon name={skillIcon(c)} />
+            <h3>{c.name}</h3>
+            {c.span && <span class="skill-span">{c.span}</span>}
+          </div>
+          {c.definition && <p class="skill-def">{c.definition}</p>}
+          <ul class="chips">
+            {c.items.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+          {c.evidence.length > 0 && (
+            <p class="skill-evidence">
+              根拠：
+              {c.evidence.map((e, i) => (
+                <>
+                  {i > 0 && '・'}
+                  <a href={e.href}>{e.label}</a>
+                </>
+              ))}
+            </p>
+          )}
+        </li>
       ))}
-    </dl>
+    </ul>
   </HomeSection>
 
   <HomeSection id="journey">
-    <dl class="kv-list">
+    <ol class="steps">
       {career.map((row) => (
-        <div>
-          <dt>{row.period}</dt>
-          <dd>{row.title}</dd>
-        </div>
+        <li>
+          <span class="step-when">{row.period}</span>
+          <span class="step-role">{row.title}</span>
+          {row.detail && <span class="step-detail">{row.detail}</span>}
+        </li>
       ))}
-    </dl>
+    </ol>
   </HomeSection>
 
   <HomeSection id="articles" note={`${articles.length} 本`}>
-    <dl class="kv-list">
-      {series.map(([name, list]) => (
-        <div>
-          <dt>{name}</dt>
-          <dd>{list.length} 本</dd>
-        </div>
-      ))}
-    </dl>
+    <p class="section-lead">
+      {`${articleSource} ${articles.length} 本を、${calendar.rows.length} つの連載に分けています。`}
+      <span class="sq" aria-hidden="true"></span>
+      {' 1 つが記事 1 本で、公開した月に置いています。'}
+    </p>
+    <div class="series" style={`--months: ${calendar.months.length}`}>
+      <div class="series-row series-head" aria-hidden="true">
+        <span></span>
+        <span></span>
+        {calendar.months.map((m) => (
+          <span class="m-label">{m}</span>
+        ))}
+      </div>
+      <ol class="series-list">
+        {calendar.rows.map((row) => (
+          <li class="series-row">
+            <span class="s-name">{row.series}</span>
+            <span class="s-count">
+              {row.total} 本
+              <span class="visually-hidden">
+                （
+                {row.perMonth
+                  .map((n, i) => (n > 0 ? `${calendar.months[i]} に ${n} 本` : ''))
+                  .filter(Boolean)
+                  .join('、')}
+                ）
+              </span>
+            </span>
+            {row.perMonth.map((n) => (
+              <span class="m" aria-hidden="true">
+                {Array.from({ length: n }, () => (
+                  <i />
+                ))}
+              </span>
+            ))}
+          </li>
+        ))}
+      </ol>
+    </div>
+    {calendar.latest && (
+      <p class="latest">
+        <span class="latest-label">最新</span>
+        <a href={calendar.latest.url}>{calendar.latest.title}</a>
+        <span class="latest-meta">
+          {calendar.latest.publishedAt}・{calendar.latest.series}
+        </span>
+      </p>
+    )}
   </HomeSection>
 
   <HomeSection id="ask">

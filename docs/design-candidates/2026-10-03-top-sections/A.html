@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Naoki Yoshida — Portfolio</title>
+  <style>
+    :root {
+      --fg: #1f2328; --muted: #59636e; --line: #d1d9e0;
+      --link: #0969da; --bg: #fff; --subtle: #f6f8fa;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", "Hiragino Sans", "Helvetica Neue", Arial, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Consolas, monospace;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --fg: #e6edf3; --muted: #9198a1; --line: #3d444d; --link: #4493f8; --bg: #0d1117; --subtle: #161b22; }
+    }
+    * { box-sizing: border-box; }
+    html { color-scheme: light dark; -webkit-text-size-adjust: 100%; }
+    body { margin: 0; color: var(--fg); background: var(--bg); font: 16px/1.75 var(--sans); overflow-wrap: anywhere; }
+    a { color: var(--link); text-decoration: none; text-underline-offset: .2em; }
+    a:hover { text-decoration: underline; }
+    a:focus-visible { outline: 2px solid var(--fg); outline-offset: 4px; border-radius: 4px; }
+    h1, h2, h3, p, ul, ol, dl, dd { margin: 0; }
+    h1, h2, h3 { line-height: 1.4; font-weight: 650; }
+    h1 { font-size: 36px; letter-spacing: -.025em; }
+    h2 { font-size: 23px; letter-spacing: -.015em; }
+    h3 { font-size: 17px; }
+    svg.icon { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .svg-library { position: absolute; width: 0; height: 0; overflow: hidden; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+    .side { padding: 16px; border-bottom: 1px solid var(--line); }
+    .brand { display: block; color: var(--fg); font-size: 19px; font-weight: 650; }
+    .side nav { display: flex; flex-wrap: wrap; gap: 3px 16px; margin-top: 9px; }
+    .side nav a { color: var(--muted); }
+    .side nav a[aria-current] { color: var(--fg); font-weight: 650; }
+    .side-links { display: flex; flex-wrap: wrap; gap: 16px; font-size: 14px; margin-top: 12px; }
+    .page { min-width: 0; }
+    .container { width: 100%; max-width: 52rem; margin: 0 auto; padding: 0 16px; }
+    main.container { padding-top: 32px; padding-bottom: 48px; }
+    .home-section { scroll-margin-top: 28px; }
+    .home-section + .home-section { margin-top: 48px; }
+    .section-heading { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px; padding-bottom: 8px; margin-bottom: 16px; border-bottom: 1px solid var(--line); }
+    .section-note { color: var(--muted); font-size: 14px; font-weight: 400; letter-spacing: 0; }
+    .section-intro { color: var(--muted); font-size: 15px; margin: -2px 0 18px; }
+    .more-link { margin-top: 14px; font-size: 15px; }
+    .lead { color: var(--muted); font-size: 17px; margin: 12px 0 24px; }
+    .profile-points { border-top: 1px solid var(--line); }
+    .profile-point { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+    .profile-point dt { display: flex; align-items: flex-start; gap: 9px; padding-top: 2px; font-size: 14px; font-weight: 600; }
+    .profile-point dt .icon { width: 19px; height: 19px; margin-top: 2px; color: var(--muted); }
+    .profile-point dd { font-size: 15px; line-height: 1.75; }
+    .profile-point strong { font-weight: 650; }
+    .point-note { display: block; color: var(--muted); font-size: 13px; margin-top: 2px; }
+    .resource-links { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+    .resource-link { display: grid; grid-template-columns: 24px minmax(0, 1fr) 12px; gap: 10px; align-items: start; padding: 14px 12px; border: 1px solid var(--line); border-radius: 4px; background: var(--subtle); }
+    .resource-link:hover { border-color: var(--muted); text-decoration: none; }
+    .resource-link > .icon { color: var(--muted); margin-top: 3px; }
+    .resource-link strong { font-size: 15px; font-weight: 600; }
+    .resource-link:hover strong { text-decoration: underline; }
+    .resource-link small { display: block; color: var(--muted); font-size: 12px; line-height: 1.65; margin-top: 4px; }
+    .resource-link .arrow { font-size: 15px; }
+    .card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; padding: 0; list-style: none; }
+    .card { display: flex; flex-direction: column; gap: 5px; padding: 16px 18px; border: 1px solid var(--line); border-radius: 4px; background: var(--subtle); min-width: 0; }
+    .card-top { display: flex; align-items: center; flex-wrap: wrap; gap: 5px 10px; color: var(--muted); font: 12px/1.75 var(--mono); }
+    .card-badges { display: flex; gap: 5px; margin-left: auto; font-family: var(--sans); }
+    .badge { display: inline-block; padding: 0 6px; border: 1px solid var(--line); border-radius: 4px; background: var(--bg); color: var(--muted); font-size: 12px; }
+    .card p { font-size: 15px; }
+    .card-links { display: flex; gap: 16px; margin-top: auto; padding-top: 6px; font-size: 14px; }
+    .skill-card { padding: 20px; gap: 0; }
+    .skill-header { display: flex; gap: 12px; align-items: center; margin-bottom: 16px; }
+    .skill-header > .icon { width: 28px; height: 28px; color: var(--muted); }
+    .skill-header p { color: var(--muted); font-size: 12px; margin-top: 3px; }
+    .skill-list { list-style: none; padding: 0; font-size: 14px; }
+    .skill-list li + li { margin-top: 8px; }
+    .skill-list li { display: flex; gap: 9px; align-items: baseline; }
+    .skill-list li::before { content: ""; width: 4px; height: 4px; background: var(--muted); flex: none; align-self: flex-start; margin-top: 10px; }
+    .skill-foot { margin-top: auto; padding-top: 16px; }
+    .skill-foot p { border-top: 1px solid var(--line); padding-top: 12px; font-size: 13px; color: var(--muted); }
+    .learning { margin-top: 14px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 4px; background: var(--subtle); }
+    .learning-title { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .learning-title .icon { color: var(--muted); }
+    .learning-title p { color: var(--muted); font-size: 12px; }
+    .learning-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 24px; margin-top: 14px; }
+    .learning-list > div { display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 8px; font-size: 13px; line-height: 1.7; }
+    .learning-list dt { font-weight: 600; }
+    .learning-list dd { color: var(--muted); }
+    .career-timeline { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 0; list-style: none; margin: 24px 0 4px; }
+    .career-stop { position: relative; padding-right: 18px; }
+    .career-stop:last-child { padding-right: 0; }
+    .career-date { display: block; font: 13px/1.7 var(--mono); color: var(--muted); margin-bottom: 16px; }
+    .career-role { position: relative; border-top: 1px solid var(--line); padding: 21px 0 0; }
+    .career-role::before { content: ""; position: absolute; width: 9px; height: 9px; background: var(--link); border: 2px solid var(--bg); outline: 1px solid var(--line); border-radius: 50%; top: -5px; left: 0; }
+    .career-stop:not(:last-child) .career-role::after { content: ""; position: absolute; top: -1px; left: 100%; width: 18px; border-top: 1px solid var(--line); }
+    .career-role h3 { font-size: 15px; line-height: 1.65; }
+    .career-role p { color: var(--muted); font-size: 12px; line-height: 1.8; margin-top: 9px; }
+    .career-role .role-note { font-size: 11px; margin-top: 2px; }
+    .article-card { gap: 0; padding: 18px; }
+    .series-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .series-heading h3 { font-size: 14px; line-height: 1.7; }
+    .series-count { flex: none; display: flex; align-items: baseline; gap: 3px; font-size: 11px; color: var(--muted); }
+    .series-count strong { color: var(--fg); font: 500 22px/1.3 var(--mono); }
+    .article-example { border-top: 1px solid var(--line); margin-top: 12px; padding-top: 11px; }
+    .article-example small { display: block; color: var(--muted); font-size: 11px; margin-bottom: 6px; }
+    .article-example a { display: block; font-size: 14px; line-height: 1.8; }
+    #ask p { margin-bottom: 16px; }
+    .button { display: inline-block; border: 1px solid var(--fg); border-radius: 4px; padding: 6px 14px; font-size: 15px; font-weight: 600; background: var(--fg); color: var(--bg); }
+    .meta { font-size: 13px; color: var(--muted); margin-top: 28px; }
+    .site-footer { border-top: 1px solid var(--line); }
+    .site-footer .container { display: flex; flex-wrap: wrap; gap: 8px 24px; padding-top: 24px; padding-bottom: 88px; font-size: 13px; color: var(--muted); }
+    .ask-fab { position: fixed; z-index: 10; right: 16px; bottom: 16px; border: 2px solid var(--bg); border-radius: 4px; padding: 7px 17px; background: var(--fg); color: var(--bg); font-size: 15px; font-weight: 600; line-height: 1.5; white-space: nowrap; }
+    @media (min-width: 1024px) {
+      body { display: grid; grid-template-columns: 16rem minmax(0, 1fr); }
+      .side { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; padding: 40px 24px; border-bottom: 0; border-right: 1px solid var(--line); overflow-y: auto; }
+      .brand { font-size: 20px; }
+      .side nav { flex-direction: column; gap: 6px; margin-top: 28px; }
+      .side-links { margin-top: auto; padding-top: 24px; }
+      .container { margin-left: 0; padding-left: 48px; padding-right: 48px; }
+      main.container { padding-top: 44px; }
+    }
+    @media (max-width: 640px) {
+      body { font-size: 15.5px; }
+      h1 { font-size: 30px; }
+      h2 { font-size: 22px; }
+      .lead { font-size: 16px; margin-bottom: 20px; }
+      .home-section + .home-section { margin-top: 40px; }
+      .profile-point { grid-template-columns: 60px minmax(0, 1fr); gap: 12px; padding: 12px 0; }
+      .profile-point dt { flex-direction: column; gap: 4px; font-size: 12px; }
+      .profile-point dd { font-size: 14px; }
+      .point-note { font-size: 13px; }
+      .resource-links, .card-grid, .learning-list { grid-template-columns: minmax(0, 1fr); }
+      .resource-links { gap: 8px; margin-top: 16px; }
+      .resource-link { padding: 10px 12px; grid-template-columns: 22px minmax(0, 1fr) 12px; align-items: center; }
+      .resource-link > .icon { margin: 0; }
+      .resource-link small { margin-top: 0; font-size: 11px; }
+      .skill-card { padding: 18px; }
+      .learning { padding: 18px; }
+      .learning-title { gap: 8px; }
+      .learning-title p { width: 100%; padding-left: 30px; }
+      .career-timeline { grid-template-columns: minmax(0, 1fr); margin-top: 20px; }
+      .career-stop { display: grid; grid-template-columns: 91px minmax(0, 1fr); gap: 16px; padding: 0; }
+      .career-date { font-size: 12px; padding-top: 1px; margin: 0; }
+      .career-role { padding: 0 0 24px 19px; border-top: 0; border-left: 1px solid var(--line); }
+      .career-role::before { top: 6px; left: -5px; }
+      .career-stop:not(:last-child) .career-role::after { display: none; }
+      .career-stop:last-child .career-role { padding-bottom: 0; }
+      .career-role p { margin-top: 6px; font-size: 12px; }
+      .article-card { padding: 16px 18px; }
+    }
+  </style>
+</head>
+<body>
+  <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <symbol id="i-work" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V4h8v3M3 12a24 24 0 0 0 18 0M10 13v3h4v-3"/></symbol>
+      <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-13-2 16"/></symbol>
+      <symbol id="i-flow" viewBox="0 0 24 24"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/><path d="M9 6h6a3 3 0 0 1 3 3v6M6 9v9h9m0-3 3 3-3 3"/></symbol>
+      <symbol id="i-paper" viewBox="0 0 24 24"><path d="M14 3H5v18h14V8Zm0 0v5h5M8 12h8M8 16h6"/></symbol>
+      <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 5C9 3 5 3 2 4v15c4-1 7-1 10 1 3-2 6-2 10-1V4c-3-1-7-1-10 1Zm0 0v15"/></symbol>
+    </defs>
+  </svg>
+  <header class="side">
+    <a class="brand" href="#about">Naoki Yoshida</a>
+    <nav aria-label="目次">
+      <a href="#about" aria-current="location">About</a><a href="#projects">Projects</a><a href="#systems">Systems</a><a href="#skills">Skills</a><a href="#journey">Journey</a><a href="#articles">Articles</a><a href="#ask">Ask AI</a>
+    </nav>
+    <div class="side-links"><a href="https://github.com/n-yoshida-dev">GitHub</a><a href="https://qiita.com/n-yoshida-dev">Qiita</a><a href="/llms.txt">llms.txt</a></div>
+  </header>
+  <div class="page">
+    <main class="container">
+      <section id="about" class="home-section" aria-labelledby="about-heading">
+        <h2 id="about-heading" class="sr-only">About</h2>
+        <h1>Naoki Yoshida</h1>
+        <p class="lead">SE です。ここには個人開発と学習の記録をまとめています。</p>
+        <dl class="profile-points">
+          <div class="profile-point">
+            <dt><svg class="icon" aria-hidden="true"><use href="#i-work"/></svg>経験</dt>
+            <dd><strong>業務システムの現場で約 10 年。</strong><br>要件整理・仕様化・テスト・チームリード<span class="point-note">継続的にコードを書く担当ではない</span></dd>
+          </div>
+          <div class="profile-point">
+            <dt><svg class="icon" aria-hidden="true"><use href="#i-code"/></svg>実装</dt>
+            <dd><strong>Java / Spring Boot で OrgFlow を設計・実装中。</strong><span class="point-note">2026 年から、個人開発で業務ワークフロー API を実装。React は学習中</span></dd>
+          </div>
+          <div class="profile-point">
+            <dt><svg class="icon" aria-hidden="true"><use href="#i-flow"/></svg>進め方</dt>
+            <dd><strong>設計判断を ADR に残し、AI と分業する。</strong><span class="point-note">公開情報の線引きを機械で検査する</span></dd>
+          </div>
+        </dl>
+        <div class="resource-links" aria-label="公開している記録">
+          <a class="resource-link" href="https://github.com/n-yoshida-dev"><svg class="icon" aria-hidden="true"><use href="#i-code"/></svg><span><strong>GitHub</strong><small>コードと設計判断（ADR）</small></span><span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="resource-link" href="https://qiita.com/n-yoshida-dev"><svg class="icon" aria-hidden="true"><use href="#i-paper"/></svg><span><strong>Qiita</strong><small>認証・API 設計の学習記録</small></span><span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="resource-link" href="https://n-yoshida-dev.github.io/reading-log/"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg><span><strong>Reading Log</strong><small>読書記録の公開サイト</small></span><span class="arrow" aria-hidden="true">↗</span></a>
+        </div>
+      </section>
+
+      <section id="projects" class="home-section" aria-labelledby="projects-heading">
+        <h2 class="section-heading" id="projects-heading">Projects <span class="section-note">4 / 12 件</span></h2>
+        <ul class="card-grid">
+          <li class="card"><div class="card-top"><span>2026-03 〜</span><span class="card-badges"><span class="badge">Public</span><span class="badge">進行中</span></span></div><h3><a href="/projects/orgflow">OrgFlow</a></h3><p>申請・承認フローを題材にした、Java / Spring Boot の業務ワークフロー API</p><div class="card-links"><a href="https://github.com/n-yoshida-dev/orgflow">GitHub</a></div></li>
+          <li class="card"><div class="card-top"><span>2026-08 〜</span><span class="card-badges"><span class="badge">Private</span><span class="badge">進行中</span></span></div><h3><a href="/projects/skill-matrix">skill-matrix</a></h3><p>学習ログを AI に読ませて理解度を判定し、マトリクスとして可視化する個人用システム</p><div class="card-links"><a href="https://github.com/n-yoshida-dev/skill-matrix">GitHub</a></div></li>
+          <li class="card"><div class="card-top"><span>2026-08 〜</span><span class="card-badges"><span class="badge">Public</span><span class="badge">進行中</span></span></div><h3><a href="/projects/reading-log">Reading Log</a></h3><p>GitHub を正本に、ChatGPT / Claude / Claude Code を横断して使う読書管理システム</p><div class="card-links"><a href="https://github.com/n-yoshida-dev/reading-log">GitHub</a><a href="https://n-yoshida-dev.github.io/reading-log/">サイト</a></div></li>
+          <li class="card"><div class="card-top"><span>2026-08 〜</span><span class="card-badges"><span class="badge">Public</span><span class="badge">進行中</span></span></div><h3><a href="/projects/claude-plugins">claude-plugins</a></h3><p>自作アプリで使い回す Claude Code プラグインのマーケットプレイス</p><div class="card-links"><a href="https://github.com/n-yoshida-dev/claude-plugins">GitHub</a></div></li>
+        </ul>
+        <p class="more-link"><a href="/projects">すべてのプロジェクト →</a></p>
+      </section>
+
+      <section id="systems" class="home-section" aria-labelledby="systems-heading">
+        <h2 class="section-heading" id="systems-heading">Systems <span class="section-note">4 件</span></h2>
+        <ul class="card-grid">
+          <li class="card"><h3><a href="/systems/personal-ai-context">Personal AI Context System</a></h3><p>複数の AI を跨いで、自分の長期コンテキストを 1 つの非公開リポジトリで管理する仕組み</p></li>
+          <li class="card"><h3><a href="/systems/learning-system">Learning System</a></h3><p>学習ログを根拠に理解度を判定し、根拠のない昇格をしない学習の仕組み</p></li>
+          <li class="card"><h3><a href="/systems/reading-system">Reading System</a></h3><p>iPhone の ChatGPT から登録し、GitHub を正本に、週次レビューを AI が回す読書の仕組み</p></li>
+          <li class="card"><h3><a href="/systems/ai-assisted-development">AI-assisted Development Workflow</a></h3><p>文書・CI・レビューで複数の自作アプリを並行して進める開発の仕組み（判断は人間、検算は機械）</p></li>
+        </ul>
+        <p class="more-link"><a href="/systems">すべての仕組み →</a></p>
+      </section>
+
+      <section id="skills" class="home-section" aria-labelledby="skills-heading">
+        <h2 class="section-heading" id="skills-heading">Skills <span class="section-note">経験の区分と根拠</span></h2>
+        <div class="card-grid">
+          <article class="card skill-card">
+            <div class="skill-header"><svg class="icon" aria-hidden="true"><use href="#i-work"/></svg><div><h3>商用実務</h3><p>業務で担当 · 約 10 年</p></div></div>
+            <ul class="skill-list"><li>要件整理・仕様化・設計書</li><li>テスト工程の計画とリード</li><li>関係者調整・チームリード</li><li>インフラ基礎・既存コードの読解・課題管理</li></ul>
+            <div class="skill-foot"><p>継続的な機能追加・改修は担当していません。</p></div>
+          </article>
+          <article class="card skill-card">
+            <div class="skill-header"><svg class="icon" aria-hidden="true"><use href="#i-code"/></svg><div><h3>個人開発</h3><p>自分のリポジトリで設計・実装</p></div></div>
+            <ul class="skill-list"><li>Java / Spring Boot・PostgreSQL</li><li>CI / CD・開発フロー</li><li>AI 協働開発の仕組み</li><li>静的サイト・ツール</li></ul>
+            <div class="skill-foot"><p>根拠：<a href="/projects/orgflow">OrgFlow</a> / <a href="/projects/claude-plugins">claude-plugins</a></p></div>
+          </article>
+        </div>
+        <div class="learning">
+          <div class="learning-title"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg><h3>理解確認済み・学習中</h3><p>確認できた範囲を明記</p></div>
+          <dl class="learning-list">
+            <div><dt>React</dt><dd>JSX・state / props などを理解確認</dd></div>
+            <div><dt>Go</dt><dd>基本構文・メソッドまで学習、一時停止中</dd></div>
+            <div><dt>AWS</dt><dd>SAA を学習中</dd></div>
+            <div><dt>Supabase</dt><dd>認証・RLS の動作確認済み。言語化はまだ</dd></div>
+            <div><dt>Stripe</dt><dd>課金は未着手</dd></div>
+          </dl>
+        </div>
+        <p class="more-link"><a href="/skills">根拠つきの一覧 →</a></p>
+      </section>
+
+      <section id="journey" class="home-section" aria-labelledby="journey-heading">
+        <h2 class="section-heading" id="journey-heading">Journey <span class="section-note">役割の変遷</span></h2>
+        <ol class="career-timeline">
+          <li class="career-stop"><span class="career-date">2016〜2018</span><div class="career-role"><h3>事業会社の<br>情報システム担当</h3><p>ヘルプデスク、仮想基盤の保守、ネットワーク管理</p></div></li>
+          <li class="career-stop"><span class="career-date">2019〜2020</span><div class="career-role"><h3>SIer の<br>設計・構築エンジニア</h3><p>IT 資産管理製品の設計・構築</p></div></li>
+          <li class="career-stop"><span class="career-date">2020〜2024</span><div class="career-role"><h3>同領域の<br>チームリーダー</h3><p>案件推進、アサイン・教育、ドキュメントレビュー</p></div></li>
+          <li class="career-stop"><span class="career-date">2025〜</span><div class="career-role"><h3>アプリケーション<br>開発部門</h3><p class="role-note">本人希望で異動</p><p>移行計画・テスト計画、課題管理</p></div></li>
+        </ol>
+        <p class="more-link"><a href="/journey">担当の詳細と学習の歩み →</a></p>
+      </section>
+
+      <section id="articles" class="home-section" aria-labelledby="articles-heading">
+        <h2 class="section-heading" id="articles-heading">Articles <span class="section-note">21 本</span></h2>
+        <p class="section-intro">Qiita に書いた学習記録。テーマごとの記事数と、記事の一例です。</p>
+        <div class="card-grid">
+          <article class="card article-card"><div class="series-heading"><h3>マルチテナント</h3><span class="series-count"><strong>4</strong> 本の記事</span></div><div class="article-example"><small>記事の一例 · Qiita</small><a href="https://qiita.com/n-yoshida-dev/items/f3f7db728206e5bcf1b2">Spring Boot + JWTで「ログイン済み」と「tenant選択済み」を分けて扱った ↗</a></div></article>
+          <article class="card article-card"><div class="series-heading"><h3>Spring Security と JWT 認証</h3><span class="series-count"><strong>8</strong> 本の記事</span></div><div class="article-example"><small>記事の一例 · Qiita</small><a href="https://qiita.com/n-yoshida-dev/items/b7902025a5c3eca3db79">Spring Bootで発行したJWTをBearer Tokenとして検証し、保護APIを通すまで ↗</a></div></article>
+          <article class="card article-card"><div class="series-heading"><h3>Spring Boot で API を組み立てる</h3><span class="series-count"><strong>5</strong> 本の記事</span></div><div class="article-example"><small>記事の一例 · Qiita</small><a href="https://qiita.com/n-yoshida-dev/items/f175fa79ebca15affb34">Spring BootでControllerの処理をServiceへ分離しながらDIを理解した話 ↗</a></div></article>
+          <article class="card article-card"><div class="series-heading"><h3>OrgFlow の設計</h3><span class="series-count"><strong>2</strong> 本の記事</span></div><div class="article-example"><small>記事の一例 · Qiita</small><a href="https://qiita.com/n-yoshida-dev/items/3a80d39c2d678e4a3552">ER図から始めようとして詰まったので、データモデリングからやり直した話 ↗</a></div></article>
+          <article class="card article-card"><div class="series-heading"><h3>AI と進める個人開発</h3><span class="series-count"><strong>2</strong> 本の記事</span></div><div class="article-example"><small>記事の一例 · Qiita</small><a href="https://qiita.com/n-yoshida-dev/items/064adc2858ddf40c4b4f">ChatGPT ProjectsでAIを"継続メンター化"するために作った仕組み ↗</a></div></article>
+        </div>
+        <p class="more-link"><a href="/articles">すべての記事 →</a></p>
+      </section>
+
+      <section id="ask" class="home-section" aria-labelledby="ask-heading">
+        <h2 class="section-heading" id="ask-heading">Ask AI</h2>
+        <p>あなたの AI に、このサイトと公開リポジトリを読ませて私について質問できます。</p>
+        <p><a class="button" href="/ask">Ask AI about this portfolio</a></p>
+      </section>
+      <p class="meta">最終確認日: 2026-10-02</p>
+    </main>
+    <footer class="site-footer"><div class="container"><span>© 2026 Naoki Yoshida</span><a href="/profile.md">このページの Markdown</a><a href="https://github.com/n-yoshida-dev/portfolio">このサイトのソース</a></div></footer>
+  </div>
+  <a class="ask-fab" href="/ask">Ask AI about this portfolio</a>
+  <script>
+    // The only script is the existing table-of-contents scroll tracking.
+    const links = [...document.querySelectorAll('.side nav a')];
+    const sections = links.map(link => document.querySelector(link.hash));
+    let scheduled = false;
+    function updateCurrent() {
+      scheduled = false;
+      let current = 0;
+      sections.forEach((section, i) => { if (section.getBoundingClientRect().top <= innerHeight / 3) current = i; });
+      if (innerHeight + scrollY >= document.documentElement.scrollHeight - 1) current = sections.length - 1;
+      links.forEach((link, i) => { if (i === current) link.setAttribute('aria-current', 'location'); else link.removeAttribute('aria-current'); });
+    }
+    function scheduleUpdate() { if (!scheduled) { scheduled = true; requestAnimationFrame(updateCurrent); } }
+    addEventListener('scroll', scheduleUpdate, { passive: true });
+    addEventListener('resize', scheduleUpdate);
+    updateCurrent();
+  </script>
+</body>
+</html>

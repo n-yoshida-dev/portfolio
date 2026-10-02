@@ -1,18 +1,11 @@
 ---
 // Articles。技術記事へのリンクを連載ごとにまとめる。
 import Base from '../layouts/Base.astro';
-import { getArticles, groupArticlesBySeries } from '../lib/content';
+import { getArticles, groupArticlesBySeries, platformLabel } from '../lib/content';
 import { SITE } from '../site';
 
 const articles = await getArticles();
 const groups = groupArticlesBySeries(articles);
-const platformLabel: Record<string, string> = {
-  qiita: 'Qiita',
-  zenn: 'Zenn',
-  note: 'note',
-  blog: 'Blog',
-  other: '',
-};
 ---
 
 <Base

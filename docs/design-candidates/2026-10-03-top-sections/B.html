@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Naoki Yoshida — Portfolio（案）</title>
+<style>
+/* ---------- 既存の global.css（必要な部分をそのまま） ---------- */
+:root{--fg:#1f2328;--fg-muted:#59636e;--line:#d1d9e0;--link:#0969da;--bg:#fff;--bg-subtle:#f6f8fa;--code-bg:#f0f2f4;--max-width:52rem;--font-sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP","Hiragino Sans","Helvetica Neue",Arial,sans-serif;--font-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace}
+@media (prefers-color-scheme:dark){:root{--fg:#e6edf3;--fg-muted:#9198a1;--line:#3d444d;--link:#4493f8;--bg:#0d1117;--bg-subtle:#161b22;--code-bg:#1c2129}}
+*,:before,:after{box-sizing:border-box}
+html{color-scheme:light dark;-webkit-text-size-adjust:100%}
+body{font-family:var(--font-sans);color:var(--fg);background:var(--bg);overflow-wrap:anywhere;margin:0;font-size:16px;line-height:1.75}
+a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
+h1,h2,h3,h4{margin:2em 0 .6em;font-weight:600;line-height:1.35}
+h1{margin-top:0;font-size:1.75rem}
+h2{border-bottom:1px solid var(--line);padding-bottom:.3em;font-size:1.35rem}
+h3{font-size:1.1rem}
+p,ul,ol{margin:0 0 1em}ul,ol{padding-left:1.5em}li+li{margin-top:.25em}
+.side{border-bottom:1px solid var(--line);padding:1rem 16px}
+.side .brand{color:var(--fg);font-size:1.1rem;font-weight:600;display:block}
+.side nav{flex-wrap:wrap;gap:.2rem 1rem;margin-top:.5rem;font-size:.95rem;display:flex}
+.side nav a{color:var(--fg-muted)}.side nav a[aria-current]{color:var(--fg);font-weight:600}
+.side-links{flex-wrap:wrap;gap:.2rem 1rem;margin-top:.6rem;font-size:.875rem;display:flex}
+.site-footer{border-top:1px solid var(--line);color:var(--fg-muted);font-size:.875rem}
+.container{max-width:var(--max-width);margin:0 auto;padding:0 16px}
+.site-footer .container{flex-wrap:wrap;gap:.5rem 1.5rem;padding-top:1.25rem;padding-bottom:5rem;display:flex}
+main.container{padding-top:2rem;padding-bottom:3rem}
+@media (width>=64rem){
+  body{grid-template-columns:16rem minmax(0,1fr);min-height:100vh;display:grid}
+  .side{border-bottom:0;border-right:1px solid var(--line);flex-direction:column;height:100vh;padding:2.5rem 1.5rem;display:flex;position:sticky;top:0;overflow-y:auto}
+  .side .brand{font-size:1.25rem}
+  .side nav{flex-direction:column;gap:.35rem;margin-top:1.5rem;font-size:1rem}
+  .side-links{margin-top:auto;padding-top:1.5rem}
+  .page{min-width:0}
+  .page .container{margin-left:0;padding-left:3rem;padding-right:3rem}
+  main.container{padding-top:3rem}
+}
+.home-section{scroll-margin-top:1rem}
+.home-section:first-child>h2{clip-path:inset(50%);border:0;width:1px;height:1px;margin:0;padding:0;position:absolute;overflow:hidden}
+.home-section>h2{margin-top:2.5rem}
+.section-note{color:var(--fg-muted);margin-left:.6rem;font-size:.875rem;font-weight:400}
+.more-link{margin:.75rem 0 0;font-size:.95rem}
+.lead{color:var(--fg-muted);margin-bottom:1.5rem;font-size:1.05rem}
+.meta{color:var(--fg-muted);font-size:.875rem}
+.badge{border:1px solid var(--line);color:var(--fg-muted);vertical-align:middle;border-radius:999px;padding:0 .6em;font-size:.75rem;display:inline-block}
+.card-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem;margin:0;padding:0;list-style:none;display:grid}
+.card{background:var(--bg-subtle);border:1px solid var(--line);border-radius:8px;flex-direction:column;gap:.3rem;margin:0;padding:1rem 1.1rem;display:flex}
+.card-top{font-family:var(--font-mono);color:var(--fg-muted);flex-wrap:wrap;align-items:center;gap:.3rem .6rem;font-size:.8rem;display:flex}
+.card-badges{font-family:var(--font-sans);gap:.3rem;margin-left:auto;display:flex}
+.card .badge{background:var(--bg)}
+.card h3{margin:0;font-size:1.05rem}.card p{margin:0;font-size:.95rem}
+.card-links{flex-wrap:wrap;gap:.25rem 1rem;margin-top:auto;padding-top:.35rem;font-size:.9rem;display:flex}
+.button-row{flex-wrap:wrap;gap:.5rem;margin:.5rem 0 1.5rem;display:flex}
+.button{font:inherit;color:var(--fg);border:1px solid var(--line);cursor:pointer;background:0 0;border-radius:4px;padding:.35em .9em;font-size:.95rem;text-decoration:none;display:inline-block}
+.button-primary{background:var(--fg);border-color:var(--fg);color:var(--bg);font-weight:600}
+.ask-fab{z-index:10;background:var(--fg);color:var(--bg);border:2px solid var(--bg);white-space:nowrap;border-radius:4px;padding:.45em 1.1em;font-size:.95rem;font-weight:600;line-height:1.5;position:fixed;bottom:16px;right:16px}
+
+/* ---------- ここから案：About / Skills / Journey / Articles ---------- */
+
+/* 共通：節の説明文（見出しの直下、何を見ているかを 1 行で言う） */
+.section-lede{color:var(--fg-muted);font-size:.9rem;margin:-.25rem 0 .9rem}
+
+/* 共通：線画アイコン（currentColor。色は足さない） */
+.ico{width:1.25rem;height:1.25rem;flex:none;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+
+/* About：要点 3 行を「何の人か / 何を作っているか / どういう開発スタイルか」の 3 枠に */
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem;margin:0 0 1.5rem;padding:0;list-style:none}
+.facts li{margin:0;border-top:2px solid var(--line);padding-top:.6rem}
+.facts-label{display:block;font-family:var(--font-mono);font-size:.75rem;color:var(--fg-muted);letter-spacing:.02em;margin-bottom:.2rem}
+.facts p{margin:0;font-size:.95rem;line-height:1.65}
+
+/* About：外部リンクをアイコン + 名前 + 何があるかのカードに */
+.link-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.75rem;margin:0 0 .5rem;padding:0;list-style:none}
+.link-cards li{margin:0}
+.link-cards a{display:flex;align-items:flex-start;gap:.7rem;background:var(--bg-subtle);border:1px solid var(--line);border-radius:8px;padding:.75rem .9rem;color:inherit;height:100%}
+.link-cards a:hover{text-decoration:none;border-color:var(--fg-muted)}
+.link-cards .ico{color:var(--fg-muted);margin-top:.2rem;width:1.4rem;height:1.4rem}
+.lc-label{display:block;color:var(--link);font-weight:600;line-height:1.4}
+.link-cards a:hover .lc-label{text-decoration:underline}
+.lc-note{display:block;color:var(--fg-muted);font-size:.8rem;line-height:1.5;margin-top:.15rem}
+
+/* Skills：区分ごとのカード 3 列。中身は短いチップ */
+.skill-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.9rem;margin:0;padding:0;list-style:none}
+.skill-grid .card{padding:.9rem 1rem 1rem}
+.skill-head{display:flex;align-items:center;gap:.5rem}
+.skill-head .ico{color:var(--fg-muted)}
+.skill-head h3{margin:0;font-size:1rem}
+.skill-span{margin-left:auto;font-family:var(--font-mono);font-size:.75rem;color:var(--fg-muted);white-space:nowrap}
+.skill-def{color:var(--fg-muted);font-size:.8rem;line-height:1.5;margin:0 0 .2rem}
+.chips{display:flex;flex-wrap:wrap;gap:.35rem;margin:.3rem 0 0;padding:0;list-style:none}
+.chips li{margin:0;font-size:.8rem;line-height:1.5;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:.05em .5em}
+
+/* Journey：横の年表（PC）。点は青（既存の例外）。線は --line */
+.tl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:.25rem 0 0;padding:0;list-style:none;counter-reset:none}
+.tl li{margin:0;position:relative;padding:1.1rem .75rem 0 0}
+.tl li::before{content:"";position:absolute;left:0;right:0;top:5px;height:2px;background:var(--line)}
+.tl li:first-child::before{left:6px}
+.tl-dot{position:absolute;left:0;top:0;width:12px;height:12px;border-radius:50%;background:var(--link);border:2px solid var(--bg);box-sizing:border-box}
+.tl-when{display:block;font-family:var(--font-mono);font-size:.8rem;color:var(--fg-muted)}
+.tl-what{display:block;font-weight:600;font-size:.95rem;line-height:1.5}
+.tl-sub{display:block;color:var(--fg-muted);font-size:.8rem;line-height:1.5;margin-top:.1rem}
+.tl-learn{margin:1rem 0 0;font-size:.875rem;color:var(--fg-muted);border-top:1px solid var(--line);padding-top:.6rem}
+.tl-learn b{font-weight:600;color:var(--fg)}
+.tl-learn .sep{margin:0 .35em}
+
+/* Articles：連載ごとに「1 マス = 1 本」のタイルで本数を見せ、最新の題名を添える */
+.series{margin:0;padding:0;list-style:none}
+.series li{margin:0;display:grid;grid-template-columns:minmax(0,17rem) minmax(0,1fr);gap:.2rem 1rem;align-items:start;padding:.55rem 0;border-top:1px solid var(--line)}
+.series li:last-child{border-bottom:1px solid var(--line)}
+.series-name{font-weight:600;font-size:.95rem}
+.series-name a{color:inherit}
+.series-tiles{display:flex;align-items:center;gap:.3rem;flex-wrap:wrap;min-height:1.65rem}
+.tiles{display:inline-flex;gap:3px}
+.tiles i{display:block;width:13px;height:13px;border:1px solid var(--line);background:var(--bg-subtle);border-radius:3px}
+.series-count{font-family:var(--font-mono);font-size:.8rem;color:var(--fg-muted);margin-left:.25rem}
+.series-latest{grid-column:2;font-size:.825rem;color:var(--fg-muted);margin:0;line-height:1.5}
+.series-latest a{color:var(--link)}
+
+/* モバイル */
+@media (width<=40rem){
+  body{font-size:15.5px}
+  .card-grid{grid-template-columns:minmax(0,1fr)}
+  h1{font-size:1.5rem}h2{font-size:1.25rem}
+  .facts{grid-template-columns:minmax(0,1fr);gap:.8rem}
+  .link-cards{grid-template-columns:minmax(0,1fr);gap:.5rem}
+  .link-cards a{padding:.6rem .8rem}
+  .skill-grid{grid-template-columns:minmax(0,1fr)}
+  /* 年表は縦に */
+  .tl{grid-template-columns:minmax(0,1fr);border-left:2px solid var(--line);margin-left:5px}
+  .tl li{padding:0 0 .9rem 1.1rem}
+  .tl li:last-child{padding-bottom:.25rem}
+  .tl li::before{display:none}
+  .tl-dot{left:-7px;top:.45rem}
+  .series li{grid-template-columns:minmax(0,1fr)}
+  .series-latest{grid-column:1}
+}
+</style>
+</head>
+<body>
+<header class="side">
+  <a class="brand" href="/">Naoki Yoshida</a>
+  <nav aria-label="目次">
+    <a href="#about" aria-current="location">About</a><a href="#projects">Projects</a><a href="#systems">Systems</a><a href="#skills">Skills</a><a href="#journey">Journey</a><a href="#articles">Articles</a><a href="#ask">Ask AI</a>
+  </nav>
+  <div class="side-links"><a href="https://github.com/n-yoshida-dev">GitHub</a><a href="https://qiita.com/n-yoshida-dev">Qiita</a><a href="/llms.txt">llms.txt</a></div>
+</header>
+<div class="page">
+<main class="container">
+
+<!-- ===== About ===== -->
+<section id="about" class="home-section" aria-labelledby="about-heading">
+  <h2 id="about-heading">About</h2>
+  <h1>Naoki Yoshida</h1>
+  <p class="lead">SE です。ここには個人開発と学習の記録をまとめています。</p>
+
+  <ul class="facts">
+    <li>
+      <span class="facts-label">何の人か</span>
+      <p>業務システムの現場で約 10 年。要件整理・仕様化・テスト・チームリード（継続的にコードを書く担当ではない）</p>
+    </li>
+    <li>
+      <span class="facts-label">何を作っているか</span>
+      <p>2026 年から Java / Spring Boot で業務ワークフロー API OrgFlow を設計・実装中。React は学習中</p>
+    </li>
+    <li>
+      <span class="facts-label">どういう開発スタイルか</span>
+      <p>設計判断を ADR に残し、AI と分業し、公開情報の線引きを機械で検査する</p>
+    </li>
+  </ul>
+
+  <ul class="link-cards">
+    <li><a href="https://github.com/n-yoshida-dev">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l-5 7 5 7M16 5l5 7-5 7M14 4l-4 16"/></svg>
+      <span><span class="lc-label">GitHub</span><span class="lc-note">すべてのコードと設計判断（ADR）の一次情報</span></span>
+    </a></li>
+    <li><a href="https://qiita.com/n-yoshida-dev">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16M4 16l10.5-10.5a2.1 2.1 0 0 1 3 3L7 19l-4 1z"/></svg>
+      <span><span class="lc-label">Qiita</span><span class="lc-note">Spring Boot / 認証 / API 設計の学習記録（連載）</span></span>
+    </a></li>
+    <li><a href="https://n-yoshida-dev.github.io/reading-log/">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5c-1.5-1.5-4-2-8-2v13c4 0 6.5.5 8 2 1.5-1.5 4-2 8-2v-13c-4 0-6.5.5-8 2zM12 6.5v13"/></svg>
+      <span><span class="lc-label">Reading Log</span><span class="lc-note">読書記録の公開サイト（GitHub Pages）</span></span>
+    </a></li>
+  </ul>
+</section>
+
+<!-- ===== Projects（対象外。今のまま） ===== -->
+<section id="projects" class="home-section" aria-labelledby="projects-heading">
+  <h2 id="projects-heading">Projects<span class="section-note">4 / 12 件</span></h2>
+  <ul class="card-grid">
+    <li class="card"><div class="card-top"><span>2026-03 〜</span><span class="card-badges"><span class="badge">Public</span><span class="badge">進行中</span></span></div><h3><a href="/projects/orgflow">OrgFlow</a></h3><p>申請・承認フローを題材にした、Java / Spring Boot の業務ワークフロー API</p><div class="card-links"><a href="https://github.com/n-yoshida-dev/orgflow">GitHub</a></div></li>
+    <li class="card"><div class="card-top"><span>2026-08 〜</span><span class="card-badges"><span class="badge">Private</span><span class="badge">進行中</span></span></div><h3><a href="/projects/skill-matrix">skill-matrix</a></h3><p>学習ログを AI に読ませて理解度を判定し、マトリクスとして可視化する個人用システム</p><div class="card-links"><a href="https://github.com/n-yoshida-dev/skill-matrix">GitHub</a></div></li>
+    <li class="card"><div class="card-top"><span>2026-08 〜</span><span class="card-badges"><span class="badge">Public</span><span class="badge">進行中</span></span></div><h3><a href="/projects/reading-log">Reading Log</a></h3><p>GitHub を正本に、ChatGPT / Claude / Claude Code を横断して使う読書管理システム</p><div class="card-links"><a href="https://github.com/n-yoshida-dev/reading-log">GitHub</a><a href="https://n-yoshida-dev.github.io/reading-log/">サイト</a></div></li>
+    <li class="card"><div class="card-top"><span>2026-08 〜</span><span class="card-badges"><span class="badge">Public</span><span class="badge">進行中</span></span></div><h3><a href="/projects/claude-plugins">claude-plugins</a></h3><p>自作アプリで使い回す Claude Code プラグインのマーケットプレイス</p><div class="card-links"><a href="https://github.com/n-yoshida-dev/claude-plugins">GitHub</a></div></li>
+  </ul>
+  <p class="more-link"><a href="/projects">すべてのプロジェクト →</a></p>
+</section>
+
+<!-- ===== Systems（対象外。今のまま） ===== -->
+<section id="systems" class="home-section" aria-labelledby="systems-heading">
+  <h2 id="systems-heading">Systems<span class="section-note">4 件</span></h2>
+  <ul class="card-grid">
+    <li class="card"><h3><a href="/systems/personal-ai-context">Personal AI Context System</a></h3><p>複数の AI を跨いで、自分の長期コンテキストを 1 つの非公開リポジトリで管理する仕組み</p></li>
+    <li class="card"><h3><a href="/systems/learning-system">Learning System</a></h3><p>学習ログを根拠に理解度を判定し、根拠のない昇格をしない学習の仕組み</p></li>
+    <li class="card"><h3><a href="/systems/reading-system">Reading System</a></h3><p>iPhone の ChatGPT から登録し、GitHub を正本に、週次レビューを AI が回す読書の仕組み</p></li>
+    <li class="card"><h3><a href="/systems/ai-assisted-development">AI-assisted Development Workflow</a></h3><p>文書・CI・レビューで複数の自作アプリを並行して進める開発の仕組み（判断は人間、検算は機械）</p></li>
+  </ul>
+  <p class="more-link"><a href="/systems">すべての仕組み →</a></p>
+</section>
+
+<!-- ===== Skills ===== -->
+<section id="skills" class="home-section" aria-labelledby="skills-heading">
+  <h2 id="skills-heading">Skills</h2>
+  <p class="section-lede">区分は混ぜません。根拠のあるものだけを、根拠の種類ごとに分けています。</p>
+  <ul class="skill-grid">
+    <li class="card">
+      <div class="skill-head">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18"/></svg>
+        <h3>商用実務</h3><span class="skill-span">約 10 年</span>
+      </div>
+      <p class="skill-def">業務で担当。コードを書く仕事ではない</p>
+      <ul class="chips"><li>要件整理・仕様化・設計書</li><li>テスト工程</li><li>関係者調整・チームリード</li><li>インフラ基礎</li><li>既存コードの読解</li><li>課題管理</li></ul>
+    </li>
+    <li class="card">
+      <div class="skill-head">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3M12 15h5"/></svg>
+        <h3>個人開発</h3><span class="skill-span">2026 〜</span>
+      </div>
+      <p class="skill-def">自分のリポジトリで設計・実装</p>
+      <ul class="chips"><li>Java / Spring Boot</li><li>PostgreSQL</li><li>CI / CD・開発フロー</li><li>AI 協働開発の仕組み</li><li>静的サイト・ツール</li></ul>
+    </li>
+    <li class="card">
+      <div class="skill-head">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5zM4 20.5V5.5M8 7h8M8 10.5h5"/></svg>
+        <h3>理解確認済み・学習中</h3>
+      </div>
+      <p class="skill-def">確認問題や説明で確認。実装の根拠はまだ薄い</p>
+      <ul class="chips"><li>Go</li><li>React</li><li>AWS</li><li>Supabase の認証・RLS</li><li>課金（Stripe）</li></ul>
+    </li>
+  </ul>
+  <p class="more-link"><a href="/skills">根拠つきの一覧 →</a></p>
+</section>
+
+<!-- ===== Journey ===== -->
+<section id="journey" class="home-section" aria-labelledby="journey-heading">
+  <h2 id="journey-heading">Journey</h2>
+  <p class="section-lede">会社名は書かず、役割の変遷だけを載せています。</p>
+  <ol class="tl">
+    <li><span class="tl-dot"></span><span class="tl-when">2016〜2018</span><span class="tl-what">事業会社の情報システム担当</span><span class="tl-sub">ヘルプデスク、仮想基盤の保守、拠点のネットワーク管理</span></li>
+    <li><span class="tl-dot"></span><span class="tl-when">2019〜2020</span><span class="tl-what">SIer の設計・構築エンジニア</span><span class="tl-sub">IT 資産管理製品の設計・構築</span></li>
+    <li><span class="tl-dot"></span><span class="tl-when">2020〜2024</span><span class="tl-what">同領域のチームリーダー</span><span class="tl-sub">案件推進、7〜8 名のアサイン・教育、プリセールス</span></li>
+    <li><span class="tl-dot"></span><span class="tl-when">2025〜</span><span class="tl-what">アプリケーション開発部門</span><span class="tl-sub">本人希望で異動。移行計画・テスト計画、課題管理</span></li>
+  </ol>
+  <p class="tl-learn"><b>学習と開発</b><span class="sep">：</span>2025 春〜 Java / Spring Boot の独学を開始<span class="sep">→</span>2026-03 OrgFlow を開始<span class="sep">→</span>2026-09 このポートフォリオを作成</p>
+  <p class="more-link"><a href="/journey">担当の詳細と学習の歩み →</a></p>
+</section>
+
+<!-- ===== Articles ===== -->
+<section id="articles" class="home-section" aria-labelledby="articles-heading">
+  <h2 id="articles-heading">Articles<span class="section-note">Qiita に 21 本</span></h2>
+  <p class="section-lede">連載（シリーズ）ごとの本数です。1 マス = 1 本。</p>
+  <ul class="series">
+    <li>
+      <span class="series-name"><a href="/articles">マルチテナント</a></span>
+      <span class="series-tiles"><span class="tiles"><i></i><i></i><i></i><i></i></span><span class="series-count">4 本</span></span>
+      <p class="series-latest">最新：<a href="https://qiita.com/n-yoshida-dev/items/2cff32755c61d039acea">Serviceの実装で理解するJavaのstream / map / メソッド参照(::) / ラムダ式(->)</a>（2026-06-25）</p>
+    </li>
+    <li>
+      <span class="series-name"><a href="/articles">Spring Security と JWT 認証</a></span>
+      <span class="series-tiles"><span class="tiles"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="series-count">8 本</span></span>
+      <p class="series-latest">最新：<a href="https://qiita.com/n-yoshida-dev/items/7223f182374776b01935">Spring SecurityでJWT検証後にsubからuserIdを取り出す流れを理解した</a>（2026-05-30）</p>
+    </li>
+    <li>
+      <span class="series-name"><a href="/articles">Spring Boot で API を組み立てる</a></span>
+      <span class="series-tiles"><span class="tiles"><i></i><i></i><i></i><i></i><i></i></span><span class="series-count">5 本</span></span>
+      <p class="series-latest">最新：<a href="https://qiita.com/n-yoshida-dev/items/1703fd75116461995219">UserRepositoryを作りながら、Spring Data JPAのRepository interfaceを理解した話</a>（2026-05-10）</p>
+    </li>
+    <li>
+      <span class="series-name"><a href="/articles">OrgFlow の設計</a></span>
+      <span class="series-tiles"><span class="tiles"><i></i><i></i></span><span class="series-count">2 本</span></span>
+      <p class="series-latest">最新：<a href="https://qiita.com/n-yoshida-dev/items/f7988ab337f5209226f7">OpenAPI YAMLを書く前に、業務操作一覧・API群・path候補を整理した話</a>（2026-04-24）</p>
+    </li>
+    <li>
+      <span class="series-name"><a href="/articles">AI と進める個人開発</a></span>
+      <span class="series-tiles"><span class="tiles"><i></i><i></i></span><span class="series-count">2 本</span></span>
+      <p class="series-latest">最新：<a href="https://qiita.com/n-yoshida-dev/items/53f0cdc3b42d6588199a">毎回書くのが面倒なコミットレビュー依頼文を、VSCode snippetで一発展開する</a>（2026-03-31）</p>
+    </li>
+  </ul>
+  <p class="more-link"><a href="/articles">すべての記事 →</a></p>
+</section>
+
+<!-- ===== Ask AI（対象外。今のまま） ===== -->
+<section id="ask" class="home-section" aria-labelledby="ask-heading">
+  <h2 id="ask-heading">Ask AI</h2>
+  <p>あなたの AI に、このサイトと公開リポジトリを読ませて私について質問できます。</p>
+  <p class="button-row"><a class="button button-primary" href="/ask">Ask AI about this portfolio</a></p>
+</section>
+<p class="meta">最終確認日: 2026-10-02</p>
+</main>
+<footer class="site-footer"><div class="container"><span>© 2026 Naoki Yoshida</span><a href="/profile.md">このページの Markdown</a><a href="https://github.com/n-yoshida-dev/portfolio">このサイトのソース</a></div></footer>
+</div>
+<a class="ask-fab" href="/ask">Ask AI about this portfolio</a>
+</body>
+</html>

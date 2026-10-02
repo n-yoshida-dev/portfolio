@@ -1,22 +1,31 @@
 ---
 title: Profile
 description: Naoki Yoshida。業務システムの現場で仕様化・調整・テストを担ってきたソフトウェアエンジニア。Java/Spring Boot の個人開発と React の学習、AI・GitHub を組み合わせた開発・学習の仕組みづくりを公開しています。
-updated: 2026-10-02
+updated: 2026-10-03
 tagline: SE です。ここには個人開発と学習の記録をまとめています。
 highlights:
-  - 業務システムの現場で約 10 年。要件整理・仕様化・テスト・チームリード（継続的にコードを書く担当ではない）
-  - 2026 年から Java / Spring Boot で業務ワークフロー API OrgFlow を設計・実装中。React は学習中
-  - 設計判断を ADR に残し、AI と分業し、公開情報の線引きを機械で検査する
+  - label: 何の人か
+    title: 業務システムの現場で約 10 年
+    detail: 要件整理・仕様化・テスト・チームリード（継続的にコードを書く担当ではない）
+  - label: 何を作っているか
+    title: 2026 年から OrgFlow を設計・実装中
+    detail: Java / Spring Boot の業務ワークフロー API。React は学習中
+  - label: どういう開発スタイルか
+    title: 設計判断を ADR に残す
+    detail: AI と分業し、公開情報の線引きを機械で検査する
 links:
   - label: GitHub
     url: https://github.com/n-yoshida-dev
     note: すべてのコードと設計判断（ADR）の一次情報
+    icon: code
   - label: Qiita
     url: https://qiita.com/n-yoshida-dev
     note: Spring Boot / 認証 / API 設計の学習記録（連載）
+    icon: pen
   - label: Reading Log
     url: https://n-yoshida-dev.github.io/reading-log/
     note: 読書記録の公開サイト（GitHub Pages）
+    icon: book
 ---
 
 ## 何の人か
