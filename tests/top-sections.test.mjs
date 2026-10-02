@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 import {
   topSkillCards,
   careerTimeline,
+  careerLead,
   articleCalendar,
   highlightLine,
 } from '../src/lib/outline.ts';
@@ -60,6 +61,14 @@ describe('トップの Journey の担当', async () => {
       expect(r.detail.length, `${r.period} の担当`).toBeGreaterThan(0);
       expect(r.detail).not.toMatch(/[\[\]|]/);
     }
+  });
+
+  it('節の一言は冒頭の段落の 1 文目で、括弧の中の「。」では切らない', () => {
+    expect(careerLead(body)).toMatch(/^会社名は書かず.*。$/);
+    expect(careerLead('前の文（括弧。の中）。後ろの [文](/x)。\n\n## 経歴')).toBe(
+      '前の文（括弧。の中）。',
+    );
+    expect(careerLead('## 経歴\n\n表だけ')).toBe('');
   });
 
   it('2 列しかない表では detail が空になる（例外にしない）', () => {

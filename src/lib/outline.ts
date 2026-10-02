@@ -295,6 +295,28 @@ export function articleCalendar(articles: CalendarArticle[]): ArticleCalendar {
 }
 
 /**
+ * career.md の最初の `##` より前にある段落の 1 文目（リンクは表示だけにする）。トップの Journey 節の一言に使う。
+ * 「会社名は書かず、…載せています（…）。」のように、括弧の中の「。」では切らない。無ければ空
+ */
+export function careerLead(body: string): string {
+  const intro = body.split(/^## /m)[0];
+  const first = intro
+    .split('\n')
+    .map((l) => l.trim())
+    .find(Boolean);
+  if (!first) return '';
+  const plain = stripLinks(first);
+  let depth = 0;
+  for (let i = 0; i < plain.length; i++) {
+    const ch = plain[i];
+    if (ch === '（' || ch === '(') depth++;
+    else if (ch === '）' || ch === ')') depth = Math.max(0, depth - 1);
+    else if (ch === '。' && depth === 0) return plain.slice(0, i + 1);
+  }
+  return plain;
+}
+
+/**
  * career.md の `## 経歴` にある表から「時期 / 役割 / 主な担当」を取り出す。
  * 表は「| 時期 | 役割 | 主な担当 |」の形で、見出し行と区切り行（|---|）を飛ばす
  */

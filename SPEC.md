@@ -53,7 +53,7 @@
 - **トップの About・Skills・Journey・Articles の見せ方**（2026-10-03 ユーザーが見本 3 案から節ごとに選択。`logs/decisions.md`。見本は `docs/design-candidates/2026-10-03-top-sections/`）
   - About：要点（`profile.md` の `highlights`）を 3 列にし、1 列を「小見出し（label）→ 太字の見出し（title）→ 薄い文字の補足（detail）」で積む（見本 B の 3 列 + C の太字の見出し）。
     外部リンク（`links`）はアイコン・名前・note のカード 3 列（見本 B）
-  - Skills・Journey・Articles は見出しのすぐ下に、その節の読み方の一言（薄い文字）を置く（定型文。区分や連載の数はデータから数える）
+  - Skills・Journey・Articles は見出しのすぐ下に、その節の読み方の一言（薄い文字）を置く（Skills・Articles は定型文で、区分や連載の数はデータから数える。Journey は `career.md` の冒頭の 1 文）
   - Skills：Skills ページと同じ区分ごとのカード（PC 2 列、項目名の無い区分は出さない）。カードは見出し（期間の括弧書き〔「約 10 年」〕があれば右端に）・区分の定義・項目のタグ・
     根拠のリンク（`###` 見出しのリンクがある区分だけ「根拠：」の行）。実装の根拠がまだない区分（理解確認済み・学習中）は全幅・破線の枠・地色なし（見本 C）
   - Journey：横の年表（点は青）に、時期 → 役割（太字）→ 担当（薄い文字。`career.md` の表の 3 列目そのまま）を縦に積む。375px では Journey ページと同じ縦の年表（見本 B）

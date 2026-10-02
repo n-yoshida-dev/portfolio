@@ -15,7 +15,13 @@ import {
   getArticles,
   platformLabel,
 } from '../lib/content';
-import { topSkillCards, careerTimeline, articleCalendar, type TopSkillCard } from '../lib/outline';
+import {
+  topSkillCards,
+  careerTimeline,
+  careerLead as careerLeadOf,
+  articleCalendar,
+  type TopSkillCard,
+} from '../lib/outline';
 import type { IconName } from '../lib/icons';
 import { SITE, ASK_BUTTON_LABEL } from '../site';
 
@@ -26,7 +32,10 @@ const featured = allFeatured.slice(0, 4);
 const projectCount = allFeatured.length + (await getOtherProjects()).length;
 const systems = await getSystems();
 const skills = topSkillCards((await getPage('skills')).body ?? '');
-const career = careerTimeline((await getPage('career')).body ?? '');
+const careerBody = (await getPage('career')).body ?? '';
+const career = careerTimeline(careerBody);
+// Journey 節の一言は career.md の冒頭の 1 文（ページ側に同じ文を書かない）
+const careerLead = careerLeadOf(careerBody);
 const articles = await getArticles();
 const calendar = articleCalendar(articles.map((a) => a.data));
 // 掲載先が 1 つだけなら「Qiita に書いた」と名前を出す（複数になったら名前を出さない）
@@ -122,9 +131,7 @@ function skillIcon(card: TopSkillCard): IconName {
   </HomeSection>
 
   <HomeSection id="journey">
-    <p class="section-lead">
-      会社名は書かず、役割の変遷だけを載せています（扱った製品名は書いています）。
-    </p>
+    {careerLead && <p class="section-lead">{careerLead}</p>}
     <ol class="steps">
       {career.map((row) => (
         <li>
