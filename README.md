@@ -102,7 +102,7 @@ OGP 画像を作り直すとき：`node scripts/generate-og.mjs`（文言は同�
   `skills.md` は、`/skills` の区分のカードとトップの Skills 節が本文から作られる。カードに出るのは `##` 見出し、冒頭の「区分（定義）／区分（定義）」の行、
   `###` 見出し（「分類：項目名 — [根拠](/projects/…)」）か箇条書き先頭の `**太字**`。どちらも無い節は、箇条書きの本文の括弧の手前まで（括弧書きはカードに出ない）。
   この形を崩すと `npm run test` が落ちる
-- **トップの文章を直す**：`profile.md` の frontmatter。`tagline`（名前の下の一言 1 文）と `highlights`（何の人かの要点。3 行まで）だけがトップに出る。
+- **トップの文章を直す**：`profile.md` の frontmatter。`tagline`（名前の下の一言。1〜2 文）と `highlights`（何の人かの要点。3 行まで）だけがトップに出る。
   本文（`## 何の人か` 以下）はトップには出ず、Markdown 版（`/profile.md`）と `/llms-full.txt` で AI と人間の両方が読める
 
 反映は `npm run build` が通れば完了。`main` へマージすると Vercel が自動でデプロイする。
