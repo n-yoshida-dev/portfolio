@@ -4,6 +4,7 @@
 import { defineCollection } from 'astro:content';
 import { glob, file } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { ICON_NAMES } from './lib/icons';
 
 /** 掲載する repo の公開状態。Private でも「存在と目的」は載せる（中身は載せない） */
 const visibility = z.enum(['public', 'private', 'archived']);
@@ -83,20 +84,34 @@ const pages = defineCollection({
     updated: z
       .union([z.date(), z.string().regex(/^\d{4}-\d{2}-\d{2}$/)])
       .transform((v) => (typeof v === 'string' ? v : v.toISOString().slice(0, 10))),
-    /** profile.md だけが持つ。外部リンクの一覧 */
+    /** profile.md だけが持つ。外部リンクの一覧。トップではアイコン・名前・note のカードになる */
     links: z
       .array(
         z.object({
           label: z.string(),
           url: z.url(),
           note: z.string().optional(),
+          /** トップのカードに添える線のアイコン（ロゴではない汎用の形。src/components/Icon.astro）。無ければ出さない */
+          icon: z.enum(ICON_NAMES).optional(),
         }),
       )
       .optional(),
     /** profile.md だけが持つ。トップの名前の直下に出す一言（1〜2 文） */
     tagline: z.string().optional(),
-    /** profile.md だけが持つ。トップに出す「何の人か」の要点。1 行 1 項目で 3 つまで。本文はトップには出さない */
-    highlights: z.array(z.string()).max(3).optional(),
+    /**
+     * profile.md だけが持つ。トップに出す「何の人か」の要点。3 つまで。本文はトップには出さない。
+     * トップでは 1 つを 1 列にし、label（小見出し）・title（太字の見出し）・detail（薄い文字の補足）の順に出す
+     */
+    highlights: z
+      .array(
+        z.object({
+          label: z.string(),
+          title: z.string(),
+          detail: z.string().optional(),
+        }),
+      )
+      .max(3)
+      .optional(),
   }),
 });
 

@@ -1,6 +1,7 @@
 // public-profile のデータを取り出す・Markdown 文字列に組み立てる、ページ横断の共通処理。
 // ページ側にロジックを持たせず、ここに集めておく（Phase 2 で自動生成に置き換えるときの境界）。
 import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
+import { highlightLine } from './outline';
 
 export type Project = CollectionEntry<'projects'>;
 export type System = CollectionEntry<'systems'>;
@@ -72,6 +73,15 @@ export const visibilityLabel: Record<Project['data']['visibility'], string> = {
   archived: 'Archive',
 };
 
+/** 記事の掲載先の表示名。other は名前を出さない（Articles ページとトップの Articles 節で使う） */
+export const platformLabel: Record<Article['data']['platform'], string> = {
+  qiita: 'Qiita',
+  zenn: 'Zenn',
+  note: 'note',
+  blog: 'Blog',
+  other: '',
+};
+
 /** 進行状態の日本語ラベル */
 export const statusLabel: Record<Project['data']['status'], string> = {
   active: '進行中',
@@ -120,8 +130,8 @@ export function systemToMarkdown(s: System): string {
 export function pageToMarkdown(p: Page): string {
   const d = p.data;
   const lines = [`# ${d.title}`, '', d.description, ''];
-  // トップに出す要点（profile.md だけ）。AI にも同じ 3 行を先に読ませる
-  if (d.highlights?.length) lines.push(...d.highlights.map((h) => `- ${h}`), '');
+  // トップに出す要点（profile.md だけ）。AI にも同じ 3 行を先に読ませる。「何の人か：見出し。補足」の 1 行にする
+  if (d.highlights?.length) lines.push(...d.highlights.map(highlightLine), '');
   lines.push(`- 最終確認日: ${d.updated}`);
   if (d.links?.length) {
     lines.push('- リンク:');

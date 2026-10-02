@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Naoki Yoshida — Portfolio</title>
+<meta name="description" content="見せ方の案：About・Skills・Journey・Articles の 4 節を、形で読めるようにしたトップの見本">
+<style>
+/* ===== 今の global.css から、トップに要る部分だけを読みやすく展開したもの ===== */
+:root{
+  --fg:#1f2328;--fg-muted:#59636e;--line:#d1d9e0;--link:#0969da;--bg:#fff;--bg-subtle:#f6f8fa;--code-bg:#f0f2f4;
+  --max-width:52rem;
+  --font-sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP","Hiragino Sans","Helvetica Neue",Arial,sans-serif;
+  --font-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root{--fg:#e6edf3;--fg-muted:#9198a1;--line:#3d444d;--link:#4493f8;--bg:#0d1117;--bg-subtle:#161b22;--code-bg:#1c2129}
+}
+*,::before,::after{box-sizing:border-box}
+html{color-scheme:light dark;-webkit-text-size-adjust:100%}
+body{font-family:var(--font-sans);color:var(--fg);background:var(--bg);overflow-wrap:anywhere;margin:0;font-size:16px;line-height:1.75}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3{margin:2em 0 .6em;font-weight:600;line-height:1.35}
+h1{margin-top:0;font-size:1.75rem}
+h2{border-bottom:1px solid var(--line);padding-bottom:.3em;font-size:1.35rem}
+h3{font-size:1.1rem}
+p,ul,ol{margin:0 0 1em}
+ul,ol{padding-left:1.5em}
+li+li{margin-top:.25em}
+
+.side{border-bottom:1px solid var(--line);padding:1rem 16px}
+.side .brand{color:var(--fg);font-size:1.1rem;font-weight:600;display:block}
+.side nav{flex-wrap:wrap;gap:.2rem 1rem;margin-top:.5rem;font-size:.95rem;display:flex}
+.side nav a{color:var(--fg-muted)}
+.side nav a[aria-current]{color:var(--fg);font-weight:600}
+.side-links{flex-wrap:wrap;gap:.2rem 1rem;margin-top:.6rem;font-size:.875rem;display:flex}
+.container{max-width:var(--max-width);margin:0 auto;padding:0 16px}
+main.container{padding-top:2rem;padding-bottom:3rem}
+.site-footer{border-top:1px solid var(--line);color:var(--fg-muted);font-size:.875rem}
+.site-footer .container{flex-wrap:wrap;gap:.5rem 1.5rem;padding-top:1.25rem;padding-bottom:5rem;display:flex}
+@media (width>=64rem){
+  body{grid-template-columns:16rem minmax(0,1fr);min-height:100vh;display:grid}
+  .side{border-bottom:0;border-right:1px solid var(--line);flex-direction:column;height:100vh;padding:2.5rem 1.5rem;display:flex;position:sticky;top:0;overflow-y:auto}
+  .side .brand{font-size:1.25rem}
+  .side nav{flex-direction:column;gap:.35rem;margin-top:1.5rem;font-size:1rem}
+  .side-links{margin-top:auto;padding-top:1.5rem}
+  .page{min-width:0}
+  .page .container{margin-left:0;padding-left:3rem;padding-right:3rem}
+  main.container{padding-top:3rem}
+}
+.home-section{scroll-margin-top:1rem}
+.home-section:first-child>h2{clip-path:inset(50%);border:0;width:1px;height:1px;margin:0;padding:0;position:absolute;overflow:hidden}
+.home-section>h2{margin-top:2.5rem}
+.section-note{color:var(--fg-muted);margin-left:.6rem;font-size:.875rem;font-weight:400}
+.more-link{margin:.75rem 0 0;font-size:.95rem}
+.lead{color:var(--fg-muted);margin-bottom:1.5rem;font-size:1.05rem}
+.meta{color:var(--fg-muted);font-size:.875rem}
+.badge{border:1px solid var(--line);color:var(--fg-muted);vertical-align:middle;border-radius:999px;padding:0 .6em;font-size:.75rem;display:inline-block}
+.card-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem;margin:0;padding:0;list-style:none;display:grid}
+.card{background:var(--bg-subtle);border:1px solid var(--line);border-radius:8px;flex-direction:column;gap:.3rem;margin:0;padding:1rem 1.1rem;display:flex}
+.card-grid>li+li{margin-top:0}
+.card-top{font-family:var(--font-mono);color:var(--fg-muted);flex-wrap:wrap;align-items:center;gap:.3rem .6rem;font-size:.8rem;display:flex}
+.card-badges{font-family:var(--font-sans);gap:.3rem;margin-left:auto;display:flex}
+.card .badge{background:var(--bg)}
+.card h3{margin:0;font-size:1.05rem}
+.card p{margin:0;font-size:.95rem}
+.card-links{flex-wrap:wrap;gap:.25rem 1rem;margin-top:auto;padding-top:.35rem;font-size:.9rem;display:flex}
+.button-row{flex-wrap:wrap;gap:.5rem;margin:.5rem 0 1.5rem;display:flex}
+.button{font:inherit;color:var(--fg);border:1px solid var(--line);cursor:pointer;background:0 0;border-radius:4px;padding:.35em .9em;font-size:.95rem;text-decoration:none;display:inline-block}
+.button-primary{background:var(--fg);border-color:var(--fg);color:var(--bg);font-weight:600}
+.button-primary:hover{text-decoration:underline}
+.ask-fab{z-index:10;background:var(--fg);color:var(--bg);border:2px solid var(--bg);white-space:nowrap;border-radius:4px;padding:.45em 1.1em;font-size:.95rem;font-weight:600;line-height:1.5;position:fixed;bottom:16px;right:16px}
+.ask-fab:hover{text-decoration:underline}
+
+/* ===== ここから案で足す部分 ===== */
+
+/* 画面には出さず、読み上げにだけ渡す文字 */
+.vh{clip-path:inset(50%);width:1px;height:1px;margin:-1px;padding:0;border:0;position:absolute;overflow:hidden;white-space:nowrap}
+/* 単色の線アイコン（ロゴではない汎用の形。色は薄い文字色） */
+.sprite{position:absolute;width:0;height:0;overflow:hidden}
+.icon{flex:none;width:20px;height:20px;color:var(--fg-muted);fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+/* 節の見出しの直下に置く、節の読み方の一言 */
+.section-lead{color:var(--fg-muted);font-size:.95rem;margin:-.1rem 0 1rem}
+/* 短い見出しは文節で折り返す（「チームリーダ／ー」のような途中の改行を防ぐ。未対応のブラウザは今と同じ折り返し） */
+.section-lead,.fact-head,.link-note,.skill-def,.step-role,.s-name{word-break:auto-phrase}
+/* 数字と単位を離さない（「約 10／年」を防ぐ） */
+.nw{white-space:nowrap}
+
+/* --- About：要点を「ラベル・見出し・本文」の 3 列にする --- */
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem;margin:0 0 1.5rem;padding:0;list-style:none}
+.facts>li{margin:0;padding-left:.85rem;border-left:2px solid var(--fg)}
+.fact-label{display:block;font-size:.8rem;line-height:1.5;color:var(--fg-muted)}
+.fact-head{display:block;font-weight:600;line-height:1.5;margin:.15rem 0 .35rem}
+.fact-body{display:block;font-size:.9rem;line-height:1.65;color:var(--fg-muted)}
+
+/* --- About：外部リンクを「アイコン・名前・そこに何があるか・行き先」のカードにする --- */
+.link-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.75rem;margin:0;padding:0;list-style:none}
+.link-cards>li{margin:0}
+.link-card{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.1rem .65rem;height:100%;padding:.8rem .9rem;color:var(--fg);background:var(--bg-subtle);border:1px solid var(--line);border-radius:8px}
+.link-card:hover{border-color:var(--fg);text-decoration:none}
+.link-card:hover .link-label{text-decoration:underline}
+.link-card .icon{grid-row:1 / span 3;width:22px;height:22px;margin-top:.2rem}
+.link-label{color:var(--link);font-weight:600;line-height:1.5}
+.link-note{font-size:.85rem;line-height:1.6;color:var(--fg-muted)}
+.link-host{font-family:var(--font-mono);font-size:.72rem;line-height:1.6;color:var(--fg-muted);margin-top:.15rem}
+
+/* --- Skills：/skills と同じ「区分ごとのカード」。根拠のない区分は破線で描く --- */
+.skill-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem;margin:0;padding:0;list-style:none}
+.skill-grid>li+li{margin-top:0}
+.skill-card{display:flex;flex-direction:column;gap:.35rem;margin:0;padding:1rem 1.1rem;background:var(--bg-subtle);border:1px solid var(--line);border-radius:8px}
+.skill-card.is-learning{grid-column:1 / -1;background:transparent;border-style:dashed}
+.skill-head{display:flex;align-items:center;gap:.5rem}
+.skill-head h3{margin:0;font-size:1.05rem}
+.skill-span{margin-left:auto;font-size:.8rem;color:var(--fg-muted);white-space:nowrap}
+.skill-def{margin:0;font-size:.85rem;line-height:1.6;color:var(--fg-muted)}
+.chips{display:flex;flex-wrap:wrap;gap:.35rem;margin:.3rem 0 0;padding:0;list-style:none}
+.chips>li{margin:0;padding:.05rem .55rem;font-size:.85rem;line-height:1.6;background:var(--bg);border:1px solid var(--line);border-radius:4px}
+.is-learning .chips>li{background:transparent;border-style:dashed}
+.skill-evidence{margin:auto 0 0;padding-top:.5rem;font-size:.875rem;color:var(--fg-muted)}
+.skill-evidence a+a::before{content:"・";color:var(--fg-muted)}
+
+/* --- Journey：詳細ページと同じ「線と青い点」の年表。PC は横、375px は縦 --- */
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:0;padding:0;list-style:none}
+.steps>li{position:relative;margin:0;padding:1.55rem 1rem 0 0}
+.steps>li::before{content:"";position:absolute;top:5px;left:0;right:0;height:2px;background:var(--line)}
+.steps>li::after{content:"";position:absolute;top:0;left:0;width:12px;height:12px;border-radius:50%;background:var(--link);border:2px solid var(--bg)}
+.step-when{display:block;font-family:var(--font-mono);font-size:.85rem;color:var(--fg-muted)}
+.step-role{display:block;font-weight:600;line-height:1.5;margin-top:.1rem}
+.step-note{display:block;font-size:.875rem;color:var(--fg-muted)}
+
+/* --- Articles：連載 × 公開月の図。■ 1 つが記事 1 本 --- */
+.sq{display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--fg-muted);vertical-align:baseline}
+.series{margin:0 0 .9rem}
+.series-row{display:grid;grid-template-columns:14.5rem 3rem repeat(4,minmax(0,1fr))}
+.series-list{margin:0;padding:0;list-style:none}
+.series-list>li{margin:0;border-top:1px solid var(--line)}
+.series-list>li:last-child{border-bottom:1px solid var(--line)}
+.s-name{align-self:center;padding:.45rem .75rem .45rem 0;font-weight:600;font-size:.95rem;line-height:1.45}
+.s-count{align-self:center;font-size:.9rem;white-space:nowrap;font-variant-numeric:tabular-nums}
+.m{display:flex;flex-wrap:wrap;align-content:center;gap:2px;padding:.45rem .4rem;border-left:1px dashed var(--line)}
+.m>i{display:block;width:10px;height:10px;border-radius:2px;background:var(--fg-muted)}
+.m-label{padding:0 .4rem .15rem;font-family:var(--font-mono);font-size:.75rem;color:var(--fg-muted);border-left:1px dashed var(--line)}
+.latest{display:flex;flex-wrap:wrap;align-items:baseline;gap:.15rem .6rem;margin:0;font-size:.95rem}
+.latest-label{font-size:.8rem;color:var(--fg-muted);border:1px solid var(--line);border-radius:4px;padding:0 .4rem;line-height:1.6}
+.latest-meta{font-family:var(--font-mono);font-size:.8rem;color:var(--fg-muted)}
+
+/* ===== 375px 前後（今の決まりと同じ 40rem で切り替える） ===== */
+@media (width<=40rem){
+  body{font-size:15.5px}
+  h1{font-size:1.5rem}
+  h2{font-size:1.25rem}
+  .card-grid{grid-template-columns:minmax(0,1fr)}
+  /* About：縦に積む。要点 3 つが最初の画面に入るよう、間隔を詰める */
+  .facts{grid-template-columns:minmax(0,1fr);gap:.85rem;margin-bottom:1.25rem}
+  .fact-head{margin:.05rem 0 .15rem}
+  .link-cards{grid-template-columns:minmax(0,1fr);gap:.5rem}
+  .link-card{padding:.65rem .8rem}
+  /* Skills：1 列 */
+  .skill-grid{grid-template-columns:minmax(0,1fr)}
+  /* Journey：詳細ページと同じ縦の年表にする */
+  .steps{grid-template-columns:minmax(0,1fr);margin-left:.4rem;border-left:2px solid var(--line)}
+  .steps>li{padding:0 0 1rem 1.25rem}
+  .steps>li:last-child{padding-bottom:.25rem}
+  .steps>li::before{display:none}
+  .steps>li::after{top:.4rem;left:-7px}
+  /* Articles：連載名を 1 行目、公開月の図を 2 行目にする */
+  .series-row{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .series-head>span:nth-child(-n+2){display:none}
+  .s-name{grid-column:1 / 4;padding:.5rem 0 .1rem}
+  .s-count{grid-column:4;justify-self:end;align-self:start;padding-top:.5rem}
+  .m{padding:.2rem .2rem .55rem;min-height:1.7rem}
+  .m>i{width:8px;height:8px}
+  .m-label{padding:0 .4rem .15rem}
+}
+</style>
+</head>
+<body>
+
+<!-- 単色の線アイコン（汎用の形。サービスのロゴは使わない） -->
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <defs>
+    <!-- GitHub：版管理の枝分かれ -->
+    <symbol id="i-branch" viewBox="0 0 24 24"><circle cx="6.5" cy="5.5" r="2.25"/><circle cx="6.5" cy="18.5" r="2.25"/><circle cx="17.5" cy="7.5" r="2.25"/><path d="M6.5 7.75v8.5"/><path d="M17.5 9.75c0 4-4.5 5.25-9.4 7"/></symbol>
+    <!-- Qiita：記事 -->
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8.5L19 7.5V21H6z"/><path d="M14 3v5h5"/><path d="M9 12h7M9 15.5h7M9 19h4"/></symbol>
+    <!-- Reading Log：開いた本 -->
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M3 5.5c3-1.2 6-1 9 1 3-2 6-2.2 9-1V19c-3-1.2-6-1-9 1-3-2-6-2.2-9-1z"/><path d="M12 6.5V20"/></symbol>
+    <!-- 商用実務：かばん -->
+    <symbol id="i-case" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5.2c0-.7.5-1.2 1.2-1.2h3.6c.7 0 1.2.5 1.2 1.2V7"/><path d="M3 12.5h18"/></symbol>
+    <!-- 個人開発：コード -->
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="M8.5 7 3.5 12l5 5"/><path d="M15.5 7l5 5-5 5"/><path d="M13.5 4.5l-3 15"/></symbol>
+    <!-- 理解確認済み・学習中：芽 -->
+    <symbol id="i-sprout" viewBox="0 0 24 24"><path d="M12 21v-9"/><path d="M12 12C12 8 9.5 5.5 5 5.5 5 9.5 7.5 12 12 12z"/><path d="M12 14.5c0-3.2 2-5.5 6.5-5.5 0 3.6-2.2 5.5-6.5 5.5z"/></symbol>
+  </defs>
+</svg>
+
+<header class="side">
+  <a class="brand" href="/">Naoki Yoshida</a>
+  <nav aria-label="目次">
+    <a href="#about">About</a><a href="#projects">Projects</a><a href="#systems">Systems</a><a href="#skills">Skills</a><a href="#journey">Journey</a><a href="#articles">Articles</a><a href="#ask">Ask AI</a>
+  </nav>
+  <div class="side-links"><a href="https://github.com/n-yoshida-dev">GitHub</a><a href="https://qiita.com/n-yoshida-dev">Qiita</a><a href="/llms.txt">llms.txt</a></div>
+</header>
+
+<div class="page">
+<main class="container">
+
+<!-- ===== About（案） ===== -->
+<section id="about" class="home-section" aria-labelledby="about-heading">
+  <h2 id="about-heading">About</h2>
+  <h1>Naoki Yoshida</h1>
+  <p class="lead">SE です。ここには個人開発と学習の記録をまとめています。</p>
+
+  <ul class="facts">
+    <li>
+      <span class="fact-label">仕事</span>
+      <span class="fact-head">業務システムの現場で<span class="nw">約 10 年</span></span>
+      <span class="fact-body">要件整理・仕様化・テスト・チームリード（継続的にコードを書く担当ではない）</span>
+    </li>
+    <li>
+      <span class="fact-label">個人開発</span>
+      <span class="fact-head">2026 年から <a href="/projects/orgflow">OrgFlow</a> を設計・実装中</span>
+      <span class="fact-body">Java / Spring Boot の業務ワークフロー API。React は学習中</span>
+    </li>
+    <li>
+      <span class="fact-label">進め方</span>
+      <span class="fact-head">設計判断を ADR に残す</span>
+      <span class="fact-body">AI と分業し、公開情報の線引きを機械で検査する</span>
+    </li>
+  </ul>
+
+  <ul class="link-cards" aria-label="外部のページ">
+    <li>
+      <a class="link-card" href="https://github.com/n-yoshida-dev">
+        <svg class="icon" aria-hidden="true"><use href="#i-branch"/></svg>
+        <span class="link-label">GitHub <span aria-hidden="true">↗</span></span>
+        <span class="link-note">すべてのコードと設計判断（ADR）の一次情報</span>
+        <span class="link-host">github.com/n-yoshida-dev</span>
+      </a>
+    </li>
+    <li>
+      <a class="link-card" href="https://qiita.com/n-yoshida-dev">
+        <svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg>
+        <span class="link-label">Qiita <span aria-hidden="true">↗</span></span>
+        <span class="link-note">Spring Boot / 認証 / API 設計の学習記録（連載）</span>
+        <span class="link-host">qiita.com/n-yoshida-dev</span>
+      </a>
+    </li>
+    <li>
+      <a class="link-card" href="https://n-yoshida-dev.github.io/reading-log/">
+        <svg class="icon" aria-hidden="true"><use href="#i-book"/></svg>
+        <span class="link-label">Reading Log <span aria-hidden="true">↗</span></span>
+        <span class="link-note">読書記録の公開サイト（GitHub Pages）</span>
+        <span class="link-host">n-yoshida-dev.github.io</span>
+      </a>
+    </li>
+  </ul>
+</section>
+
+<!-- ===== Projects（対象外。今の形のまま） ===== -->
+<section id="projects" class="home-section" aria-labelledby="projects-heading">
+  <h2 id="projects-heading">Projects<span class="section-note">4 / 12 件</span></h2>
+  <ul class="card-grid">
+    <li class="card"><div class="card-top"><span>2026-03 〜</span><span class="card-badges"><span class="badge">Public</span><span class="badge">進行中</span></span></div><h3><a href="/projects/orgflow">OrgFlow</a></h3><p>申請・承認フローを題材にした、Java / Spring Boot の業務ワークフロー API</p><div class="card-links"><a href="https://github.com/n-yoshida-dev/orgflow">GitHub</a></div></li>
+    <li class="card"><div class="card-top"><span>2026-08 〜</span><span class="card-badges"><span class="badge">Private</span><span class="badge">進行中</span></span></div><h3><a href="/projects/skill-matrix">skill-matrix</a></h3><p>学習ログを AI に読ませて理解度を判定し、マトリクスとして可視化する個人用システム</p><div class="card-links"><a href="https://github.com/n-yoshida-dev/skill-matrix">GitHub</a></div></li>
+    <li class="card"><div class="card-top"><span>2026-08 〜</span><span class="card-badges"><span class="badge">Public</span><span class="badge">進行中</span></span></div><h3><a href="/projects/reading-log">Reading Log</a></h3><p>GitHub を正本に、ChatGPT / Claude / Claude Code を横断して使う読書管理システム</p><div class="card-links"><a href="https://github.com/n-yoshida-dev/reading-log">GitHub</a><a href="https://n-yoshida-dev.github.io/reading-log/">サイト</a></div></li>
+    <li class="card"><div class="card-top"><span>2026-08 〜</span><span class="card-badges"><span class="badge">Public</span><span class="badge">進行中</span></span></div><h3><a href="/projects/claude-plugins">claude-plugins</a></h3><p>自作アプリで使い回す Claude Code プラグインのマーケットプレイス</p><div class="card-links"><a href="https://github.com/n-yoshida-dev/claude-plugins">GitHub</a></div></li>
+  </ul>
+  <p class="more-link"><a href="/projects">すべてのプロジェクト →</a></p>
+</section>
+
+<!-- ===== Systems（対象外。今の形のまま） ===== -->
+<section id="systems" class="home-section" aria-labelledby="systems-heading">
+  <h2 id="systems-heading">Systems<span class="section-note">4 件</span></h2>
+  <ul class="card-grid">
+    <li class="card"><h3><a href="/systems/personal-ai-context">Personal AI Context System</a></h3><p>複数の AI を跨いで、自分の長期コンテキストを 1 つの非公開リポジトリで管理する仕組み</p></li>
+    <li class="card"><h3><a href="/systems/learning-system">Learning System</a></h3><p>学習ログを根拠に理解度を判定し、根拠のない昇格をしない学習の仕組み</p></li>
+    <li class="card"><h3><a href="/systems/reading-system">Reading System</a></h3><p>iPhone の ChatGPT から登録し、GitHub を正本に、週次レビューを AI が回す読書の仕組み</p></li>
+    <li class="card"><h3><a href="/systems/ai-assisted-development">AI-assisted Development Workflow</a></h3><p>文書・CI・レビューで複数の自作アプリを並行して進める開発の仕組み（判断は人間、検算は機械）</p></li>
+  </ul>
+  <p class="more-link"><a href="/systems">すべての仕組み →</a></p>
+</section>
+
+<!-- ===== Skills（案） ===== -->
+<section id="skills" class="home-section" aria-labelledby="skills-heading">
+  <h2 id="skills-heading">Skills</h2>
+  <p class="section-lead">根拠の種類で 3 つに分けています。区分は混ぜません。</p>
+  <ul class="skill-grid">
+    <li class="skill-card">
+      <div class="skill-head">
+        <svg class="icon" aria-hidden="true"><use href="#i-case"/></svg>
+        <h3>商用実務</h3>
+        <span class="skill-span">約 10 年</span>
+      </div>
+      <p class="skill-def">業務で担当（コードを書く仕事ではない）</p>
+      <ul class="chips">
+        <li>要件整理・仕様化・設計書</li><li>テスト工程</li><li>関係者調整・チームリード</li><li>インフラ基礎</li><li>既存コードの読解</li><li>課題管理</li>
+      </ul>
+      <p class="skill-evidence">根拠：<a href="#journey">経歴（Journey）</a></p>
+    </li>
+    <li class="skill-card">
+      <div class="skill-head">
+        <svg class="icon" aria-hidden="true"><use href="#i-code"/></svg>
+        <h3>個人開発</h3>
+      </div>
+      <p class="skill-def">自分のリポジトリで設計・実装</p>
+      <ul class="chips">
+        <li>Java / Spring Boot</li><li>PostgreSQL</li><li>CI / CD・開発フロー</li><li>AI 協働開発の仕組み</li><li>静的サイト・ツール</li>
+      </ul>
+      <p class="skill-evidence">根拠：<a href="/projects/orgflow">OrgFlow</a><a href="/projects/claude-plugins">claude-plugins</a></p>
+    </li>
+    <li class="skill-card is-learning">
+      <div class="skill-head">
+        <svg class="icon" aria-hidden="true"><use href="#i-sprout"/></svg>
+        <h3>理解確認済み・学習中</h3>
+      </div>
+      <p class="skill-def">確認問題や自分の言葉での説明で確認したもの（実装の根拠はまだ薄い）と、判定できる根拠がまだないもの</p>
+      <ul class="chips">
+        <li>Go</li><li>React</li><li>AWS</li><li>Supabase の認証・RLS</li><li>課金（Stripe）</li>
+      </ul>
+    </li>
+  </ul>
+  <p class="more-link"><a href="/skills">根拠つきの一覧 →</a></p>
+</section>
+
+<!-- ===== Journey（案） ===== -->
+<section id="journey" class="home-section" aria-labelledby="journey-heading">
+  <h2 id="journey-heading">Journey</h2>
+  <ol class="steps">
+    <li><span class="step-when">2016〜2018</span><span class="step-role">事業会社の情報システム担当</span></li>
+    <li><span class="step-when">2019〜2020</span><span class="step-role">SIer の設計・構築エンジニア</span></li>
+    <li><span class="step-when">2020〜2024</span><span class="step-role">同領域のチームリーダー</span></li>
+    <li><span class="step-when">2025〜</span><span class="step-role">アプリケーション開発部門</span><span class="step-note">本人希望で異動</span></li>
+  </ol>
+  <p class="more-link"><a href="/journey">担当の詳細と学習の歩み →</a></p>
+</section>
+
+<!-- ===== Articles（案）：図はビルド時に articles.json から作る想定（実行時の JavaScript は使わない） ===== -->
+<section id="articles" class="home-section" aria-labelledby="articles-heading">
+  <h2 id="articles-heading">Articles<span class="section-note">21 本</span></h2>
+  <p class="section-lead">Qiita に書いた 21 本を、5 つの連載に分けています。<span class="sq" aria-hidden="true"></span> 1 つが記事 1 本で、公開した月に置いています。</p>
+
+  <div class="series">
+    <div class="series-row series-head" aria-hidden="true">
+      <span></span><span></span>
+      <span class="m-label">2026-03</span><span class="m-label">2026-04</span><span class="m-label">2026-05</span><span class="m-label">2026-06</span>
+    </div>
+    <ol class="series-list">
+      <li class="series-row">
+        <span class="s-name">AI と進める個人開発</span>
+        <span class="s-count">2 本<span class="vh">（2026 年 3 月に 2 本）</span></span>
+        <span class="m" aria-hidden="true"><i></i><i></i></span><span class="m" aria-hidden="true"></span><span class="m" aria-hidden="true"></span><span class="m" aria-hidden="true"></span>
+      </li>
+      <li class="series-row">
+        <span class="s-name">OrgFlow の設計</span>
+        <span class="s-count">2 本<span class="vh">（2026 年 4 月に 2 本）</span></span>
+        <span class="m" aria-hidden="true"></span><span class="m" aria-hidden="true"><i></i><i></i></span><span class="m" aria-hidden="true"></span><span class="m" aria-hidden="true"></span>
+      </li>
+      <li class="series-row">
+        <span class="s-name">Spring Boot で API を組み立てる</span>
+        <span class="s-count">5 本<span class="vh">（2026 年 4 月に 1 本、5 月に 4 本）</span></span>
+        <span class="m" aria-hidden="true"></span><span class="m" aria-hidden="true"><i></i></span><span class="m" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="m" aria-hidden="true"></span>
+      </li>
+      <li class="series-row">
+        <span class="s-name">Spring Security と JWT 認証</span>
+        <span class="s-count">8 本<span class="vh">（2026 年 5 月に 8 本）</span></span>
+        <span class="m" aria-hidden="true"></span><span class="m" aria-hidden="true"></span><span class="m" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="m" aria-hidden="true"></span>
+      </li>
+      <li class="series-row">
+        <span class="s-name">マルチテナント</span>
+        <span class="s-count">4 本<span class="vh">（2026 年 6 月に 4 本）</span></span>
+        <span class="m" aria-hidden="true"></span><span class="m" aria-hidden="true"></span><span class="m" aria-hidden="true"></span><span class="m" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      </li>
+    </ol>
+  </div>
+
+  <p class="latest">
+    <span class="latest-label">最新</span>
+    <a href="https://qiita.com/n-yoshida-dev/items/2cff32755c61d039acea">Serviceの実装で理解するJavaのstream / map / メソッド参照(::) / ラムダ式(-&gt;)</a>
+    <span class="latest-meta">2026-06-25・マルチテナント</span>
+  </p>
+  <p class="more-link"><a href="/articles">すべての記事 →</a></p>
+</section>
+
+<!-- ===== Ask AI（対象外。今の形のまま） ===== -->
+<section id="ask" class="home-section" aria-labelledby="ask-heading">
+  <h2 id="ask-heading">Ask AI</h2>
+  <p>あなたの AI に、このサイトと公開リポジトリを読ませて私について質問できます。</p>
+  <p class="button-row"><a class="button button-primary" href="/ask">Ask AI about this portfolio</a></p>
+</section>
+
+<p class="meta">最終確認日: 2026-10-02</p>
+
+<!-- 目次のスクロール監視（今のサイトと同じもの） -->
+<script type="module">var e=[...document.querySelectorAll(`.side nav a[href^="#"]`)],t=e.map(e=>document.getElementById(e.hash.slice(1))),n=!1;function r(){n=!1;let r=window.innerHeight/3,i=window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-1,a=0;t.forEach((e,t)=>{e&&e.getBoundingClientRect().top<=r&&(a=t)}),i&&(a=t.length-1),e.forEach((e,t)=>{t===a?e.setAttribute(`aria-current`,`location`):e.removeAttribute(`aria-current`)})}var i=()=>{n||(n=!0,requestAnimationFrame(r))};window.addEventListener(`scroll`,i,{passive:!0}),window.addEventListener(`resize`,i),r();</script>
+</main>
+<footer class="site-footer"><div class="container"><span>© 2026 Naoki Yoshida</span><a href="/profile.md">このページの Markdown</a><a href="https://github.com/n-yoshida-dev/portfolio">このサイトのソース</a></div></footer>
+</div>
+<a class="ask-fab" href="/ask">Ask AI about this portfolio</a>
+</body>
+</html>

@@ -39,7 +39,49 @@ export interface SkillOverview {
 export interface TimelineRow {
   period: string;
   title: string;
+  /** 3 列目の「主な担当」。トップでは役割の下に薄い文字で出す。無ければ空 */
+  detail: string;
 }
+
+/** トップの Skills 節のカード 1 枚（Skills ページのカードから、項目名のある区分だけを取ったもの） */
+export interface TopSkillCard {
+  /** 区分名（見出しの括弧書きを除く）。「商用実務」 */
+  name: string;
+  /**
+   * 見出しの括弧書きのうち、期間（数字を含むもの）。「商用実務（約 10 年）」→「約 10 年」。
+   * 「個人開発（根拠のあるもの）」のような期間でない括弧書きは出さない（見本 C の形）。無ければ空
+   */
+  span: string;
+  definition: string;
+  items: string[];
+  evidence: SkillCard['evidence'];
+  /** 実装の根拠がまだない区分（理解確認済み・学習中）。トップでは破線の枠で描く */
+  tentative: boolean;
+}
+
+/** 記事 1 本のうち、連載 × 公開月の表に要る項目（articles.json の形） */
+export interface CalendarArticle {
+  title: string;
+  url: string;
+  publishedAt: string;
+  series?: string;
+}
+
+/** トップの Articles 節の「連載 × 公開月」の表 */
+export interface ArticleCalendar {
+  /** 列になる月（YYYY-MM）。最初の記事の月から最後の記事の月まで、記事の無い月も含めて古い順 */
+  months: string[];
+  /** 行になる連載。最初の記事が古い順（学んだ順） */
+  rows: { series: string; total: number; perMonth: number[] }[];
+  /** いちばん新しい記事。記事が無ければ undefined */
+  latest?: CalendarArticle & { series: string };
+}
+
+/** 実装の根拠がまだない区分の名前。CLAUDE.md「守ること」の区分（商用実務 / 個人開発 / 理解確認済み / 学習中）のうち後ろの 2 つ */
+const TENTATIVE_KINDS = ['理解確認済み', '学習中'];
+
+/** 連載の無い記事をまとめる名前（content.ts の groupArticlesBySeries と同じ） */
+const NO_SERIES = 'その他';
 
 /** Markdown のリンク `[表示](URL)` を表示だけにする */
 function stripLinks(text: string): string {
@@ -49,6 +91,11 @@ function stripLinks(text: string): string {
 /** 見出しから括弧書き（全角・半角）を外す。「商用実務（約 10 年）」→「商用実務」 */
 function stripParen(text: string): string {
   return text.replace(/\s*[（(].*?[）)]\s*$/, '').trim();
+}
+
+/** 見出しの末尾の括弧書きの中身。「商用実務（約 10 年）」→「約 10 年」。無ければ空 */
+function parenOf(text: string): string {
+  return text.match(/[（(]([^（）()]*)[）)]\s*$/)?.[1].trim() ?? '';
 }
 
 /** `###` 見出しの「：」より前を項目名にする。「バックエンド：Java / Spring Boot — OrgFlow」→「Java / Spring Boot」 */
@@ -185,8 +232,92 @@ export function skillOverview(body: string): SkillOverview {
   return { cards, note };
 }
 
+/** トップの要点 1 つ（profile.md の highlights）を、Markdown 版の 1 行にする。「- 何の人か：見出し。補足」 */
+export function highlightLine(h: { label: string; title: string; detail?: string }): string {
+  return `- ${h.label}：${h.title}${h.detail ? `。${h.detail}` : ''}`;
+}
+
 /**
- * career.md の `## 経歴` にある表から「時期 / 役割」を取り出す（3 列目の担当はトップに出さない）。
+ * skills.md の本文から、トップの Skills 節のカードを作る。
+ * Skills ページのカード（skillOverview）のうち、トップの短い版（skillGroups）に出る区分だけを残す
+ * （「商用実務で扱っていないもの」のような項目名の無い区分はトップに出さない）
+ */
+export function topSkillCards(body: string): TopSkillCard[] {
+  const shown = new Set(skillGroups(body).map((g) => g.name));
+  return skillOverview(body)
+    .cards.filter((c) => shown.has(stripParen(c.title)))
+    .map((c) => {
+      const name = stripParen(c.title);
+      return {
+        name,
+        span: /\d/.test(parenOf(c.title)) ? parenOf(c.title) : '',
+        definition: c.definition,
+        items: c.items,
+        evidence: c.evidence,
+        tentative: TENTATIVE_KINDS.some((k) => name.includes(k)),
+      };
+    });
+}
+
+/** 「YYYY-MM」の翌月 */
+function nextMonth(month: string): string {
+  const [y, m] = month.split('-').map(Number);
+  return m === 12 ? `${y + 1}-01` : `${y}-${String(m + 1).padStart(2, '0')}`;
+}
+
+/**
+ * 記事の一覧から、トップの Articles 節の「連載 × 公開月」の表を作る（■ 1 つが記事 1 本）。
+ * 月は最初の記事の月から最後の記事の月まで切れ目なく並べ、連載は最初の記事が古い順に並べる（階段状になり、学んだ順が読める）
+ */
+export function articleCalendar(articles: CalendarArticle[]): ArticleCalendar {
+  if (articles.length === 0) return { months: [], rows: [] };
+  const sorted = [...articles].sort((a, b) => a.publishedAt.localeCompare(b.publishedAt));
+  const first = sorted[0].publishedAt.slice(0, 7);
+  const last = sorted[sorted.length - 1].publishedAt.slice(0, 7);
+  const months = [first];
+  while (months[months.length - 1] < last) months.push(nextMonth(months[months.length - 1]));
+
+  // 古い順に見ていくので、Map への登録順がそのまま「最初の記事が古い順」になる
+  const rows = new Map<string, { series: string; total: number; perMonth: number[] }>();
+  for (const a of sorted) {
+    const series = a.series ?? NO_SERIES;
+    const row = rows.get(series) ?? { series, total: 0, perMonth: months.map(() => 0) };
+    row.total += 1;
+    row.perMonth[months.indexOf(a.publishedAt.slice(0, 7))] += 1;
+    rows.set(series, row);
+  }
+  const newest = sorted[sorted.length - 1];
+  return {
+    months,
+    rows: [...rows.values()],
+    latest: { ...newest, series: newest.series ?? NO_SERIES },
+  };
+}
+
+/**
+ * career.md の最初の `##` より前にある段落の 1 文目（リンクは表示だけにする）。トップの Journey 節の一言に使う。
+ * 「会社名は書かず、…載せています（…）。」のように、括弧の中の「。」では切らない。無ければ空
+ */
+export function careerLead(body: string): string {
+  const intro = body.split(/^## /m)[0];
+  const first = intro
+    .split('\n')
+    .map((l) => l.trim())
+    .find(Boolean);
+  if (!first) return '';
+  const plain = stripLinks(first);
+  let depth = 0;
+  for (let i = 0; i < plain.length; i++) {
+    const ch = plain[i];
+    if (ch === '（' || ch === '(') depth++;
+    else if (ch === '）' || ch === ')') depth = Math.max(0, depth - 1);
+    else if (ch === '。' && depth === 0) return plain.slice(0, i + 1);
+  }
+  return plain;
+}
+
+/**
+ * career.md の `## 経歴` にある表から「時期 / 役割 / 主な担当」を取り出す。
  * 表は「| 時期 | 役割 | 主な担当 |」の形で、見出し行と区切り行（|---|）を飛ばす
  */
 export function careerTimeline(body: string): TimelineRow[] {
@@ -203,7 +334,7 @@ export function careerTimeline(body: string): TimelineRow[] {
       .slice(1, -1)
       .map((c) => stripLinks(c).trim());
     if (cells.length < 2 || cells[0] === '時期' || /^-+$/.test(cells[0])) continue;
-    rows.push({ period: cells[0], title: cells[1] });
+    rows.push({ period: cells[0], title: cells[1], detail: cells[2] ?? '' });
   }
   return rows;
 }

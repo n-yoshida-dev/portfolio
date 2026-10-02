@@ -1,0 +1,17 @@
+---
+// 線のアイコン 1 つ（形は src/lib/icons.ts）。飾りなので読み上げからは隠す（隣に必ず文字がある）。
+// 色は文字色を引き継ぐ。大きさと色は呼び出し側の class で決める
+import { ICONS, type IconName } from '../lib/icons';
+
+interface Props {
+  name: IconName;
+  class?: string;
+}
+const { name, class: className } = Astro.props;
+---
+
+<svg class:list={['icon', className]} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  {ICONS[name].map((d) => (
+    <path d={d} />
+  ))}
+</svg>
