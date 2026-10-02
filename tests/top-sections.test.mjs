@@ -5,7 +5,21 @@ import { describe, it, expect } from 'vitest';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { topSkillCards, careerTimeline, articleCalendar } from '../src/lib/outline.ts';
+import {
+  topSkillCards,
+  careerTimeline,
+  articleCalendar,
+  highlightLine,
+} from '../src/lib/outline.ts';
+
+describe('About の要点の Markdown 版', () => {
+  it('「- 小見出し：見出し。補足」の 1 行になり、補足が無ければ見出しで終わる', () => {
+    expect(highlightLine({ label: '何の人か', title: '見出し', detail: '補足' })).toBe(
+      '- 何の人か：見出し。補足',
+    );
+    expect(highlightLine({ label: '何の人か', title: '見出し' })).toBe('- 何の人か：見出し');
+  });
+});
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -25,9 +39,10 @@ describe('トップの Skills のカード', async () => {
     for (const c of cards) expect(c.items.length, `${c.name} の項目`).toBeGreaterThan(0);
   });
 
-  it('見出しの括弧書きは区分名から外して span に入る', () => {
-    const work = cards.find((c) => c.name === '商用実務');
-    expect(work?.span).toBe('約 10 年');
+  it('見出しの括弧書きは区分名から外し、期間（数字を含むもの）だけを span に入れる', () => {
+    expect(cards.find((c) => c.name === '商用実務')?.span).toBe('約 10 年');
+    // 「個人開発（根拠のあるもの）」は期間ではないので出さない（見本 C の形）
+    expect(cards.find((c) => c.name === '個人開発')?.span).toBe('');
     for (const c of cards) expect(c.name).not.toMatch(/[（(]/);
   });
 

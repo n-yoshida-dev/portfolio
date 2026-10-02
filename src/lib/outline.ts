@@ -47,7 +47,10 @@ export interface TimelineRow {
 export interface TopSkillCard {
   /** 区分名（見出しの括弧書きを除く）。「商用実務」 */
   name: string;
-  /** 見出しの括弧書きの中身。「約 10 年」。無ければ空 */
+  /**
+   * 見出しの括弧書きのうち、期間（数字を含むもの）。「商用実務（約 10 年）」→「約 10 年」。
+   * 「個人開発（根拠のあるもの）」のような期間でない括弧書きは出さない（見本 C の形）。無ければ空
+   */
   span: string;
   definition: string;
   items: string[];
@@ -229,6 +232,11 @@ export function skillOverview(body: string): SkillOverview {
   return { cards, note };
 }
 
+/** トップの要点 1 つ（profile.md の highlights）を、Markdown 版の 1 行にする。「- 何の人か：見出し。補足」 */
+export function highlightLine(h: { label: string; title: string; detail?: string }): string {
+  return `- ${h.label}：${h.title}${h.detail ? `。${h.detail}` : ''}`;
+}
+
 /**
  * skills.md の本文から、トップの Skills 節のカードを作る。
  * Skills ページのカード（skillOverview）のうち、トップの短い版（skillGroups）に出る区分だけを残す
@@ -242,7 +250,7 @@ export function topSkillCards(body: string): TopSkillCard[] {
       const name = stripParen(c.title);
       return {
         name,
-        span: parenOf(c.title),
+        span: /\d/.test(parenOf(c.title)) ? parenOf(c.title) : '',
         definition: c.definition,
         items: c.items,
         evidence: c.evidence,
