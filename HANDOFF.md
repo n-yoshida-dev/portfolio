@@ -23,28 +23,29 @@
 ████████████████████ 100%  残り  0 /  8  フェーズ3：デザインの見直し
 ███████░░░░░░░░░░░░░  37%  残り  5 /  8  フェーズ4：本番を見た指摘への対応
 ████████████████░░░░  82%  残り  5 / 29  合計
-あなたの回答待ち：0 件（回答済み 15 件）
+あなたの回答待ち：1 件（回答済み 15 件）
 保留（合計に含めない）：9 件（済み 2 件）
 
-前回の区切り（2026-10-02）から：完了 +3 件、新たに見つかったタスク +2 件
+前回の区切り（2026-10-03）から：完了 +0 件、新たに見つかったタスク +0 件
 ```
 
 ## 現在地
 
-- フェーズ：**フェーズ4 の途中**。About の一言とトップの 4 節（About・Skills・Journey・Articles）の見せ方は本番に出た。残りは上から
-  OrgFlow の紹介文 → Reading Log の説明 → 最初の画面の見せ方（複数 AI のコンペ）→ Ask AI の入口 → 本番の通し確認（順番は Claude に任された。`TODO.md` フェーズ4）
-- 紹介文のタスクは `public-profile/` の Markdown を直す。あなたの「伝えたいこと」の原文は `TODO.md` にあり、文面はユーザーが確認する。非公開リポジトリは「存在と目的」と概念レベルの区分まで
-- 複数 AI のコンペ（ai-review。Beads の epic ops-h49）：やり方は ops-h49 の設計欄、前回の結果と反省はそのコメント、前回の指示書と見本は `docs/design-candidates/2026-10-03-top-sections/`。
-  Opus・Fable は Agent ツールの model 指定、GPT-6 Astra は VS Code 拡張同梱の `codex exec -m gpt-6-astra`（サンドボックスではブラウザを起動できないので、表示の確認はメインが撮る）
+- フェーズ：**フェーズ4 の途中**。About の一言とトップの 4 節（About・Skills・Journey・Articles）の見せ方は本番に出た。残りの並び
+  （OrgFlow の紹介文 → Reading Log の説明 → 最初の画面の見せ方〔複数 AI のコンペ〕→ Ask AI の入口 → 本番の通し確認）は Claude の案で、ユーザーは未回答（`TODO.md` フェーズ4 の冒頭）。
+  ai-review の試行 2（skill-matrix）は、フェーズ4 が落ち着いてから（Claude の判断）
+- 紹介文のタスクは `public-profile/` の Markdown を直す。ユーザーの「伝えたいこと」の原文は `TODO.md` にあり、文面はユーザーが確認する。非公開リポジトリは「存在と目的」と概念レベルの区分まで
+- 複数 AI のコンペの進め方・前回の結果と反省・モデルの呼び方は Beads の ops-h49（設計欄とコメント）、前回の指示書と見本は `docs/design-candidates/2026-10-03-top-sections/`
 - トップは `src/pages/index.astro`（節の骨格の読み取りは `src/lib/outline.ts`、アイコンは `src/lib/icons.ts`）。Ask AI の入口は `src/layouts/Base.astro` の `.ask-fab` と `src/lib/ask.ts`
 - 見本や画像を見せるときは非公開の Artifact に載せて URL を渡す（scratchpad のリンクは VS Code で開けない）
 - 画面の確認は Playwright で撮る（`KNOWLEDGE.md`）。使ったローカルのサーバーは止め、`ps` で確かめてから区切る
-- ユーザー待ち：なし（`TODO.md` の確認待ち 0 件、Beads も portfolio の人間待ちは 0 件）。文面の細かいレビューは、最後の「本番を通して見て…」でユーザーが行う
+- ユーザー待ち：1 件。最初の画面のコンペで PLAN「派手な見た目はやらない」の枠をどう扱うか（`TODO.md` 確認待ち、Beads ops-urz.21）。コンペの指示書を書く前に要る。
+  文面の細かいレビューは、最後の「本番を通して見て…」でユーザーが行う
 - 状況の確認：`node dashboard/update.mjs --serve --open`
 - main：クリーン（この引き継ぎの PR をマージした後）。作業中のブランチは無い
 
 ## 次セッションで最初にやること
 
-1. フェーズ4「OrgFlow の紹介文」に着手する。`TODO.md` にあるあなたの「伝えたいこと」から、カードの一文（`tagline`）の案を 2〜3 出して選んでもらう（完了条件は `TODO.md`）
+1. フェーズ4「OrgFlow の紹介文」に着手する。`TODO.md` にあるユーザーの「伝えたいこと」から、カードの一文（`tagline`）の案を 2〜3 出して選んでもらう（完了条件は `TODO.md`）
 
 `TODO.md` の先頭と一致させる。書くのは最初の一手だけで、一覧は `TODO.md` が持つ。
