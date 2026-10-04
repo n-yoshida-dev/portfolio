@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Naoki Yoshida — Portfolio</title>
+  <style>
+    :root {
+      --fg: #1f2328;
+      --fg-muted: #59636e;
+      --line: #d1d9e0;
+      --link: #0969da;
+      --bg: #fff;
+      --bg-subtle: #f6f8fa;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", "Hiragino Sans", "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --fg: #e6edf3;
+        --fg-muted: #9198a1;
+        --line: #3d444d;
+        --link: #4493f8;
+        --bg: #0d1117;
+        --bg-subtle: #161b22;
+      }
+    }
+    * { box-sizing: border-box; }
+    html { color-scheme: light dark; -webkit-text-size-adjust: 100%; }
+    body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.75 var(--font-sans); overflow-wrap: anywhere; }
+    a { color: var(--link); text-decoration: none; text-underline-offset: .25em; }
+    a:hover { text-decoration: underline; }
+    a:focus-visible { outline: 2px solid var(--fg); outline-offset: 5px; }
+    h1, h2, h3, p { margin: 0; }
+    .wrap { width: calc(100% - 32px); max-width: 52rem; margin-inline: auto; }
+    .masthead { min-height: 96px; display: flex; align-items: center; justify-content: space-between; gap: 24px; border-bottom: 1px solid var(--line); }
+    .wordmark { font: 13px/1.5 var(--font-mono); letter-spacing: .05em; color: var(--fg-muted); }
+    .navigation { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 14px; }
+    .navigation a { color: var(--fg); }
+    .hero { min-height: calc(100svh - 96px); padding-block: 76px 72px; }
+    h1 { font-size: clamp(42px, 6.5vw, 80px); line-height: 1.12; font-weight: 500; letter-spacing: -.055em; }
+    .lead { margin-top: 24px; color: var(--fg-muted); font-size: 16px; }
+    .outline { list-style: none; margin: 56px 0 0; padding: 0; }
+    .outline li { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 8px 24px; border-top: 1px solid var(--line); padding-block: 20px; }
+    .outline li:last-child { border-bottom: 1px solid var(--line); }
+    .fact-label { color: var(--fg-muted); font-size: 12px; line-height: 1.6; padding-top: 5px; }
+    .outline h2 { font-size: 22px; line-height: 1.55; font-weight: 600; letter-spacing: -.02em; }
+    .qualification { font-size: 13px; line-height: 1.7; color: var(--fg-muted); margin-top: 6px; }
+    .entry-links { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; margin-top: 32px; font-size: 14px; }
+    .button { display: inline-block; border: 1px solid var(--fg); border-radius: 4px; padding: 10px 18px; background: var(--fg); color: var(--bg); font-size: 14px; font-weight: 600; text-align: center; }
+    .details { border-top: 1px solid var(--line); padding-block: 56px 64px; scroll-margin-top: 32px; }
+    .section-heading { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 12px; margin-bottom: 32px; }
+    .section-heading h2, .ai h2 { font-size: 24px; font-weight: 600; letter-spacing: -.025em; }
+    .section-heading a { font-size: 13px; }
+    .facts { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; padding: 0; margin: 0 0 32px; }
+    .facts li { border-top: 1px solid var(--line); padding-top: 12px; }
+    .facts h3 { margin: 6px 0 8px; font-size: 17px; line-height: 1.6; font-weight: 600; }
+    .fact-detail { color: var(--fg-muted); font-size: 14px; line-height: 1.8; }
+    .link-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; list-style: none; margin: 0; padding: 0; }
+    .link-card { display: flex; gap: 12px; height: 100%; padding: 16px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg-subtle); }
+    .link-card:hover { border-color: var(--fg-muted); text-decoration: none; }
+    .link-card:hover .link-label { text-decoration: underline; }
+    .icon { flex: none; width: 20px; height: 20px; margin-top: 3px; fill: none; stroke: var(--fg-muted); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .link-label { display: block; font-weight: 600; }
+    .link-note { display: block; color: var(--fg-muted); font-size: 12px; line-height: 1.7; margin-top: 4px; }
+    .ai { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 24px; border-top: 1px solid var(--line); padding-block: 40px; }
+    .ai p { margin-top: 12px; color: var(--fg-muted); font-size: 14px; max-width: 30em; }
+    footer { border-top: 1px solid var(--line); padding-block: 24px 36px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; font-size: 12px; color: var(--fg-muted); }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 20px; }
+    @media (max-width: 640px) {
+      .masthead { min-height: 0; padding-block: 20px; flex-direction: column; align-items: flex-start; gap: 16px; }
+      .navigation { gap: 6px 18px; line-height: 1.8; }
+      .hero { min-height: calc(100svh - 124px); padding-block: 48px 64px; }
+      h1 { font-size: clamp(36px, 11.2vw, 58px); }
+      .lead { margin-top: 20px; font-size: 15px; line-height: 1.85; }
+      .outline { margin-top: 36px; }
+      .outline li { grid-template-columns: minmax(0, 1fr); gap: 5px; padding-block: 16px; }
+      .fact-label { padding: 0; font-size: 11px; }
+      .outline h2 { font-size: 18px; line-height: 1.6; }
+      .qualification { font-size: 12px; margin-top: 5px; }
+      .entry-links { gap: 16px; margin-top: 28px; }
+      .entry-links .button { width: 100%; }
+      .entry-links > a:last-child { margin-inline: auto; padding-block: 4px; }
+      .details { padding-block: 36px 40px; }
+      .section-heading { margin-bottom: 24px; }
+      .facts { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+      .link-cards { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+      .link-card { padding: 14px 16px; }
+      .ai { grid-template-columns: minmax(0, 1fr); padding-block: 32px; }
+      .ai .button { justify-self: start; max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header class="masthead wrap">
+    <p class="wordmark">Portfolio</p>
+    <nav class="navigation" aria-label="目次">
+      <a href="#about">About</a>
+      <a href="/projects">Projects</a>
+      <a href="/systems">Systems</a>
+      <a href="/skills">Skills</a>
+      <a href="/journey">Journey</a>
+      <a href="/articles">Articles</a>
+      <a href="/ask">Ask AI</a>
+    </nav>
+  </header>
+  <main class="wrap">
+    <section class="hero" aria-labelledby="name">
+      <h1 id="name">Naoki Yoshida</h1>
+      <p class="lead">SE です。ここには個人開発と学習の記録をまとめています。</p>
+      <ul class="outline">
+        <li>
+          <span class="fact-label">何の人か</span>
+          <div>
+            <h2>業務システムの現場で約 10 年</h2>
+            <p class="qualification">コードを書く力は、業務ではなく個人開発で積んでいます。</p>
+          </div>
+        </li>
+        <li>
+          <span class="fact-label">何を作っているか</span>
+          <h2>2026 年から OrgFlow を設計・実装中</h2>
+        </li>
+        <li>
+          <span class="fact-label">どういう開発スタイルか</span>
+          <h2>設計判断を ADR に残す</h2>
+        </li>
+      </ul>
+      <div class="entry-links">
+        <a class="button" href="/projects">すべてのプロジェクト →</a>
+        <a href="/systems">すべての仕組み →</a>
+      </div>
+    </section>
+    <section id="about" class="details" aria-labelledby="about-heading">
+      <div class="section-heading">
+        <h2 id="about-heading">About</h2>
+        <a href="/profile.md">このページの Markdown</a>
+      </div>
+      <ul class="facts">
+        <li>
+          <span class="fact-label">何の人か</span>
+          <h3>業務システムの現場で約 10 年</h3>
+          <p class="fact-detail">要件整理・仕様化・テスト・チームリード（継続的にコードを書く担当ではない）</p>
+        </li>
+        <li>
+          <span class="fact-label">何を作っているか</span>
+          <h3>2026 年から OrgFlow を設計・実装中</h3>
+          <p class="fact-detail">Java / Spring Boot の業務ワークフロー API。React は学習中</p>
+        </li>
+        <li>
+          <span class="fact-label">どういう開発スタイルか</span>
+          <h3>設計判断を ADR に残す</h3>
+          <p class="fact-detail">AI と分業し、公開情報の線引きを機械で検査する</p>
+        </li>
+      </ul>
+      <ul class="link-cards" aria-label="外部のページ">
+        <li><a class="link-card" href="https://github.com/n-yoshida-dev">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5l-5 7 5 7M16 5l5 7-5 7M14 4l-4 16"/></svg>
+          <span><span class="link-label">GitHub</span><span class="link-note">すべてのコードと設計判断（ADR）の一次情報</span></span>
+        </a></li>
+        <li><a class="link-card" href="https://qiita.com/n-yoshida-dev">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 20h16M4 16l10.5-10.5a2.1 2.1 0 0 1 3 3L7 19l-4 1z"/></svg>
+          <span><span class="link-label">Qiita</span><span class="link-note">Spring Boot / 認証 / API 設計の学習記録（連載）</span></span>
+        </a></li>
+        <li><a class="link-card" href="https://n-yoshida-dev.github.io/reading-log/">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 6.5c-1.5-1.5-4-2-8-2v13c4 0 6.5.5 8 2 1.5-1.5 4-2 8-2v-13c-4 0-6.5.5-8 2zM12 6.5v13"/></svg>
+          <span><span class="link-label">Reading Log</span><span class="link-note">読書記録の公開サイト（GitHub Pages）</span></span>
+        </a></li>
+      </ul>
+    </section>
+    <section class="ai" aria-labelledby="ask-heading">
+      <div>
+        <h2 id="ask-heading">Ask AI</h2>
+        <p>あなたの AI に、このサイトと公開リポジトリを読ませて私について質問できます。</p>
+      </div>
+      <a class="button" href="/ask">Ask AI about this portfolio</a>
+    </section>
+  </main>
+  <footer class="wrap">
+    <span>© 2026 Naoki Yoshida</span>
+    <div class="footer-links">
+      <a href="/llms.txt">llms.txt</a>
+      <a href="https://github.com/n-yoshida-dev/portfolio">このサイトのソース</a>
+    </div>
+  </footer>
+</body>
+</html>
