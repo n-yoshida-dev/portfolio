@@ -38,6 +38,12 @@ ChatGPT / Claude.ai / Claude Code / Gemini
 
 ## 運用
 
+**毎週、ChatGPT がその週の自分との会話を分析し、自分について分かったことをこのリポジトリに積み上げる。**
+積み上げた内容は ChatGPT だけでなく Claude Code など他の AI でも読み、
+今後は [Reading Log](/projects/reading-log) の読む順番の管理などにも使う予定。
+
+更新するときの順序：
+
 1. 新しい事実・決定に日付を付ける
 2. 現在地の要約に影響するなら、先にそれを更新する
 3. テーマ別の詳細を更新する
