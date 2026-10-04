@@ -1,11 +1,11 @@
 ---
 title: Reading System
-tagline: iPhone の ChatGPT から登録し、GitHub を正本に、週次レビューを AI が回す読書の仕組み
-summary: iPhone の ChatGPT から登録し、GitHub を正本に、GitHub Pages で閲覧し、週次レビューを AI が回す読書の仕組み。アプリを作らず、既存サービスの組み合わせで成立させた。
+tagline: ChatGPT から登録し、GitHub を正本に、週次レビューを AI が回す読書の仕組み
+summary: ChatGPT のプロジェクトから登録し、GitHub を正本に、GitHub Pages で閲覧し、週次レビューを AI が回す読書の仕組み。週次レビューは自分の長期コンテキストも読んで読む順番を毎週決め直し、アプリを作らず既存サービスの組み合わせで成立させた。
 order: 3
-components: [reading-log, ChatGPT Projects, Claude Code, GitHub Pages]
+components: [reading-log, ChatGPT Projects, personal-ai-context（非公開・参照のみ）, GitHub Pages]
 highlights:
-  - 日常の登録は iPhone の ChatGPT、大量登録や構造変更は Claude Code と、AI ごとに役割を分ける
+  - 登録から週次レビュー・コミットまで日常の運用は ChatGPT で回し、閲覧は GitHub Pages に任せる
   - 全 AI 共通のルールを 1 ファイルに持つ。書誌情報を推測で確定せず、本人の感想を勝手に要約しない
   - ChatGPT が main に直接コミットするため、ブランチは使わず「作業前に pull、競合したら止めて報告」をルールにした
 ---
@@ -13,7 +13,7 @@ highlights:
 ## 流れ
 
 ```
-iPhone / ChatGPT（表紙の写真と一言で登録・進捗・感想）
+ChatGPT の読書管理プロジェクト（本の Amazon のページの画像 URL を渡して登録・進捗・感想）
   ↓ AI が Markdown を書き、GitHub の main に直接コミット
 GitHub（正本。1 冊 1 ファイル、未整理は inbox/）
   ↓
@@ -21,18 +21,25 @@ Reading Log（books / inbox / reviews / templates）
   ↓ Jekyll が Markdown からサイトを生成
 GitHub Pages（閲覧画面）
   ↓
-週次レビュー（ChatGPT の定期タスクが、読書中の本・積読・アクションを見直す）
+週次レビュー（ChatGPT の定期タスク）
+  ← 自分の長期コンテキスト（非公開・読むだけ）と直近 7 日の会話から、今の優先課題をつかむ
+  ↓ 全冊を評価し直し、次に読む 1 冊・上位 3 冊・順位を変えた理由を書く（理由は一般的な言い方に）
+GitHub（週次レビューと読む順番を更新）
 ```
+
+長期コンテキストは [Personal AI Context System](/systems/personal-ai-context)。2026-10-04 から週次レビューが読むようになった。
 
 ## 設計の要点
 
-- **正本は GitHub、作業場所は ChatGPT**。会話の中だけに重要情報を残さない
-- **AI ごとに役割を分ける**。日常の登録は iPhone の ChatGPT、大量登録や構造変更は Claude Code
+- **正本は GitHub、作業場所は ChatGPT**。会話の中だけに重要情報を残さない。登録から週次レビュー・コミットまで、日常の運用は ChatGPT で回す
+- **非公開の判断材料を、公開の記録に書き写さない**。週次レビューは自分の事情も使って順番を決めるが、公開の記録には一般化した理由だけを書き、会話や非公開ファイルの中身を引用しない
+- **順番は毎週決め直すが、小さな変化では入れ替えない**。変えたら理由を、変えなかったら維持した理由を書く
 - **全 AI 共通のルール（AI_RULES.md）を 1 つ持つ**。ChatGPT 用・Claude 用の入口ファイルは、そのルールを指すだけにする
 - **書誌情報を推測で確定しない**。画像や会話から判別できない値は空欄にして、本人に確認する
 - **本人の言葉を守る**。感想は勝手に要約・削除しない。AI の整理案は「AI による整理案」と明記する
 - **読み切ることを目的にしない**。`skimmed`（拾い読みで完了）と `abandoned`（中止）を正常な完了として持つ。同時に読むのは 2 冊まで
 - **読了後のアクションは 1〜3 件**。期限・完了条件・実行結果を持たせ、完了時は学びを追記する
+- **ステータスの変更などの AI の提案は、本人が確認するまで本のファイルに反映しない**。「AI 提案、本人未合意」と書いて週次レビューに置く
 
 ## 判断したこと
 

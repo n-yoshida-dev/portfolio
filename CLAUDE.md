@@ -29,7 +29,7 @@ Astro の静的サイトで、コンテンツは `public-profile/` の Markdown 
 
 - **このリポジトリは Public。`public-profile/` に「一般公開して問題ない情報」以外を書かない。**
   線引きは `README.md`「公開してよい情報の線引き」。`npm run lint`（禁止語スキャン）がヒットしたら**書き直す**。許可リストは作らない
-- **非公開リポジトリ（personal-ai-context / study / ops / writing ほか）の中身をコピーしない。** 参照するのは「存在と目的」まで。
+- **非公開リポジトリ（personal-ai-context / study / ops / writing ほか）の中身をコピーしない。** 参照するのは「存在と目的」まで（例外は `README.md`「公開してよい情報の線引き」）。
   各リポジトリの CLAUDE.md や判断台帳の文面をそのまま貼らない。固有名詞（会社名・製品名・案件名・家族・地名）はスキャンで拾えないので目視で確認する
 - **コンテンツの正本は `public-profile/`。** ページ側（`src/pages/`）に文章を直書きしない。見出し・説明文などの定型文だけを置く
 - **HTML は人間向けに短く、Markdown 版・llms.txt は AI 向けに詳しく。** 長い本文は `highlights`（要点 3 行）を書いて HTML では畳み、Markdown 版は全文のまま（`SPEC.md` §4）
