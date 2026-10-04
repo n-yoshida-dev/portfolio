@@ -1,7 +1,7 @@
 ---
 title: OrgFlow
-tagline: 申請・承認フローを題材にした、Java / Spring Boot の業務ワークフロー API
-summary: 申請・承認フローを題材にした業務ワークフロー API。Java / Spring Boot で、マルチテナント、JWT 認証、権限、監査ログ、状態遷移を扱う主力プロジェクト。
+tagline: 設計力・コーディング力・開発基盤や環境を作る力を身につけるための学習用リポジトリ
+summary: 設計力・コーディング力・開発基盤や環境を作る力を身につけるための学習用リポジトリ。題材は申請・承認フローの業務ワークフロー API（Java / Spring Boot）で、マルチテナント、JWT 認証、権限、監査ログ、状態遷移を扱い、バイブコーディングはせず AI と壁打ちしながら自力で実装している。
 repo: https://github.com/n-yoshida-dev/orgflow
 visibility: public
 status: active
