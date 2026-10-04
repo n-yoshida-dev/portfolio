@@ -38,9 +38,9 @@ ChatGPT / Claude.ai / Claude Code / Gemini
 
 ## 運用
 
-**毎週、ChatGPT がその週の自分との会話を分析し、自分について分かったことをこのリポジトリに積み上げる。**
-積み上げた内容は ChatGPT だけでなく Claude Code など他の AI でも読み、
-今後は [Reading Log](/projects/reading-log) の読む順番の管理などにも使う予定。
+**毎週、ChatGPT がその週の本人と ChatGPT の会話を分析し、本人について分かったことをこのリポジトリに積み上げる。**
+積み上げた内容は、2026-10-04 から [Reading Log](/projects/reading-log) の週次レビューが読むだけの形で使い、読む本の順番を決める材料にしている。
+今後は ChatGPT だけでなく Claude Code など他の AI とも共有できるようにする予定（今は単発で読ませる程度）。
 
 更新するときの順序：
 
