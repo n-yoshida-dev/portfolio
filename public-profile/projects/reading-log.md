@@ -1,6 +1,6 @@
 ---
 title: Reading Log
-tagline: 毎週 AI が読書記録を読み、次に読む 1 冊を理由付きで提案する読書管理システム
+tagline: 毎週 AI が読書記録と自分の長期コンテキストを読み、次に読む 1 冊を提案する読書管理システム
 summary: GitHub を正本にした読書管理システムで、読みたい本は ChatGPT のプロジェクトから追加し、読書状況は自動で更新される GitHub Pages で見る。毎週 ChatGPT の定期タスクが、読書記録と、会話から積み上げた自分の長期コンテキスト（Personal AI Context）を読んで、読む順番を決め直し、次に読む 1 冊を理由付きで提案する。
 repo: https://github.com/n-yoshida-dev/reading-log
 site: https://n-yoshida-dev.github.io/reading-log/
@@ -24,7 +24,7 @@ highlights:
 
 ## 使い方
 
-- **追加**：読みたい本は、ChatGPT の読書管理プロジェクトで追加を頼む。AI が Markdown を書いて GitHub に反映する
+- **追加**：読みたい本は、ChatGPT の読書管理プロジェクトで追加を頼む（本の画像は Amazon のページの画像 URL を渡す）。AI が Markdown を書いて GitHub に反映する
 - **閲覧**：読書状況は、Markdown の更新に合わせて自動で作り直される GitHub Pages（Jekyll）で見る
 - **週次レビュー**：毎週 ChatGPT の定期タスクが読む順番を決め直し、次に読む 1 冊を提案する（下の節）
 

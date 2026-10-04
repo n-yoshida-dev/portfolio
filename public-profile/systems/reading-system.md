@@ -1,7 +1,7 @@
 ---
 title: Reading System
-tagline: iPhone の ChatGPT から登録し、GitHub を正本に、週次レビューを AI が回す読書の仕組み
-summary: iPhone の ChatGPT から登録し、GitHub を正本に、GitHub Pages で閲覧し、週次レビューを AI が回す読書の仕組み。週次レビューは自分の長期コンテキストも読んで読む順番を毎週決め直し、アプリを作らず既存サービスの組み合わせで成立させた。
+tagline: ChatGPT から登録し、GitHub を正本に、週次レビューを AI が回す読書の仕組み
+summary: ChatGPT のプロジェクトから登録し、GitHub を正本に、GitHub Pages で閲覧し、週次レビューを AI が回す読書の仕組み。週次レビューは自分の長期コンテキストも読んで読む順番を毎週決め直し、アプリを作らず既存サービスの組み合わせで成立させた。
 order: 3
 components: [reading-log, ChatGPT Projects, personal-ai-context（非公開・参照のみ）, GitHub Pages]
 highlights:
@@ -13,7 +13,7 @@ highlights:
 ## 流れ
 
 ```
-iPhone / ChatGPT（表紙の写真と一言で登録・進捗・感想）
+ChatGPT の読書管理プロジェクト（本の Amazon のページの画像 URL を渡して登録・進捗・感想）
   ↓ AI が Markdown を書き、GitHub の main に直接コミット
 GitHub（正本。1 冊 1 ファイル、未整理は inbox/）
   ↓
