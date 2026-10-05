@@ -18,6 +18,13 @@ export const SITE = {
  */
 export const ASK_BUTTON_LABEL = 'Ask AI about this portfolio';
 
+/** 左の目次の下と、トップの表紙の目次の下に並べる文字リンク。2 か所で同じものを出す */
+export const QUICK_LINKS: readonly { label: string; href: string }[] = [
+  { label: 'GitHub', href: SITE.githubUrl },
+  { label: 'Qiita', href: SITE.qiitaUrl },
+  { label: 'llms.txt', href: '/llms.txt' },
+] as const;
+
 /** トップの 1 節。目次（左の固定目次）と、トップの見出し・「すべて →」の行き先を同じ定義から作る */
 export interface Section {
   /** `<section id>` と目次リンクの `#id`。変えるときは index.astro の `<HomeSection id>` も一緒に変える */

@@ -1,8 +1,9 @@
 ---
 // すべてのページの共通枠。<head> のメタ情報（SEO / OGP）、左の固定目次、フッターを持つ。
 // 目次はトップの 7 節（SECTIONS）へのリンク。トップではページ内の `#id`、他のページでは `/#id` に飛ぶ（SPEC.md §4）。
+// トップだけは slot="cover" で表紙（開いた直後の 1 画面）を渡し、左の目次と本文はその下から始まる。
 import '../styles/global.css';
-import { SITE, SECTIONS, sectionIdForPath, ASK_BUTTON_LABEL } from '../site';
+import { SITE, SECTIONS, QUICK_LINKS, sectionIdForPath, ASK_BUTTON_LABEL } from '../site';
 
 interface Props {
   /** ページ固有のタイトル。トップは省略してサイト名だけにする */
@@ -28,6 +29,8 @@ const ogImage = new URL('/og.png', Astro.site);
 const isHome = currentPath === '/';
 /** 詳しい版のページを見ているとき、その節の目次項目を強調する（トップでは JavaScript が今いる節に付け替える） */
 const currentSection = isHome ? undefined : sectionIdForPath(currentPath);
+/** 表紙のあるページ（トップ）。右下の Ask AI ボタンを表紙の上に出さない箱に入れる */
+const hasCover = Astro.slots.has('cover');
 ---
 
 <!doctype html>
@@ -54,47 +57,60 @@ const currentSection = isHome ? undefined : sectionIdForPath(currentPath);
     <meta name="twitter:image" content={ogImage} />
   </head>
   <body>
-    <header class="side">
-      <a class="brand" href="/">
-        {SITE.name}
-      </a>
-      <nav aria-label="目次">
-        {SECTIONS.map((s) => (
-          <a
-            href={isHome ? `#${s.id}` : `/#${s.id}`}
-            aria-current={currentSection === s.id ? 'true' : undefined}
-          >
-            {s.label}
-          </a>
-        ))}
-      </nav>
-      <div class="side-links">
-        <a href={SITE.githubUrl}>GitHub</a>
-        <a href={SITE.qiitaUrl}>Qiita</a>
-        <a href="/llms.txt">llms.txt</a>
-      </div>
-    </header>
-    <div class="page">
-      <main class="container">
-        <slot />
-      </main>
-      <footer class="site-footer">
-        <div class="container">
-          <span>
-            © {new Date().getFullYear()} {SITE.name}
-          </span>
-          {markdownHref && <a href={markdownHref}>このページの Markdown</a>}
-          <a href={SITE.repoUrl}>このサイトのソース</a>
-        </div>
-      </footer>
-    </div>
-    {
-      /* Ask AI の追従ボタン。どのページからでも /ask へ行けるよう右下に留める。/ask 自身では出さない（SPEC.md §4） */
-      currentPath !== '/ask' && (
-        <a class="ask-fab" href="/ask">
-          {ASK_BUTTON_LABEL}
+    <slot name="cover" />
+    <div class="layout">
+      <header class="side">
+        <a class="brand" href="/">
+          {SITE.name}
         </a>
-      )
-    }
+        <nav aria-label="目次">
+          {SECTIONS.map((s) => (
+            <a
+              href={isHome ? `#${s.id}` : `/#${s.id}`}
+              aria-current={currentSection === s.id ? 'true' : undefined}
+            >
+              {s.label}
+            </a>
+          ))}
+        </nav>
+        <div class="side-links">
+          {QUICK_LINKS.map((l) => (
+            <a href={l.href}>{l.label}</a>
+          ))}
+        </div>
+      </header>
+      <div class="page">
+        <main class="container">
+          <slot />
+        </main>
+        <footer class="site-footer">
+          <div class="container">
+            <span>
+              © {new Date().getFullYear()} {SITE.name}
+            </span>
+            {markdownHref && <a href={markdownHref}>このページの Markdown</a>}
+            <a href={SITE.repoUrl}>このサイトのソース</a>
+          </div>
+        </footer>
+        {
+          /*
+            Ask AI の追従ボタン。どのページからでも /ask へ行けるよう右下に留める。/ask 自身では出さない（SPEC.md §4）。
+            表紙のあるトップでは .fab-rail（本文の箱の末尾。CSS の sticky）に入れ、表紙では出さず本文と一緒に下から入ってくる
+          */
+          currentPath !== '/ask' &&
+            (hasCover ? (
+              <div class="fab-rail">
+                <a class="ask-fab" href="/ask">
+                  {ASK_BUTTON_LABEL}
+                </a>
+              </div>
+            ) : (
+              <a class="ask-fab" href="/ask">
+                {ASK_BUTTON_LABEL}
+              </a>
+            ))
+        }
+      </div>
+    </div>
   </body>
 </html>

@@ -7,15 +7,17 @@ interface Props {
   id: string;
   /** 見出しの右に添える件数など（例：「11 件」）。無ければ出さない */
   note?: string;
+  /** section に足す class（トップの表紙に置く About の節の見た目に使う） */
+  class?: string;
 }
-const { id, note } = Astro.props;
+const { id, note, class: className } = Astro.props;
 const section = SECTIONS.find((s) => s.id === id);
 if (!section) {
   throw new Error(`トップの節 "${id}" が src/site.ts の SECTIONS にありません`);
 }
 ---
 
-<section id={id} class="home-section" aria-labelledby={`${id}-heading`}>
+<section id={id} class:list={['home-section', className]} aria-labelledby={`${id}-heading`}>
   <h2 id={`${id}-heading`}>
     {section.label}
     {note && <span class="section-note">{note}</span>}

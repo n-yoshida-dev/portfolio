@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Naoki Yoshida — Portfolio</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --fg: #1f2328;
+      --fg-muted: #59636e;
+      --line: #d1d9e0;
+      --link: #0969da;
+      --bg: #fff;
+      --bg-subtle: #f6f8fa;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", "Hiragino Sans", "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --fg: #e6edf3;
+        --fg-muted: #9198a1;
+        --line: #3d444d;
+        --link: #4493f8;
+        --bg: #0d1117;
+        --bg-subtle: #161b22;
+      }
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      color: var(--fg);
+      background: var(--bg);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.75;
+      overflow-wrap: anywhere;
+    }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; text-underline-offset: .22em; }
+    a:focus-visible { outline: 2px solid var(--fg); outline-offset: 5px; border-radius: 4px; }
+    h1, h2, h3, p { margin: 0; }
+    .container { width: 100%; max-width: 52rem; margin-inline: auto; padding-inline: 16px; }
+    .cover {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      min-height: 100svh;
+      padding-bottom: 40px;
+    }
+    .masthead {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      padding-block: 25px;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+    }
+    .edition { font-family: var(--font-mono); color: var(--fg-muted); letter-spacing: .06em; }
+    .masthead a { display: inline-flex; align-items: center; gap: 10px; min-height: 24px; }
+    .intro { flex: 1; display: flex; flex-direction: column; justify-content: center; padding-block: 56px 64px; }
+    h1 { font-size: clamp(2.375rem, 5.4vw, 4.25rem); letter-spacing: -.045em; line-height: 1.15; font-weight: 600; }
+    .lead { color: var(--fg-muted); margin-top: 24px; font-size: 18px; line-height: 1.9; }
+    .routes { padding: 0; margin: 0; list-style: none; border-top: 1px solid var(--line); }
+    .routes li { border-bottom: 1px solid var(--line); }
+    .route {
+      display: grid;
+      grid-template-columns: 9rem minmax(0, 1fr) 20px;
+      gap: 16px;
+      align-items: center;
+      min-height: 86px;
+      padding: 19px 0;
+    }
+    .route-name { font-size: 21px; font-weight: 500; letter-spacing: -.02em; }
+    .route-description { color: var(--fg); font-size: 17px; line-height: 1.6; }
+    .route-arrow { font-size: 21px; line-height: 1; text-align: right; }
+    .route:hover { text-decoration: none; background: var(--bg-subtle); }
+    .route:hover .route-name { text-decoration: underline; text-underline-offset: .22em; }
+    .secondary { display: flex; flex-wrap: wrap; gap: 4px 32px; margin-top: 15px; }
+    .secondary a { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; }
+    .about-wrap { border-top: 1px solid var(--line); background: var(--bg-subtle); }
+    #about { padding-block: 64px 72px; scroll-margin-top: 24px; }
+    h2 { font-size: 28px; font-weight: 600; letter-spacing: -.025em; line-height: 1.35; }
+    .facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; margin: 36px 0 40px; padding: 0; list-style: none; }
+    .facts li { border-top: 1px solid var(--line); padding-top: 14px; }
+    .fact-label { display: block; color: var(--fg-muted); font-size: 12px; }
+    .fact-title { display: block; font-size: 18px; font-weight: 600; margin-block: 7px 10px; line-height: 1.65; }
+    .fact-detail { display: block; color: var(--fg-muted); font-size: 14px; line-height: 1.85; }
+    .link-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; padding: 0; margin: 0; list-style: none; }
+    .link-card { display: flex; align-items: flex-start; gap: 12px; height: 100%; padding: 18px 16px; background: var(--bg-subtle); border: 1px solid var(--line); border-radius: 8px; }
+    .link-card:hover { text-decoration: none; border-color: var(--fg-muted); }
+    .link-card:hover .link-label { text-decoration: underline; text-underline-offset: .22em; }
+    .icon { flex: none; width: 20px; height: 20px; margin-top: 4px; fill: none; stroke: currentColor; color: var(--fg-muted); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .link-label { display: block; font-weight: 600; }
+    .link-note { display: block; margin-top: 4px; font-size: 12px; line-height: 1.7; color: var(--fg-muted); }
+    .profile-link { margin-top: 24px; font-size: 14px; }
+    .ask { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 32px; padding-block: 40px; border-bottom: 1px solid var(--line); }
+    .ask h2 { font-size: 18px; letter-spacing: 0; }
+    .ask p { max-width: 30em; color: var(--fg-muted); font-size: 14px; margin-top: 8px; }
+    .button { display: inline-block; background: var(--fg); color: var(--bg); padding: 10px 16px; border: 1px solid var(--fg); border-radius: 4px; font-size: 14px; font-weight: 600; text-align: center; }
+    .footer-links { display: flex; align-items: baseline; flex-wrap: wrap; gap: 12px 24px; padding-block: 24px 32px; font-size: 12px; }
+    .copyright { margin-right: auto; color: var(--fg-muted); }
+    @media (max-width: 40rem) {
+      .cover { padding-bottom: 28px; }
+      .masthead { padding-block: 19px; }
+      .intro { padding-block: 44px 52px; }
+      h1 { font-size: 38px; }
+      .lead { margin-top: 20px; font-size: 16px; line-height: 1.9; }
+      .route { grid-template-columns: minmax(0, 1fr) 20px; gap: 4px 12px; padding-block: 15px; min-height: 89px; }
+      .route-name { grid-column: 1; font-size: 17px; }
+      .route-description { grid-column: 1; font-size: 14px; }
+      .route-arrow { grid-column: 2; grid-row: 1 / 3; font-size: 20px; }
+      .secondary { justify-content: space-between; gap: 0 16px; margin-top: 13px; }
+      .secondary a { font-size: 14px; }
+      #about { padding-block: 40px 48px; }
+      h2 { font-size: 25px; }
+      .facts { grid-template-columns: minmax(0, 1fr); gap: 24px; margin-block: 28px 32px; }
+      .fact-title { font-size: 17px; margin-bottom: 6px; }
+      .link-cards { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+      .link-card { padding: 15px 16px; }
+      .link-note { font-size: 13px; }
+      .ask { grid-template-columns: minmax(0, 1fr); gap: 20px; padding-block: 32px; }
+      .ask .button { justify-self: start; }
+      .footer-links { gap: 10px 20px; }
+      .copyright { flex-basis: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="cover container">
+      <header class="masthead">
+        <span class="edition">Portfolio</span>
+        <a href="https://github.com/n-yoshida-dev">GitHub <span aria-hidden="true">↗</span></a>
+      </header>
+      <div class="intro">
+        <h1>Naoki Yoshida</h1>
+        <p class="lead">SE です。ここには個人開発と学習の記録をまとめています。</p>
+      </div>
+      <nav aria-label="目次">
+        <ul class="routes">
+          <li><a class="route" href="#about"><span class="route-name">About</span><span class="route-description">業務システムの現場で約 10 年</span><span class="route-arrow" aria-hidden="true">↓</span></a></li>
+          <li><a class="route" href="/projects"><span class="route-name">Projects</span><span class="route-description">2026 年から OrgFlow を設計・実装中</span><span class="route-arrow" aria-hidden="true">→</span></a></li>
+          <li><a class="route" href="/systems"><span class="route-name">Systems</span><span class="route-description">設計判断を ADR に残す</span><span class="route-arrow" aria-hidden="true">→</span></a></li>
+        </ul>
+        <div class="secondary">
+          <a href="/skills">Skills</a>
+          <a href="/journey">Journey</a>
+          <a href="/articles">Articles</a>
+          <a href="/ask">Ask AI</a>
+        </div>
+      </nav>
+    </div>
+    <div class="about-wrap">
+      <section id="about" class="container" aria-labelledby="about-heading">
+        <h2 id="about-heading">About</h2>
+        <ul class="facts">
+          <li><span class="fact-label">何の人か</span><span class="fact-title">業務システムの現場で約 10 年</span><span class="fact-detail">要件整理・仕様化・テスト・チームリード（継続的にコードを書く担当ではない）</span></li>
+          <li><span class="fact-label">何を作っているか</span><span class="fact-title">2026 年から OrgFlow を設計・実装中</span><span class="fact-detail">Java / Spring Boot の業務ワークフロー API。React は学習中</span></li>
+          <li><span class="fact-label">どういう開発スタイルか</span><span class="fact-title">設計判断を ADR に残す</span><span class="fact-detail">AI と分業し、公開情報の線引きを機械で検査する</span></li>
+        </ul>
+        <ul class="link-cards" aria-label="外部のページ">
+          <li><a class="link-card" href="https://github.com/n-yoshida-dev"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5l-5 7 5 7M16 5l5 7-5 7M14 4l-4 16"/></svg><span><span class="link-label">GitHub</span><span class="link-note">すべてのコードと設計判断（ADR）の一次情報</span></span></a></li>
+          <li><a class="link-card" href="https://qiita.com/n-yoshida-dev"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 20h16M4 16l10.5-10.5a2.1 2.1 0 0 1 3 3L7 19l-4 1z"/></svg><span><span class="link-label">Qiita</span><span class="link-note">Spring Boot / 認証 / API 設計の学習記録（連載）</span></span></a></li>
+          <li><a class="link-card" href="https://n-yoshida-dev.github.io/reading-log/"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 6.5c-1.5-1.5-4-2-8-2v13c4 0 6.5.5 8 2 1.5-1.5 4-2 8-2v-13c-4 0-6.5.5-8 2zM12 6.5v13"/></svg><span><span class="link-label">Reading Log</span><span class="link-note">読書記録の公開サイト（GitHub Pages）</span></span></a></li>
+        </ul>
+        <p class="profile-link"><a href="/profile.md">このページの Markdown</a></p>
+      </section>
+    </div>
+  </main>
+  <footer class="container">
+    <div class="ask">
+      <div><h2>Ask AI</h2><p>あなたの AI に、このサイトと公開リポジトリを読ませて私について質問できます。</p></div>
+      <a class="button" href="/ask">Ask AI about this portfolio</a>
+    </div>
+    <div class="footer-links">
+      <span class="copyright">© 2026 Naoki Yoshida</span>
+      <a href="/llms.txt">llms.txt</a>
+      <a href="https://github.com/n-yoshida-dev/portfolio">このサイトのソース</a>
+    </div>
+  </footer>
+</body>
+</html>
