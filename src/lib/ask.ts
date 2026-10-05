@@ -21,12 +21,20 @@ Cite the sources you relied on.
 Answer in Japanese.`;
 }
 
+/** 各 AI サービスへのリンク 1 つ */
+export interface ChatLink {
+  label: string;
+  href?: string;
+  /** URL でプロンプトを渡せないサービス（Gemini）。開くと同時にプロンプトをクリップボードへ写す */
+  copy?: boolean;
+}
+
 /** 各 AI サービスの「プロンプト入り新規チャット」URL。対応していないサービスは undefined */
-export function chatLinks(prompt: string): { label: string; href?: string }[] {
+export function chatLinks(prompt: string): ChatLink[] {
   const q = encodeURIComponent(prompt);
   return [
     { label: 'ChatGPT で開く', href: `https://chatgpt.com/?q=${q}` },
     { label: 'Claude で開く', href: `https://claude.ai/new?q=${q}` },
-    { label: 'Gemini（コピーして貼り付け）', href: 'https://gemini.google.com/app' },
+    { label: 'Gemini（コピーして貼り付け）', href: 'https://gemini.google.com/app', copy: true },
   ];
 }

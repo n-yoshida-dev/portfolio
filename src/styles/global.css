@@ -440,10 +440,12 @@ main.container {
   z-index: 10;
   height: 0;
 }
-.fab-rail .ask-fab {
+.fab-rail .ask-entry-fab {
   position: absolute;
   top: 0;
   bottom: auto;
+}
+.fab-rail .ask-fab {
   display: inline-flex;
   align-items: center;
   height: var(--fab-height);
@@ -1213,14 +1215,19 @@ h1 .badge {
 }
 
 /*
-  Ask AI の追従ボタン（SPEC.md §4）。position: fixed で画面の右下に留める（JavaScript は使わない）。
+  Ask AI の追従ボタン（SPEC.md §4）。外側の箱（.ask-entry-fab）を position: fixed で画面の右下に留める（JavaScript は使わない）。
   影は使わず、背景色の縁取りでカードや本文の上に重なったときの境目を見せる。言葉は 1 行に収める
 */
-.ask-fab {
+.ask-entry-fab {
   position: fixed;
   right: 16px;
   bottom: 16px;
   z-index: 10;
+}
+.ask-fab {
+  display: block;
+  font-family: inherit;
+  cursor: pointer;
   background: var(--fg);
   color: var(--bg);
   border: 2px solid var(--bg);
@@ -1233,6 +1240,103 @@ h1 .badge {
 }
 .ask-fab:hover {
   text-decoration: underline;
+}
+
+/*
+  Ask AI の入口のメニュー（src/components/AskEntry.astro。SPEC.md §4）。ChatGPT / Claude / Gemini と /ask を縦に並べる。
+  押したときは popover として最前面に開き（外を押すか Esc で閉じる）、PC でマウスを乗せたときは同じメニューを入口の箱の中に出す。
+  右下のボタンではボタンの上、トップの Ask AI 節ではボタンの下に開く。地色と線だけで描き、影は使わない
+*/
+/* トップの節の入口はメニューの位置の基準にする（右下の入口は .ask-entry-fab が fixed / absolute で基準になる） */
+.ask-entry-section {
+  position: relative;
+  display: inline-block;
+}
+.ask-menu {
+  /* popover の既定の見た目（中央寄せ・枠・余白）を打ち消す */
+  inset: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--fg);
+  overflow: visible;
+}
+.ask-menu-panel {
+  /* 幅は 15rem から 22rem まで、狭い画面では左右 16px の内側まで。Gemini のコピー後の長い文言は折り返す */
+  min-width: 15rem;
+  max-width: min(22rem, calc(100vw - 32px));
+  margin: 0;
+  padding: 0.3rem 0;
+  list-style: none;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  word-break: auto-phrase;
+  background: var(--bg);
+  border: 1px solid var(--fg-muted);
+  border-radius: 6px;
+}
+.ask-menu-panel > li {
+  margin: 0;
+}
+.ask-menu-panel a {
+  display: block;
+  padding: 0.45rem 0.9rem;
+}
+.ask-menu-panel > .ask-menu-more {
+  margin-top: 0.3rem;
+  border-top: 1px solid var(--line);
+  padding-top: 0.3rem;
+  font-size: 0.875rem;
+}
+/* ボタンとメニューの間の隙間。マウスを乗せて開いたときは、ここを通ってもメニューが閉じない（透明な余白で埋める） */
+.ask-entry-fab .ask-menu {
+  padding-bottom: 6px;
+}
+.ask-entry-section .ask-menu {
+  padding-top: 6px;
+}
+/*
+  押して開いたとき（最前面）。右下のボタンは常に画面の右下にあるので、メニューも画面の右下（ボタンの真上）に固定する。
+  トップの節は画面の中央に出し、CSS の anchor positioning に対応するブラウザではボタンの真下に付ける
+*/
+.ask-entry-fab .ask-menu:popover-open {
+  position: fixed;
+  right: 16px;
+  bottom: calc(16px + 2.6rem);
+}
+.ask-entry-section .ask-menu:popover-open {
+  inset: 0;
+  margin: auto;
+  width: fit-content;
+  height: fit-content;
+}
+@supports (position-area: bottom) {
+  .ask-entry-section .ask-trigger {
+    anchor-name: --ask-section;
+  }
+  .ask-entry-section .ask-menu:popover-open {
+    position-anchor: --ask-section;
+    position-area: bottom span-right;
+    inset: auto;
+    margin: 0;
+  }
+}
+/* PC でマウスを乗せたとき。押して開いていない間だけ、入口の箱の中に絶対配置で出す */
+@media (hover: hover) and (pointer: fine) {
+  .ask-entry:hover > .ask-menu:not(:popover-open) {
+    display: block;
+    position: absolute;
+    z-index: 1;
+  }
+  .ask-entry-fab:hover > .ask-menu:not(:popover-open) {
+    right: 0;
+    bottom: 100%;
+  }
+  .ask-entry-section:hover > .ask-menu:not(:popover-open) {
+    left: 0;
+    top: 100%;
+  }
 }
 
 /*

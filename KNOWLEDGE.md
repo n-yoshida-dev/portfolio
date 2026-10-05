@@ -293,3 +293,23 @@ About の節（`section#about`）は表紙の中に置き、外部リンクの�
 確かめ方：Playwright（Chromium）で 1280×800 と 375×812 を、ライト・ダーク・動きを減らす設定の 3 通りで撮り、
 横スクロールなし（ページの幅＝画面の幅。開いて約 0.3 秒の動きの途中も）、ボタンが表紙では画面の外・表紙の後は右下 16px、ページ末尾でフッターの文字が隠れないことを測った。
 `/projects`・`/skills` のボタンは右下 16px のまま、`/ask` には出ない
+
+### 2026-10-05：Ask AI の入口のメニューは HTML の popover で開け閉めし、JavaScript は Gemini のコピーだけにする
+
+ユーザーの依頼は「マウスオーバーで ChatGPT / Claude / Gemini を選んで押せる」と「スマホは押して開く」。開け閉めの作り方は 3 つあった。
+自前の JavaScript で開け閉めする（CLAUDE.md「守ること」の JavaScript の例外が増える）、`<details>`（マウスを乗せて開く形と相性が悪く、外を押しても閉じない）、
+HTML の popover（`popovertarget` を付けたボタンで開き、外を押すか Esc で閉じる。JavaScript なし。Chrome 114・Safari 17・Firefox 125 から）。popover にした。
+マウスを乗せたときは、popover を開かずに同じメニューを CSS の `:hover` で入口の箱の中に出す（`@media (hover: hover) and (pointer: fine)` の間だけ）。
+ブラウザの既定の `[popover]:not(:popover-open) { display: none }` は、作り手の CSS の `display: block` で上書きできる（読み込み元の順で作り手が勝つ）。
+ボタンとメニューの間の隙間は、メニューの外側の透明な余白で埋めた。マウスが隙間を通る間も「入口の箱の上」のままなので、メニューが閉じない。
+
+押して開いた popover は最前面（top layer）に出て、位置は画面が基準になる。右下のボタンは常に画面の右下にあるので、メニューも画面の右下に固定した。
+トップの節のボタンにはメニューを付けて出すため、CSS の anchor positioning（`anchor-name` / `position-area`）を `@supports` の中で使い、未対応のブラウザでは画面の中央に出す。
+右下のボタンにも一度 anchor positioning を付けたが、Chromium でメニューがボタンから離れた位置に出た（下のハマりと同時に起きていたので、原因は切り分けていない）。固定の位置で足りるので外した。
+
+Gemini は URL でプロンプトを渡せないので、押したときに `navigator.clipboard.writeText` で写す。リンクは新しいタブで開く（同じタブで移ると、写し終える前にページが離れうるため）。
+これに合わせて、メニューの ChatGPT・Claude も新しいタブで開く。`/ask` のボタンは今までどおり（同じタブ・Gemini はコピーしない）。
+
+ハマったこと：右下の箱を固定する `.ask-entry-fab { position: fixed }` の後ろに、`.ask-entry { position: relative }` を書いていた。
+クラス 1 つ同士で強さが同じなので後ろが勝ち、右下のボタンがページの末尾に普通に並んだ（Playwright でボタンの位置が y=2129 と出て気づいた）。
+位置の基準にする指定は `.ask-entry-section` にだけ書く形に直した。同じ要素に付く 2 つのクラスに `position` を書き分けるときは、順番に頼らない
