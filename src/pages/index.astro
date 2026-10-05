@@ -1,6 +1,8 @@
 ---
 // トップ。1 枚のページに 7 節（About / Projects / Systems / Skills / Journey / Articles / Ask AI）を縦に並べ、
 // 左の目次がその節へ移動する（SPEC.md §4）。各節は短い版で、詳しい版は各ページに残して「すべて →」で行く。
+// 先頭は画面 1 つ分の表紙（名前・一言・要点 3 行・目次）で、About の節は表紙の中に置き、外部リンクのカードは表紙の直後に置く
+// （2026-10-05 ユーザーがコンペの見本 A を選択。logs/decisions.md、見本は docs/design-candidates/2026-10-04-first-screen/）。
 // 文章は frontmatter の tagline / highlights と各コレクションの要約だけを出し、profile.md の本文は Markdown 版（/profile.md）に任せる。
 import Base from '../layouts/Base.astro';
 import HomeSection from '../components/HomeSection.astro';
@@ -23,7 +25,7 @@ import {
   type TopSkillCard,
 } from '../lib/outline';
 import type { IconName } from '../lib/icons';
-import { SITE, ASK_BUTTON_LABEL } from '../site';
+import { SITE, SECTIONS, QUICK_LINKS, ASK_BUTTON_LABEL } from '../site';
 
 const profile = await getPage('profile');
 // 主なプロジェクトは 4 件まで（SPEC.md §4）。総数は切る前の件数で数える
@@ -43,6 +45,16 @@ const platforms = [...new Set(articles.map((a) => platformLabel[a.data.platform]
 const articleSource =
   platforms.length === 1 && platforms[0] ? `${platforms[0]} に書いた` : '書いた';
 
+/**
+ * 表紙の目次に添える件数（節の id → 件数と単位）。今のトップで件数を出している 3 節だけ。
+ * Projects は見出しの「4 / 12 件」のうち全体の件数を使う。PC では 1 件 1 マスの小さな図も並べる
+ */
+const coverCounts: Partial<Record<string, { n: number; unit: string }>> = {
+  projects: { n: projectCount, unit: '件' },
+  systems: { n: systems.length, unit: '件' },
+  articles: { n: articles.length, unit: '本' },
+};
+
 /** Skills の区分見出しに添えるアイコン。根拠がまだない区分は芽、商用実務はかばん、それ以外（個人開発）はコード */
 function skillIcon(card: TopSkillCard): IconName {
   if (card.tentative) return 'sprout';
@@ -51,20 +63,63 @@ function skillIcon(card: TopSkillCard): IconName {
 ---
 
 <Base description={profile.data.description} markdownHref="/profile.md">
-  <HomeSection id="about">
-    <h1>{SITE.name}</h1>
-    {profile.data.tagline && <p class="lead">{profile.data.tagline}</p>}
-    {profile.data.highlights && (
-      <ul class="facts">
-        {profile.data.highlights.map((h) => (
-          <li>
-            <span class="fact-label">{h.label}</span>
-            <span class="fact-title">{h.title}</span>
-            {h.detail && <span class="fact-detail">{h.detail}</span>}
-          </li>
-        ))}
-      </ul>
-    )}
+  <div class="cover" slot="cover">
+    <div class="cover-inner">
+      <HomeSection id="about" class="cover-about">
+        <div class="cover-id">
+          <h1>{SITE.name}</h1>
+          {profile.data.tagline && <p class="lead">{profile.data.tagline}</p>}
+        </div>
+        {profile.data.highlights && (
+          <ul class="cover-facts">
+            {profile.data.highlights.map((h) => (
+              <li>
+                <span class="fact-label">{h.label}</span>
+                <span class="fact-title">{h.title}</span>
+                {h.detail && <span class="fact-detail">{h.detail}</span>}
+              </li>
+            ))}
+          </ul>
+        )}
+      </HomeSection>
+      <nav class="cover-nav" aria-label="目次">
+        <ol class="ix">
+          {SECTIONS.map((s, i) => {
+            const count = coverCounts[s.id];
+            return (
+              <li>
+                <a href={`#${s.id}`}>
+                  <span class="ix-no" aria-hidden="true">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span class="ix-name">{s.label}</span>
+                  <span class="ix-sq" aria-hidden="true">
+                    {count && Array.from({ length: count.n }, () => <i />)}
+                  </span>
+                  <span class="ix-count">{count && `${count.n} ${count.unit}`}</span>
+                  <span class="ix-go" aria-hidden="true">
+                    →
+                  </span>
+                </a>
+              </li>
+            );
+          })}
+        </ol>
+        <ul class="cover-links">
+          {QUICK_LINKS.map((l) => (
+            <li>
+              <a href={l.href}>{l.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+    <a class="cover-down" href="#after-cover" aria-hidden="true" tabindex="-1">
+      ↓
+    </a>
+  </div>
+
+  <div class="about-links" id="after-cover">
     {profile.data.links && (
       <ul class="link-cards" aria-label="外部のページ">
         {profile.data.links.map((l) => (
@@ -80,7 +135,7 @@ function skillIcon(card: TopSkillCard): IconName {
         ))}
       </ul>
     )}
-  </HomeSection>
+  </div>
 
   <HomeSection id="projects" note={`${featured.length} / ${projectCount} 件`}>
     <ul class="card-grid">

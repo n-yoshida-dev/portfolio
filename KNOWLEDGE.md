@@ -275,3 +275,21 @@ personal-ai-context を**使わない**版の Fable の作り手がそれを自�
 ユーザーが押すと「claude.ai はブロックされています ERR_BLOCKED_BY_RESPONSE」になった。公開する前に、リンクが開けるかを確かめていなかった。
 ページの中で `fetch('A.html')` で読み、`<iframe srcdoc>` に入れて表示する形に直した（PC 1280px / スマホ 375px の幅を切り替え、動きをもう一度再生できる）。
 見本の中のリンクは枠の外へ移動しないよう、`#` の移動以外は止めた。手元では `file://` だと `fetch` が通らないので、`python3 -m http.server` で配って確かめた
+
+### 2026-10-05：表紙の実装。見本の HTML は写さず CSS だけを持ってきて、右下のボタンは本文の箱の末尾で sticky にする
+
+見本 A（`docs/design-candidates/2026-10-04-first-screen/A.html`）は今のトップの HTML を写した 1 枚なので、そのまま置くと文面が正本と二重になる。
+CSS だけを `global.css` に整形して移し、中身は今の部品（`HomeSection`・`profile.md` の `tagline` / `highlights` / `links`・`SECTIONS`）から組んだ。
+表紙は `Base.astro` の名前つき slot（`slot="cover"`）で渡し、左の目次と本文の 2 列は `body` から `.layout` の箱に移した（表紙の下から 2 列が始まるため）。
+About の節（`section#about`）は表紙の中に置き、外部リンクのカードは節の外（表紙の直後）に出した。`npm run check:home` は `section#about` の中の h1 と一言を見るので、そのまま通る。
+
+右下の Ask AI ボタンは、見本では高さ 0 の箱を本文の先頭に置いて `position: sticky; top: calc(100svh - …)` で下端に貼っていた。
+これだとボタンが HTML の先頭に来て、キーボードで Tab を押したとき左の目次より先にボタンへ移る。そこで箱を本文の箱（`.page`）の**末尾**に置き、
+`position: sticky; bottom: calc(16px + ボタンの高さ)` にした。sticky の要素は自分の入っている箱（`.page`）の外へは動けないので、
+表紙を見ている間は `.page` の上端（画面の下端の外）に留まり、本文が上がってくると一緒に入ってきて右下で止まる。見た目は見本と同じで、順番は今までどおりフッターの後。
+トップ以外のページは表紙が無いので、今までどおり `position: fixed`（`Base.astro` が `Astro.slots.has('cover')` で切り替える）。
+
+ほかに見本から変えたのは 1 点だけ：目次の → の出入り（`transition`）を、動きを減らす設定のときは止めるようにした（見本では設定にかかわらず動いていた）。
+確かめ方：Playwright（Chromium）で 1280×800 と 375×812 を、ライト・ダーク・動きを減らす設定の 3 通りで撮り、
+横スクロールなし（ページの幅＝画面の幅。開いて約 0.3 秒の動きの途中も）、ボタンが表紙では画面の外・表紙の後は右下 16px、ページ末尾でフッターの文字が隠れないことを測った。
+`/projects`・`/skills` のボタンは右下 16px のまま、`/ask` には出ない
