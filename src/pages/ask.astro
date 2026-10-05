@@ -5,7 +5,7 @@ import { buildAskPrompt, chatLinks } from '../lib/ask';
 import { SITE } from '../site';
 
 const prompt = buildAskPrompt(Astro.site);
-const links = chatLinks(prompt);
+const links = chatLinks(Astro.site);
 ---
 
 <Base
@@ -32,7 +32,14 @@ const links = chatLinks(prompt);
       </button>
       {links.map((l) =>
         l.href ? (
-          <a class="button" href={l.href}>
+          <a
+            class="button"
+            href={l.href}
+            target={l.copy ? '_blank' : undefined}
+            rel={l.copy ? 'noopener' : undefined}
+            data-ask-copy={l.copy?.prompt}
+            data-ask-source={l.copy?.source}
+          >
             {l.label}
           </a>
         ) : null,
@@ -80,6 +87,9 @@ const links = chatLinks(prompt);
   </ul>
 
   <script>
+    // Gemini のボタンのコピー（プロンプト + サイトの全文。入口のメニューと同じ処理）
+    import '../scripts/ask-copy';
+
     // コピーボタン。クリップボード API が使えない環境では、テキストを選択状態にする
     const button = document.getElementById('copy-prompt') as HTMLButtonElement | null;
     const pre = document.getElementById('ask-prompt');

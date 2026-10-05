@@ -1,8 +1,8 @@
 ---
 // Ask AI の入口。ボタンを押すと（PC はマウスを乗せても）各 AI を選ぶメニューが開き、/ask に移らずに訪問者の AI を開ける（SPEC.md §3・§4）。
 // 開け閉めは HTML の popover（popovertarget）に任せ、JavaScript は使わない。外を押すか Esc で閉じる。
-// JavaScript は Gemini のプロンプトのコピーだけ（Gemini は URL でプロンプトを渡せないため）。
-import { buildAskPrompt, chatLinks } from '../lib/ask';
+// JavaScript は Gemini のプロンプトとサイトの全文のコピーだけ（src/scripts/ask-copy.ts。Gemini は URL でプロンプトを渡せず、URL も読めないため）。
+import { chatLinks } from '../lib/ask';
 import { ASK_BUTTON_LABEL } from '../site';
 
 interface Props {
@@ -10,8 +10,7 @@ interface Props {
   variant: 'fab' | 'section';
 }
 const { variant } = Astro.props;
-const prompt = buildAskPrompt(Astro.site);
-const links = chatLinks(prompt).filter((l) => l.href);
+const links = chatLinks(Astro.site).filter((l) => l.href);
 /** メニューの id。1 ページに fab と section が 1 つずつまでなので、variant で分ければ重ならない */
 const menuId = `ask-menu-${variant}`;
 ---
@@ -32,7 +31,8 @@ const menuId = `ask-menu-${variant}`;
             href={l.href}
             target="_blank"
             rel="noopener"
-            data-ask-copy={l.copy ? prompt : undefined}
+            data-ask-copy={l.copy?.prompt}
+            data-ask-source={l.copy?.source}
           >
             {l.label}
           </a>
@@ -46,27 +46,5 @@ const menuId = `ask-menu-${variant}`;
 </div>
 
 <script>
-  // 「Gemini（コピーして貼り付け）」を押したら、Gemini を新しいタブで開くのと同時にプロンプトをクリップボードへ写す。
-  // 写せなかったときは、その旨と /ask でコピーできることをリンクの文字で知らせる（黙って失敗させない）
-  for (const link of document.querySelectorAll<HTMLAnchorElement>('a[data-ask-copy]')) {
-    const original = link.textContent ?? '';
-    const fail = (error: unknown) => {
-      console.error('プロンプトをコピーできませんでした', error);
-      link.textContent = 'コピーできませんでした。/ask でコピーしてください';
-    };
-    link.addEventListener('click', () => {
-      try {
-        navigator.clipboard
-          .writeText(link.dataset.askCopy ?? '')
-          .then(() => {
-            link.textContent = 'コピーしました。Gemini に貼り付けてください';
-            setTimeout(() => (link.textContent = original), 4000);
-          })
-          .catch(fail);
-      } catch (error) {
-        // navigator.clipboard が無い環境（http で開いたときなど）はここに来る
-        fail(error);
-      }
-    });
-  }
+  import '../scripts/ask-copy';
 </script>
