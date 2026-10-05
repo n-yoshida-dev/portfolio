@@ -35,9 +35,10 @@
 - フェーズ：**フェーズ5 の始め**。2026-10-05 にユーザーが本番を通して見て、感想を 7 件のタスクに切り出した（フェーズ5。ユーザーの発言は各タスクに原文で入れてある）。
   フェーズ4 の「本番を通して見て」は、フェーズ5 が片付いてからもう一度見てもらうので開いたまま
 - 並びは Claude の案（ユーザー未回答）：Ask AI の 2 件（答えを短く・Gemini）→ 広い画面の余白・文字リンク → 要点 3 行・Skills・Journey（ユーザーとの相談が要る）
-- 作業中のブランチ：なし（`feat/ask-short-answer` の PR がマージされた前提で書いている）
+- 作業中のブランチ：なし（`feat/gemini-paste` の PR がマージされた前提で書いている）
 - 「Ask AI の答えを短くし、質問を促す」はプロンプトを直して本番に出した。Claude のサブエージェントでは確かめたが、ChatGPT と claude.ai で開いての確認が残っていて、タスクは開いたまま（ユーザーが見る）
-- Ask AI のプロンプトは `src/lib/ask.ts`、入口のメニューは `src/components/AskEntry.astro`（Gemini のコピーは `data-ask-copy`）。Gemini はサイトの URL を読めない（TODO の該当タスク）
+- 「Gemini がサイトを読めない」は、Gemini のときだけサイトの全文を付けて写す形にして本番に出した。実機の Gemini での確認が残っていて、タスクは開いたまま（ユーザーが見る。付箋 ops-urz.25 にまとめた）
+- Ask AI のプロンプトは `src/lib/ask.ts`、入口のメニューは `src/components/AskEntry.astro`、Gemini のコピーは `src/scripts/ask-copy.ts`
 - 文面のタスク（要点 3 行・Skills・Journey）は、ユーザーの事実を足さず、案を見せて選んでもらう。ユーザーは「嘘つくのもＮＧ」と言っている
 - 非公開リポジトリの線引き：`README.md`「公開してよい情報の線引き」
 - 画面の確認は Playwright で撮る（`KNOWLEDGE.md`。Playwright は skill-matrix の `frontend/node_modules` のものを絶対パスで読む）。見本や画像を見せるときは非公開の Artifact に載せて URL を渡す
@@ -46,6 +47,6 @@
 
 ## 次セッションで最初にやること
 
-1. `main` から新しいブランチを切り、フェーズ5「Gemini がサイトを読めない」に着手する（ユーザーの発言・Claude の案・完了条件は `TODO.md`）
+1. `main` から新しいブランチを切り、フェーズ5「広い画面の右の余白」に着手する（直し方の見本を作り、非公開の Artifact で見せてユーザーに選んでもらう。完了条件は `TODO.md`）
 
 `TODO.md` の先頭と一致させる。書くのは最初の一手だけで、一覧は `TODO.md` が持つ。
