@@ -48,10 +48,12 @@ describe('Ask AI の各 AI へのリンク', () => {
 
   it('最初の答えを短い概要と次の質問の候補にさせ、区分・出典・日本語の指示も残す', () => {
     expect(prompt).toContain('at most 5 bullet points');
-    expect(prompt).toContain('suggest 3 questions');
+    expect(prompt).toContain('give 3 short example questions');
+    expect(prompt).toContain('Do not guess how it is written in Japanese.');
+    expect(prompt).toContain('Do not describe a skill as more advanced than the sources say.');
     expect(prompt).toContain('professional\nexperience, personal development, or current learning');
     expect(prompt).toContain('Do not add a separate skills section');
     expect(prompt).toContain('Cite the sources');
-    expect(prompt).toContain('Answer in Japanese.');
+    expect(prompt).toContain('Answer in Japanese, including headings.');
   });
 });

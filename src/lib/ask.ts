@@ -1,5 +1,6 @@
 // Ask AI ページで訪問者の AI に渡すプロンプト。llms.txt を最初に読ませ、区分を混同しないよう指示する。
-// 最初の答えは短い概要と次の質問の候補だけにさせる（長文は読まれないため。2026-10-05 ユーザーの提案、TODO フェーズ5）
+// 最初の答えは短い概要と次の質問の候補だけにさせる（長文は読まれないため。2026-10-05 ユーザーの提案、TODO フェーズ5）。
+// 2026-10-06 に本番の 3 つの AI の答えを見たユーザーの感想（原文は SPEC.md §3）を受け、概要に具体的な事実を入れさせ、質問を自然な一文で促す形にした（直し方は Claude の解釈）
 import { SITE } from '../site';
 
 /** URL を渡せない AI（Gemini）に、プロンプトと一緒に貼り付けるサイトの全文 */
@@ -7,19 +8,24 @@ export const PASTE_SOURCE = '/llms-full.txt';
 
 /** 答え方の指示。URL を読ませるプロンプトと、全文を貼り付けるプロンプトで共通 */
 const ANSWER_RULES = `Keep your first answer short:
-- An overview in at most 5 bullet points, each one short sentence
-  (about 40 Japanese characters).
-- Then suggest 3 questions I could ask next to learn more.
+- An overview in at most 5 bullet points. Each is one sentence
+  (about 40 to 60 Japanese characters) with concrete facts
+  such as years, project names, or technologies.
+- Then, in one natural sentence, invite me to ask more,
+  and give 3 short example questions I might ask next
+  (each under about 30 Japanese characters).
 Give details only when I ask a follow-up question.
 
+Write the name as "Naoki Yoshida". Do not guess how it is written in Japanese.
 When you mention skills, say whether each comes from professional
 experience, personal development, or current learning.
+Do not describe a skill as more advanced than the sources say.
 Do not add a separate skills section to the first answer.
 Do not infer anything that is not stated in those sources.
 
 Cite the sources you relied on (links only).
 
-Answer in Japanese.`;
+Answer in Japanese, including headings.`;
 
 /** ビルド時に確定した公開 URL（末尾の / なし）。未設定なら開発サーバーの URL */
 function siteBase(site: URL | undefined): string {
