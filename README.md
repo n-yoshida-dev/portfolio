@@ -34,7 +34,7 @@ portfolio/
 └── .github/workflows/ci.yml
 ```
 
-技術：[Astro](https://astro.build)（静的出力）+ TypeScript + 素の CSS。ライブラリは最小限にし、JavaScript は Ask AI のコピーボタンと目次のスクロール監視だけ。
+技術：[Astro](https://astro.build)（静的出力）+ TypeScript + 素の CSS。ライブラリは最小限にし、JavaScript は Ask AI のプロンプトのコピー（`/ask` のボタンと、入口のメニューの Gemini）と目次のスクロール監視だけ。
 ホスティングは Vercel（設定ファイル不要。`vercel.json` は URL の末尾スラッシュを揃えるためだけにある）。
 
 ## ページ
@@ -54,7 +54,7 @@ portfolio/
 | `/llms-full.txt`   | 主要ページの Markdown を 1 ファイルに連結                                                                                                                              | —                     |
 
 どのページにも左の目次（375px 幅では上部に横並び）があり、トップの各節（`/#projects` など）へ飛べる。詳しい版のページでは、今いる節の項目が太字になる。
-`/ask` 以外のページの右下には、`/ask` へ行く追従ボタン「Ask AI about this portfolio」がある。
+`/ask` 以外のページの右下には、追従ボタン「Ask AI about this portfolio」がある。押すと（PC はマウスを乗せても）ChatGPT / Claude / Gemini と `/ask` を選ぶメニューが開く。
 トップだけは先頭に画面 1 つ分の表紙（名前・一言・要点 3 行・目次）があり、左の目次と右下のボタンは表紙を過ぎてから出る（375px 幅のトップは表紙の中の目次だけ）。
 
 ## 開発
@@ -72,14 +72,14 @@ CI と同じ検査をまとめて回す：
 npm run format:check && npm run lint && npm run typecheck && npm run test && npm run build && npm run check:home
 ```
 
-| コマンド               | 内容                                                                                                                                                |
-| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npm run format:check` | Prettier（`public-profile/` の Markdown は対象外）                                                                                                  |
-| `npm run lint`         | `public-profile/` の禁止語スキャン                                                                                                                  |
-| `npm run typecheck`    | `astro check`（Astro / TypeScript の型検査）                                                                                                        |
-| `npm run test`         | Vitest（スキャンの回帰テスト、public-profile の参照整合、詳細ページの本文の長さ、Skills / Journey の表に句点が無いこと、Skills のカードの読み取り） |
-| `npm run build`        | ビルド。frontmatter が型に合わないとここで失敗する                                                                                                  |
-| `npm run check:home`   | ビルドしたトップに、3 点（何の人か・何を作ったか・どう開発しているか）の節が中身つきで出ているか（`scripts/check-home.mjs`。build の後に回す）      |
+| コマンド               | 内容                                                                                                                                                                           |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `npm run format:check` | Prettier（`public-profile/` の Markdown は対象外）                                                                                                                             |
+| `npm run lint`         | `public-profile/` の禁止語スキャン                                                                                                                                             |
+| `npm run typecheck`    | `astro check`（Astro / TypeScript の型検査）                                                                                                                                   |
+| `npm run test`         | Vitest（スキャンの回帰テスト、public-profile の参照整合、詳細ページの本文の長さ、Skills / Journey の表に句点が無いこと、Skills のカードの読み取り、Ask AI の各 AI へのリンク） |
+| `npm run build`        | ビルド。frontmatter が型に合わないとここで失敗する                                                                                                                             |
+| `npm run check:home`   | ビルドしたトップに、3 点（何の人か・何を作ったか・どう開発しているか）の節が中身つきで出ているか（`scripts/check-home.mjs`。build の後に回す）                                 |
 
 OGP 画像を作り直すとき：`node scripts/generate-og.mjs`（文言は同スクリプト内）。
 

@@ -3,7 +3,8 @@
 // 目次はトップの 7 節（SECTIONS）へのリンク。トップではページ内の `#id`、他のページでは `/#id` に飛ぶ（SPEC.md §4）。
 // トップだけは slot="cover" で表紙（開いた直後の 1 画面）を渡し、左の目次と本文はその下から始まる。
 import '../styles/global.css';
-import { SITE, SECTIONS, QUICK_LINKS, sectionIdForPath, ASK_BUTTON_LABEL } from '../site';
+import AskEntry from '../components/AskEntry.astro';
+import { SITE, SECTIONS, QUICK_LINKS, sectionIdForPath } from '../site';
 
 interface Props {
   /** ページ固有のタイトル。トップは省略してサイト名だけにする */
@@ -94,20 +95,16 @@ const hasCover = Astro.slots.has('cover');
         </footer>
         {
           /*
-            Ask AI の追従ボタン。どのページからでも /ask へ行けるよう右下に留める。/ask 自身では出さない（SPEC.md §4）。
+            Ask AI の追従ボタン。どのページからでも各 AI を開けるよう右下に留め、押すと AI を選ぶメニューが開く。/ask 自身では出さない（SPEC.md §4）。
             表紙のあるトップでは .fab-rail（本文の箱の末尾。CSS の sticky）に入れ、表紙では出さず本文と一緒に下から入ってくる
           */
           currentPath !== '/ask' &&
             (hasCover ? (
               <div class="fab-rail">
-                <a class="ask-fab" href="/ask">
-                  {ASK_BUTTON_LABEL}
-                </a>
+                <AskEntry variant="fab" />
               </div>
             ) : (
-              <a class="ask-fab" href="/ask">
-                {ASK_BUTTON_LABEL}
-              </a>
+              <AskEntry variant="fab" />
             ))
         }
       </div>

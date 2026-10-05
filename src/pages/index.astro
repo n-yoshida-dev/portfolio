@@ -5,6 +5,7 @@
 // （2026-10-05 ユーザーがコンペの見本 A を選択。logs/decisions.md、見本は docs/design-candidates/2026-10-04-first-screen/）。
 // 文章は frontmatter の tagline / highlights と各コレクションの要約だけを出し、profile.md の本文は Markdown 版（/profile.md）に任せる。
 import Base from '../layouts/Base.astro';
+import AskEntry from '../components/AskEntry.astro';
 import HomeSection from '../components/HomeSection.astro';
 import Icon from '../components/Icon.astro';
 import ProjectCard from '../components/ProjectCard.astro';
@@ -25,7 +26,7 @@ import {
   type TopSkillCard,
 } from '../lib/outline';
 import type { IconName } from '../lib/icons';
-import { SITE, SECTIONS, QUICK_LINKS, ASK_BUTTON_LABEL } from '../site';
+import { SITE, SECTIONS, QUICK_LINKS } from '../site';
 
 const profile = await getPage('profile');
 // 主なプロジェクトは 4 件まで（SPEC.md §4）。総数は切る前の件数で数える
@@ -251,11 +252,9 @@ function skillIcon(card: TopSkillCard): IconName {
 
   <HomeSection id="ask">
     <p>あなたの AI に、このサイトと公開リポジトリを読ませて私について質問できます。</p>
-    <p class="button-row">
-      <a class="button button-primary" href="/ask">
-        {ASK_BUTTON_LABEL}
-      </a>
-    </p>
+    <div class="button-row">
+      <AskEntry variant="section" />
+    </div>
   </HomeSection>
 
   <p class="meta">最終確認日: {profile.data.updated}</p>
