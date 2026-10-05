@@ -32,4 +32,13 @@ describe('Ask AI の各 AI へのリンク', () => {
   it('プロンプトは公開 URL の llms.txt を最初に読ませる', () => {
     expect(prompt.startsWith('Read https://example.com/llms.txt first.')).toBe(true);
   });
+
+  it('最初の答えを短い概要と次の質問の候補にさせ、区分・出典・日本語の指示も残す', () => {
+    expect(prompt).toContain('at most 5 bullet points');
+    expect(prompt).toContain('suggest 3 questions');
+    expect(prompt).toContain('professional\nexperience, personal development, or current learning');
+    expect(prompt).toContain('Do not add a separate skills section');
+    expect(prompt).toContain('Cite the sources');
+    expect(prompt).toContain('Answer in Japanese.');
+  });
 });
