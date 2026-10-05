@@ -21,31 +21,29 @@
 ████████████████████ 100%  残り  0 /  3  フェーズ2：文章の減量（読める量にする）
 ████████████████████ 100%  残り  0 /  1  開発の道具
 ████████████████████ 100%  残り  0 /  8  フェーズ3：デザインの見直し
-████████████░░░░░░░░  62%  残り  3 /  8  フェーズ4：本番を見た指摘への対応
-█████████████████░░░  89%  残り  3 / 29  合計
+███████████████░░░░░  75%  残り  2 /  8  フェーズ4：本番を見た指摘への対応
+██████████████████░░  93%  残り  2 / 29  合計
 あなたの回答待ち：0 件（回答済み 17 件）
 保留（合計に含めない）：12 件（済み 2 件）
 
-前回の区切り（2026-10-05）から：完了 +0 件、新たに見つかったタスク +0 件
+前回の区切り（2026-10-05）から：完了 +1 件、新たに見つかったタスク +0 件
 ```
 
 ## 現在地
 
-- フェーズ：**フェーズ4 の途中**。最初の画面の見せ方は、ユーザーが 8 つの部分すべてで A（Opus の考慮しない版）を選んだ（`logs/decisions.md` 2026-10-05）。残りは A の実装。
-  その後は Ask AI の入口 → 本番の通し確認（並びは Claude の案で、ユーザーは未回答）。ai-review の試行 2（skill-matrix）は、フェーズ4 が落ち着いてから（Claude の判断）
-- 作業中のブランチ：`feat/first-screen`（push 済み、PR はまだ無い）。入っているのは見本・選択の記録・引き継ぎだけ。実装を同じブランチに足して PR を作る
-- 実装の手本：`docs/design-candidates/2026-10-04-first-screen/A.html` と `A-aim.md`（「部分ごとの案」と「変える決まり」6 つ）。見本は今のトップの HTML を写した 1 枚なので、
-  `src/pages/index.astro`（節の骨格は `src/lib/outline.ts`）と `src/styles/global.css` に組み直す。文面は正本（`public-profile/`）から作り、ページ側に直書きしない
-- A の新しい言葉は番号 01〜07・「12 件」・↓・→ だけ（`A-aim.md`）。PLAN「やらないこと」と SPEC §4（構成・About の要点・375px の目次・アニメーション・目次の件数の図・表紙の幅）を同じ PR で直す。
-  `npm run check:home` が表紙の形でも通るかを確かめる
-- 考慮版の指示書と伏せ字の対応は同じフォルダの `brief-pac.local.md`・`makers.local.md`（コミットしない）。抜き出した節の中身を公開物に写さない
-- 非公開リポジトリの線引き：`README.md`「公開してよい情報の線引き」。Ask AI の入口は `src/layouts/Base.astro` の `.ask-fab` と `src/lib/ask.ts`
-- 画面の確認は Playwright で撮る（`KNOWLEDGE.md`）。見本や画像を見せるときは非公開の Artifact に載せて URL を渡す（別の HTML はページ内で開く。`KNOWLEDGE.md` 2026-10-05）
-- ユーザー待ち：なし。別に ai-review の判断待ち ops-h49.4 が開いている（今回のコンペは答えを待たずに進めた。Claude の判断）
+- フェーズ：**フェーズ4 の途中**。最初の画面は A の形（トップの先頭に画面 1 つ分の表紙）が `main` に入り、本番に出ている（`feat/first-screen` の PR がマージされた前提で書いている）。
+  残りは Ask AI の入口 → 本番の通し確認（並びは Claude の案で、ユーザーは未回答）。ai-review の試行 2（skill-matrix）は、フェーズ4 が落ち着いてから（Claude の判断）
+- 作業中のブランチ：なし
+- 表紙の作り：`src/pages/index.astro` の `slot="cover"` と `src/styles/global.css` の「トップの表紙」。決まりは SPEC §4「トップの表紙」、見本から変えた点は `KNOWLEDGE.md` 2026-10-05
+- Ask AI の入口は `src/layouts/Base.astro` の `.ask-fab` と `src/lib/ask.ts`。トップの右下ボタンは `.fab-rail`（sticky）に入っていて表紙では出さないので、入口を変えるときもそれを保つ。
+  JavaScript を足すなら理由を `KNOWLEDGE.md` に書き、CLAUDE.md「守ること」と SPEC §3・§4 も同じ PR で直す（TODO の完了条件）
+- 非公開リポジトリの線引き：`README.md`「公開してよい情報の線引き」
+- 画面の確認は Playwright で撮る（`KNOWLEDGE.md`。Playwright は skill-matrix の `frontend/node_modules` のものを絶対パスで読む）。見本や画像を見せるときは非公開の Artifact に載せて URL を渡す
+- ユーザー待ち：なし。別に ai-review の判断待ち ops-h49.4 が開いている
 - 状況の確認：`node dashboard/update.mjs --serve --open`
 
 ## 次セッションで最初にやること
 
-1. `feat/first-screen` で、A の形（表紙を足す）を実装する。手本と直す決まりは上の「現在地」と `A-aim.md`。終わったら `apps-workflow:pr-flow` で PR を作る
+1. `main` から新しいブランチを切り、フェーズ4「Ask AI の入口」に着手する（ユーザーの発言と完了条件は `TODO.md`）
 
 `TODO.md` の先頭と一致させる。書くのは最初の一手だけで、一覧は `TODO.md` が持つ。
