@@ -62,10 +62,10 @@ for (const link of document.querySelectorAll<HTMLAnchorElement>('a[data-ask-copy
 
   const fail = (error: unknown) => {
     console.error('プロンプトをコピーできませんでした', error);
-    // 入口のメニューでは /ask を案内し、/ask ではページのプロンプト枠を案内する
-    link.textContent = entry
-      ? 'コピーできませんでした。/ask でコピーしてください'
-      : 'コピーできませんでした。上のプロンプトをコピーしてください';
+    // Gemini は URL を読めないので、URL を読ませる /ask のプロンプトではなく、全文そのものを貼る道を案内する
+    link.textContent = source
+      ? `コピーできませんでした。${source} を開いて全文を Gemini に貼ってください`
+      : 'コピーできませんでした。/ask でコピーしてください';
   };
   link.addEventListener('click', () => {
     try {
