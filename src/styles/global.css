@@ -1263,13 +1263,15 @@ h1 .badge {
   overflow: visible;
 }
 .ask-menu-panel {
+  /* 幅は 15rem から 22rem まで、狭い画面では左右 16px の内側まで。Gemini のコピー後の長い文言は折り返す */
   min-width: 15rem;
+  max-width: min(22rem, calc(100vw - 32px));
   margin: 0;
   padding: 0.3rem 0;
   list-style: none;
   font-size: 0.95rem;
   line-height: 1.5;
-  white-space: nowrap;
+  word-break: auto-phrase;
   background: var(--bg);
   border: 1px solid var(--fg-muted);
   border-radius: 6px;
