@@ -1,11 +1,12 @@
 // Ask AI の入口のメニュー（src/components/AskEntry.astro）に並べる各 AI のリンク（src/lib/ask.ts の chatLinks）を確かめる。
 // ChatGPT / Claude は URL にプロンプトを入れて開き、URL で渡せない Gemini だけがコピーを伴う
 import { describe, it, expect } from 'vitest';
-import { buildAskPrompt, chatLinks } from '../src/lib/ask.ts';
+import { buildAskPrompt, buildPastedPrompt, chatLinks, PASTE_SOURCE } from '../src/lib/ask.ts';
 
 describe('Ask AI の各 AI へのリンク', () => {
-  const prompt = buildAskPrompt(new URL('https://example.com/'));
-  const links = chatLinks(prompt);
+  const site = new URL('https://example.com/');
+  const prompt = buildAskPrompt(site);
+  const links = chatLinks(site);
 
   it('ChatGPT・Claude・Gemini の 3 つが、どれもリンク先を持つ', () => {
     expect(links.map((l) => l.label)).toEqual([
@@ -23,10 +24,22 @@ describe('Ask AI の各 AI へのリンク', () => {
     }
   });
 
-  it('Gemini だけがコピーを伴う（URL でプロンプトを渡せないため）', () => {
+  it('Gemini だけがコピーを伴い、URL ではなくサイトの全文を貼り付けるプロンプトを写す', () => {
     expect(links.filter((l) => l.copy).map((l) => l.label)).toEqual([
       'Gemini（コピーして貼り付け）',
     ]);
+    const gemini = links.find((l) => l.copy);
+    expect(gemini?.copy).toEqual({ prompt: buildPastedPrompt(site), source: PASTE_SOURCE });
+    expect(PASTE_SOURCE).toBe('/llms-full.txt');
+  });
+
+  it('全文を貼り付けるプロンプトは、URL を開かせず、答え方の指示は URL 版と同じ', () => {
+    const pasted = buildPastedPrompt(site);
+    expect(pasted).toContain('https://example.com/llms-full.txt');
+    expect(pasted).toContain('You do not need to open any URL.');
+    expect(pasted).not.toContain('Read https://');
+    const rules = prompt.slice(prompt.indexOf('Keep your first answer short'));
+    expect(pasted.endsWith(rules)).toBe(true);
   });
 
   it('プロンプトは公開 URL の llms.txt を最初に読ませる', () => {
