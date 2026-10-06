@@ -27,7 +27,7 @@ import {
   type TopSkillCard,
 } from '../lib/outline';
 import type { IconName } from '../lib/icons';
-import { SITE, SECTIONS, QUICK_LINKS } from '../site';
+import { SITE, SECTIONS } from '../site';
 
 const profile = await getPage('profile');
 // 主なプロジェクトは 4 件まで（SPEC.md §4）。総数は切る前の件数で数える。
@@ -113,13 +113,6 @@ function skillIcon(card: TopSkillCard): IconName {
             );
           })}
         </ol>
-        <ul class="cover-links">
-          {QUICK_LINKS.map((l) => (
-            <li>
-              <a href={l.href}>{l.label}</a>
-            </li>
-          ))}
-        </ul>
       </nav>
     </div>
     <a class="cover-down" href="#after-cover" aria-hidden="true" tabindex="-1">
@@ -265,6 +258,10 @@ function skillIcon(card: TopSkillCard): IconName {
     <div class="button-row">
       <AskEntry variant="section" />
     </div>
+    <p class="llms-note">
+      AI 向けの入口：<a href="/llms.txt">llms.txt</a>（このサイトの要約を、AI
+      が読みやすい形にまとめたファイル）
+    </p>
   </HomeSection>
 
   <p class="meta">最終確認日: {profile.data.updated}</p>

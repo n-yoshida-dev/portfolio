@@ -4,6 +4,7 @@
 // トップだけは slot="cover" で表紙（開いた直後の 1 画面）を渡し、左の目次と本文はその下から始まる。
 import '../styles/global.css';
 import AskEntry from '../components/AskEntry.astro';
+import Icon from '../components/Icon.astro';
 import { SITE, SECTIONS, QUICK_LINKS, sectionIdForPath } from '../site';
 
 interface Props {
@@ -76,7 +77,10 @@ const hasCover = Astro.slots.has('cover');
         </nav>
         <div class="side-links">
           {QUICK_LINKS.map((l) => (
-            <a href={l.href}>{l.label}</a>
+            <a href={l.href}>
+              <Icon name={l.icon} />
+              {l.label}
+            </a>
           ))}
         </div>
       </header>
@@ -91,6 +95,7 @@ const hasCover = Astro.slots.has('cover');
             </span>
             {markdownHref && <a href={markdownHref}>このページの Markdown</a>}
             <a href={SITE.repoUrl}>このサイトのソース</a>
+            <a href="/llms.txt">AI 向けの要約（llms.txt）</a>
           </div>
         </footer>
         {

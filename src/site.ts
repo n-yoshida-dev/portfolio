@@ -1,4 +1,6 @@
 // サイト全体で使う定数。ここ以外にサイト名や GitHub アカウントを直書きしない。
+import type { IconName } from './lib/icons';
+
 export const SITE = {
   name: 'Naoki Yoshida',
   /** <title> の末尾と OGP の site_name */
@@ -18,11 +20,14 @@ export const SITE = {
  */
 export const ASK_BUTTON_LABEL = 'Ask AI about this portfolio';
 
-/** 左の目次の下と、トップの表紙の目次の下に並べる文字リンク。2 か所で同じものを出す */
-export const QUICK_LINKS: readonly { label: string; href: string }[] = [
-  { label: 'GitHub', href: SITE.githubUrl },
-  { label: 'Qiita', href: SITE.qiitaUrl },
-  { label: 'llms.txt', href: '/llms.txt' },
+/**
+ * 左の目次の下に並べるリンク（アイコン付き）。2026-10-06 ユーザーが見本 B を選択（logs/decisions.md）：
+ * トップの表紙には置かない（表紙のすぐ下に、説明つきのリンクカードがあるため）。
+ * llms.txt は人間には説明なしで伝わらないので、ここには置かず、トップの Ask AI 節とフッターに説明つきで置く
+ */
+export const QUICK_LINKS: readonly { label: string; href: string; icon: IconName }[] = [
+  { label: 'GitHub', href: SITE.githubUrl, icon: 'code' },
+  { label: 'Qiita', href: SITE.qiitaUrl, icon: 'pen' },
 ] as const;
 
 /** トップの 1 節。目次（左の固定目次）と、トップの見出し・「すべて →」の行き先を同じ定義から作る */
