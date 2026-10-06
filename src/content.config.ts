@@ -50,6 +50,11 @@ const projects = defineCollection({
     stack: z.array(z.string()).default([]),
     /** true なら一覧の上段（主要プロジェクト）に出す。false は「Other」にまとめる */
     featured: z.boolean().default(false),
+    /**
+     * true なら、トップの Projects がカード 3 列になる広い画面（1600px 以上）のときだけ、主要プロジェクトの後ろに足す。
+     * 行をちょうど埋めるための枠で、featured: false のものに付ける（SPEC.md §4）
+     */
+    homeWide: z.boolean().default(false),
     /** 並び順。小さいほど先 */
     order: z.number().default(100),
     /** 関連する Systems の slug */

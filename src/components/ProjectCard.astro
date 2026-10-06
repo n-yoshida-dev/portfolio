@@ -9,13 +9,15 @@ interface Props {
   project: Project;
   /** true なら技術タグを省略する（トップの短い一覧向け） */
   compact?: boolean;
+  /** true なら広い画面（トップの Projects が 3 列のとき）だけ出す。それより狭い画面では CSS で隠す */
+  wideOnly?: boolean;
 }
-const { project, compact = false } = Astro.props;
+const { project, compact = false, wideOnly = false } = Astro.props;
 const d = project.data;
 const hasDetail = (project.body ?? '').trim().length > 0;
 ---
 
-<li class="card">
+<li class:list={['card', { 'wide-only': wideOnly }]}>
   <div class="card-top">
     {d.period && <span>{d.period}</span>}
     <span class="card-badges">

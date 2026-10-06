@@ -7,10 +7,12 @@ interface Props {
   id: string;
   /** 見出しの右に添える件数など（例：「11 件」）。無ければ出さない */
   note?: string;
+  /** 広い画面（トップの Projects が 3 列のとき）だけ note の代わりに出す件数。無ければ常に note */
+  noteWide?: string;
   /** section に足す class（トップの表紙に置く About の節の見た目に使う） */
   class?: string;
 }
-const { id, note, class: className } = Astro.props;
+const { id, note, noteWide, class: className } = Astro.props;
 const section = SECTIONS.find((s) => s.id === id);
 if (!section) {
   throw new Error(`トップの節 "${id}" が src/site.ts の SECTIONS にありません`);
@@ -20,7 +22,8 @@ if (!section) {
 <section id={id} class:list={['home-section', className]} aria-labelledby={`${id}-heading`}>
   <h2 id={`${id}-heading`}>
     {section.label}
-    {note && <span class="section-note">{note}</span>}
+    {note && <span class:list={['section-note', { 'narrow-only': noteWide }]}>{note}</span>}
+    {noteWide && <span class="section-note wide-only">{noteWide}</span>}
   </h2>
   <slot />
   {section.more && (

@@ -8,6 +8,7 @@ status: active
 period: 2026-08 〜
 stack: [Markdown, Python, Shell, Claude Code hooks, Cloud routines]
 featured: false
+homeWide: true
 order: 24
 systems: [ai-assisted-development]
 ---
