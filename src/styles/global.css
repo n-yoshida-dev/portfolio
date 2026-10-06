@@ -191,6 +191,16 @@ hr {
   margin-top: 0.6rem;
   font-size: 0.875rem;
 }
+/* 左の目次の下のリンク（GitHub・Qiita）。何のリンクかが分かるよう、名前の前にアイコンを添える */
+.side-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.side-links .icon {
+  width: 1.05rem;
+  height: 1.05rem;
+}
 .site-footer {
   border-top: 1px solid var(--line);
   color: var(--fg-muted);
@@ -240,6 +250,8 @@ main.container {
     font-size: 1rem;
   }
   .side-links {
+    flex-direction: column;
+    gap: 0.4rem;
     margin-top: auto;
     padding-top: 1.5rem;
   }
@@ -387,18 +399,6 @@ main.container {
 .ix-go {
   display: none;
 }
-.cover-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.2rem 1rem;
-  margin: 0.9rem 0 0;
-  padding: 0;
-  list-style: none;
-  font-size: 0.875rem;
-}
-.cover-links > li {
-  margin: 0;
-}
 /* 表紙の下端の矢印。続きがあることだけを示す（読み上げない） */
 .cover-down {
   position: absolute;
@@ -457,12 +457,12 @@ main.container {
   .cover {
     padding: 3rem clamp(1.5rem, 5vw, 4.5rem) 3.5rem;
   }
-  /* 3 段の格子：1 段目 名前と一言 / 2 段目 要点 3 行と目次（上下の線をそろえる）/ 3 段目 目次の下の文字リンク。本文と同じく中央に置く */
+  /* 2 段の格子：1 段目 名前と一言 / 2 段目 要点 3 行と目次（上下の線をそろえる）。本文と同じく中央に置く */
   .cover-inner {
     max-width: 68rem;
     margin-inline: auto;
     grid-template-columns: minmax(0, 1.65fr) minmax(17rem, 1fr);
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto auto;
     column-gap: 4.5rem;
     row-gap: 0;
   }
@@ -478,10 +478,8 @@ main.container {
   }
   .cover-nav {
     grid-column: 2;
-    grid-row: 2 / 4;
+    grid-row: 2;
     display: grid;
-    grid-template-rows: subgrid;
-    gap: 0;
   }
   .cover-facts {
     display: flex;
@@ -562,9 +560,6 @@ main.container {
     opacity: 1;
     transform: none;
   }
-  .cover-links {
-    margin-top: 1.1rem;
-  }
 }
 /*
   開いたときの 1 回だけの動き（CSS だけ。約 1.7 秒で終わる）。上から順に、線が左から引かれ、文字と目次の行が 10px 下から浮かび、件数のマスが左から現れる。
@@ -574,8 +569,7 @@ main.container {
   .cover-id h1,
   .cover-id .lead,
   .cover-facts > li > span,
-  .ix > li,
-  .cover-links {
+  .ix > li {
     animation: cover-rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   }
   .cover-id .lead {
@@ -622,9 +616,6 @@ main.container {
   }
   .ix > li:nth-child(7) {
     animation-delay: 0.78s;
-  }
-  .cover-links {
-    animation-delay: 0.86s;
   }
   .cover-down {
     animation: cover-rise 0.6s 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
@@ -688,6 +679,12 @@ main.container {
   font-weight: 400;
   color: var(--fg-muted);
   margin-left: 0.6rem;
+}
+/* トップの Ask AI 節の llms.txt の案内。AI 向けのファイルなので、何かを一言添えて薄い文字で置く */
+.llms-note {
+  margin: 1rem 0 0;
+  font-size: 0.875rem;
+  color: var(--fg-muted);
 }
 .more-link {
   margin: 0.75rem 0 0;
