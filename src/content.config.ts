@@ -104,7 +104,7 @@ const pages = defineCollection({
     /** profile.md だけが持つ。トップの名前の直下に出す一言（1〜2 文） */
     tagline: z.string().optional(),
     /**
-     * profile.md だけが持つ。トップに出す「何の人か」の要点。3 つまで。本文はトップには出さない。
+     * profile.md だけが持つ。トップに出す要点（個人で作っているもの・AI と開発する仕組み・学んでいること）。3 つまで。本文はトップには出さない。
      * トップでは 1 つを 1 列にし、label（小見出し）・title（太字の見出し）・detail（薄い文字の補足）の順に出す
      */
     highlights: z

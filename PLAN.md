@@ -10,13 +10,14 @@
 
 ## 誰のためのものか
 
-1. **転職の選考で見る人**：短時間で「何の人か」「何を作ったか」「どう開発しているか」を把握したい
+1. **IT の仕事をしている人**（同僚・社外のエンジニア・選考で見る人）：短時間で「何の人か」「何を作ったか」「どう開発しているか」を把握したい。
+   転職を意識した書き方はしない。同僚や、転職したあとの会社の人が見ても違和感のない「吉田の紹介ページ」にする（2026-10-06。`logs/decisions.md`）
 2. **AI**：訪問者の ChatGPT / Claude / Gemini が、私について根拠付きで答えられるようにする（`/llms.txt`、Markdown 版、Ask AI）
 3. **自分**：分散した成果物の索引。将来は skill-matrix から Skills を自動生成する土台
 
 ## 見せたいこと
 
-- **Projects**：何を作ったか（OrgFlow を主力に、skill-matrix / Reading Log / AI Study Coach / claude-plugins。その他は Other にまとめる）
+- **Projects**：何を作ったか（学習用の OrgFlow、生活や学習で使う skill-matrix / Reading Log / AI Study Coach / claude-plugins。その他は Other にまとめる）
 - **Systems**：それらをどう組み合わせて、開発・学習・生活改善を仕組み化しているか
   （Personal AI Context / Learning System / Reading System / AI-assisted Development Workflow）
 - **Skills**：技術名の羅列ではなく、何を作り・設計し・判断したか。「商用実務」「個人開発」「理解確認済み」「学習中」を混ぜない
