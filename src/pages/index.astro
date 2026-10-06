@@ -14,6 +14,7 @@ import {
   getPage,
   getFeaturedProjects,
   getOtherProjects,
+  getHomeWideProjects,
   getSystems,
   getArticles,
   platformLabel,
@@ -29,10 +30,16 @@ import type { IconName } from '../lib/icons';
 import { SITE, SECTIONS, QUICK_LINKS } from '../site';
 
 const profile = await getPage('profile');
-// 主なプロジェクトは 4 件まで（SPEC.md §4）。総数は切る前の件数で数える
+// 主なプロジェクトは 4 件まで（SPEC.md §4）。総数は切る前の件数で数える。
+// カードが 3 列になる広い画面では、homeWide の 2 件を足して 6 枚（2 行ちょうど）にする
 const allFeatured = await getFeaturedProjects();
 const featured = allFeatured.slice(0, 4);
+const wideExtras = (await getHomeWideProjects()).slice(0, 6 - featured.length);
 const projectCount = allFeatured.length + (await getOtherProjects()).length;
+// 見出しの件数。広い画面では足した分を数えた件数に差し替える
+const projectNote = `${featured.length} / ${projectCount} 件`;
+const projectNoteWide =
+  wideExtras.length > 0 ? `${featured.length + wideExtras.length} / ${projectCount} 件` : undefined;
 const systems = await getSystems();
 const skills = topSkillCards((await getPage('skills')).body ?? '');
 const careerBody = (await getPage('career')).body ?? '';
@@ -138,10 +145,13 @@ function skillIcon(card: TopSkillCard): IconName {
     )}
   </div>
 
-  <HomeSection id="projects" note={`${featured.length} / ${projectCount} 件`}>
+  <HomeSection id="projects" note={projectNote} noteWide={projectNoteWide}>
     <ul class="card-grid">
       {featured.map((p) => (
         <ProjectCard project={p} compact />
+      ))}
+      {wideExtras.map((p) => (
+        <ProjectCard project={p} compact wideOnly />
       ))}
     </ul>
   </HomeSection>

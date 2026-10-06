@@ -8,6 +8,7 @@ status: active
 period: 2026-08 〜
 stack: [React, TypeScript, Vite, Recharts, Vitest]
 featured: false
+homeWide: true
 order: 20
 systems: [ai-assisted-development]
 ---

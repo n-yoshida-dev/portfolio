@@ -25,6 +25,12 @@ export async function getOtherProjects(): Promise<Project[]> {
   return all.sort(byOrder);
 }
 
+/** トップが 3 列のときだけ主要プロジェクトの後ろに足すもの（featured: false かつ homeWide: true）。order 順 */
+export async function getHomeWideProjects(): Promise<Project[]> {
+  const all = await getCollection('projects', (p) => !p.data.featured && p.data.homeWide);
+  return all.sort(byOrder);
+}
+
 /** Systems。order 順 */
 export async function getSystems(): Promise<System[]> {
   const all = await getCollection('systems');

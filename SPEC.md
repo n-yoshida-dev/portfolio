@@ -9,7 +9,7 @@
 
 | コレクション | 場所 | 主な項目 | 用途 |
 |---|---|---|---|
-| `projects` | `projects/*.md` | title / tagline / summary / repo / site / visibility（public・private・archived）/ status（active・paused・done・archived）/ period / stack / featured / order / systems / highlights | Projects 一覧・詳細。`featured: false` は Other / Experiments。本文が空なら詳細ページを作らない |
+| `projects` | `projects/*.md` | title / tagline / summary / repo / site / visibility（public・private・archived）/ status（active・paused・done・archived）/ period / stack / featured / homeWide / order / systems / highlights | Projects 一覧・詳細。`featured: false` は Other / Experiments。`homeWide: true` はトップのカードが 3 列の広い画面だけ、主なプロジェクトの後ろに足す（§4）。本文が空なら詳細ページを作らない |
 | `systems` | `systems/*.md` | title / tagline / summary / order / components / highlights | Systems 一覧・詳細 |
 | `pages` | `profile.md` `career.md` `skills.md` | title / description / updated / links・tagline・highlights（profile のみ。highlights は 3 行まで） | Home / Journey / Skills |
 | `articles` | `articles.json` | id / title / url / platform / publishedAt / tags / series / summary | Articles。連載（series）ごとにまとめ、連載内は古い順 |
@@ -61,7 +61,7 @@
 - 素の CSS 1 ファイル（`src/styles/global.css`）。色は文字・薄い文字・線・リンク・背景（地色 `--bg-subtle` を含む）の 5 系統。ダークモードは OS 設定に追従
 - **構成は「1 枚のページ + 左の固定目次」**（2026-09-27。`logs/decisions.md`）。トップに 7 節（何の人か / Projects / Systems / Skills / Journey / Articles / Ask AI）を縦に並べ、
   左の目次はその節へ移動する。スクロールに合わせて今いる節の項目を強調する（この JavaScript だけ例外として持つ）。375px 幅では目次の全項目を上部に横並びで出す（ボタンで隠さない。2026-09-27 ユーザー確認）。
-  トップの各節は**短い版**（主なプロジェクト 4 件、区分ごとのスキルのカード、年表、連載 × 公開月の図）で、詳しい版は各ページに残して「すべて →」で行く。
+  トップの各節は**短い版**（主なプロジェクト 4 件〔1600px 以上は `homeWide` の 2 件を足して 6 件〕、区分ごとのスキルのカード、年表、連載 × 公開月の図）で、詳しい版は各ページに残して「すべて →」で行く。
   **トップの先頭には画面 1 つ分の表紙を置く**（2026-10-05 ユーザーがコンペの見本 A を選択。`logs/decisions.md`。見本は `docs/design-candidates/2026-10-04-first-screen/`）。
   トップでは、左の固定目次（PC）は表紙の下から出る。375px 幅のトップは表紙の中の目次（全 7 項目・2 列・ボタンで隠さない）だけにし、上部の横並びの目次は出さない（同じ 7 項目が二重になるため）。トップ以外のページは今までどおり
 - **トップの表紙**（見本 A）
@@ -108,7 +108,10 @@
   カードの下に、定義の行より後ろの文（判定の注記）を置く。開いた直後に見える文字は 500 字前後
   **例外：Skills / Journey は HTML と Markdown 版が同じ本文から作られる**ので、そこは短く保ち、技術の細部は projects / systems の本文
   （HTML では畳まれ、Markdown 版には全文が出る）に置く。こうして AI 向けの情報を減らさない
-- 本文幅は最大 52rem（左の目次 16rem を除く。トップの表紙だけは最大 68rem）、モバイルは 16px の左右余白。Skills / Journey 以外の表（詳細ページの本文にあるもの）は横スクロール
+- 本文幅は最大 52rem（左の目次 16rem を除く。トップの表紙だけは最大 68rem）で、目次の右の残りの中央に置く（表紙も画面の中央）。モバイルは 16px の左右余白。
+  **画面の幅で段階的に構成を変える**（2026-10-06 ユーザーが見本から C を選び、段階的に変えることを提案。`logs/decisions.md`。段階と枚数は Claude の案）：
+  1600px 以上はトップだけ本文を最大 76rem・表紙を最大 92rem に広げ、Projects のカードを 3 列・6 枚（`homeWide` の 2 件を足す。見出しの件数も 6 にする）／
+  1024〜1600px は 2 列・4 枚／640〜1024px は上部の目次で 2 列／640px 未満は 1 列。Systems（4 件）と Skills は広い画面でも 2 列。トップ以外のページは本文幅を広げない（長い文が読みにくくなるため）。足す 2 件を `homeWide` で選ぶことと、広げるのをトップだけにすることも Claude の案（ユーザーが見え方を見たあとで変わりうる）。Skills / Journey 以外の表（詳細ページの本文にあるもの）は横スクロール
 
 ## 5. 検査（CI と同じ）
 

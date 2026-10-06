@@ -157,7 +157,8 @@ hr {
 /*
   レイアウト：左の固定目次 + 本文（SPEC.md §4）。2 列は .layout の箱に掛ける（トップでは表紙の下から始まるため）。
   狭い画面では目次を上部の横並びに畳み、64rem 以上で左に固定する（position: sticky。JavaScript は使わない）。
-  本文の幅は目次の 16rem を除いて最大 52rem（--max-width）
+  本文の幅は目次の 16rem を除いて最大 52rem（--max-width）で、目次の右の残りの中央に置く（広い画面で右だけが空かないように。2026-10-06 の C）。
+  トップだけは 100rem 以上で本文を広げる（下の「広い画面のトップ」）
 */
 .side {
   border-bottom: 1px solid var(--line);
@@ -246,7 +247,6 @@ main.container {
     min-width: 0;
   }
   .page .container {
-    margin-left: 0;
     padding-left: 3rem;
     padding-right: 3rem;
   }
@@ -457,9 +457,10 @@ main.container {
   .cover {
     padding: 3rem clamp(1.5rem, 5vw, 4.5rem) 3.5rem;
   }
-  /* 3 段の格子：1 段目 名前と一言 / 2 段目 要点 3 行と目次（上下の線をそろえる）/ 3 段目 目次の下の文字リンク */
+  /* 3 段の格子：1 段目 名前と一言 / 2 段目 要点 3 行と目次（上下の線をそろえる）/ 3 段目 目次の下の文字リンク。本文と同じく中央に置く */
   .cover-inner {
     max-width: 68rem;
+    margin-inline: auto;
     grid-template-columns: minmax(0, 1.65fr) minmax(17rem, 1fr);
     grid-template-rows: auto auto auto;
     column-gap: 4.5rem;
@@ -1482,6 +1483,36 @@ h1 .badge {
   border-radius: 6px;
   padding: 0.9em 1em;
   overflow-x: auto;
+}
+
+/*
+  広い画面のトップ（2026-10-06 ユーザーが見本から C を選び、画面の幅で段階的に構成を変えることを提案。logs/decisions.md）。
+  100rem（1600px）以上で、トップの本文を最大 76rem・表紙を最大 92rem（16rem + 76rem）に広げ、Projects のカードを 3 列にする。
+  3 列のときだけ homeWide の 2 件（.wide-only）を出して 6 枚にし、見出しの件数も差し替える。Systems・Skills は 2 列のまま。
+  64〜100rem は 2 列・4 枚、40rem 未満は 1 列（下の @media (max-width: 40rem)）
+*/
+.wide-only {
+  display: none;
+}
+@media (min-width: 100rem) {
+  .cover ~ .layout .page .container {
+    max-width: 76rem;
+  }
+  .cover-inner {
+    max-width: 92rem;
+  }
+  #projects .card-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .card.wide-only {
+    display: flex;
+  }
+  .section-note.wide-only {
+    display: inline;
+  }
+  .section-note.narrow-only {
+    display: none;
+  }
 }
 
 @media (max-width: 40rem) {
