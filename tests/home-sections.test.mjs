@@ -89,8 +89,12 @@ describe('短い版の解析（Skills / Journey）', () => {
         expect(item, `${g.name} の項目名に Markdown の記法が残っている`).not.toMatch(/[*\[\]]/);
       }
     }
-    // 「扱っていないもの」のような、項目名を持たない区分は出さない
-    expect(groups.map((g) => g.name)).not.toContain('商用実務で扱っていないもの');
+    // 区分は CLAUDE.md「守ること」の 3 つだけ
+    expect(groups.map((g) => g.name)).toEqual([
+      '自分で書いて作った',
+      'AI と開発する仕組み',
+      '学習中',
+    ]);
   });
 
   it('career.md の経歴表から「時期 / 役割」が取れる', async () => {

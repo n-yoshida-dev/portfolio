@@ -34,21 +34,24 @@ describe('トップの Skills のカード', async () => {
   const body = bodyOf(await readFile(path.join(root, 'public-profile/skills.md'), 'utf8'));
   const cards = topSkillCards(body);
 
-  it('項目名のある区分だけがカードになり、どのカードにも項目がある', () => {
-    expect(cards.length).toBeGreaterThanOrEqual(2);
-    expect(cards.map((c) => c.name)).not.toContain('商用実務で扱っていないもの');
+  it('区分は CLAUDE.md「守ること」の 3 つで、どのカードにも項目がある', () => {
+    expect(cards.map((c) => c.name)).toEqual([
+      '自分で書いて作った',
+      'AI と開発する仕組み',
+      '学習中',
+    ]);
     for (const c of cards) expect(c.items.length, `${c.name} の項目`).toBeGreaterThan(0);
   });
 
-  it('見出しの括弧書きは区分名から外し、期間（数字を含むもの）だけを span に入れる', () => {
-    expect(cards.find((c) => c.name === '商用実務')?.span).toBe('約 10 年');
-    // 「個人開発（根拠のあるもの）」は期間ではないので出さない（見本 C の形）
-    expect(cards.find((c) => c.name === '個人開発')?.span).toBe('');
-    for (const c of cards) expect(c.name).not.toMatch(/[（(]/);
+  it('見出しの括弧書きは区分名に残らず、期間の無い区分では span が空', () => {
+    for (const c of cards) {
+      expect(c.name).not.toMatch(/[（(]/);
+      expect(c.span).toBe('');
+    }
   });
 
-  it('根拠がまだない区分（理解確認済み・学習中）だけが tentative になる', () => {
-    expect(cards.filter((c) => c.tentative).map((c) => c.name)).toEqual(['理解確認済み・学習中']);
+  it('作品で示せる根拠がまだない区分（学習中）だけが tentative になる', () => {
+    expect(cards.filter((c) => c.tentative).map((c) => c.name)).toEqual(['学習中']);
   });
 });
 

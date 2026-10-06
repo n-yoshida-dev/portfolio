@@ -35,7 +35,7 @@ export const GET: APIRoute = async ({ site }) => {
     '## Profile',
     '',
     `- [Profile](${url('/profile.md')}): ${profile.data.description}`,
-    `- [Skills](${url('/skills.md')}): 商用実務・個人開発・学習中を分けて記載した技術スキル`,
+    `- [Skills](${url('/skills.md')}): 自分で書いて作ったもの・AI と開発する仕組み・学習中を分けて記載した技術スキル`,
     `- [Journey](${url('/journey.md')}): 経歴と学習の歩み、資格`,
     '',
     '## Projects',

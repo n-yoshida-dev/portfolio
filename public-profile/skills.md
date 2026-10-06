@@ -1,24 +1,13 @@
 ---
 title: Skills
-description: 技術スキルを 4 つの区分（商用実務 / 個人開発 / 理解確認済み / 学習中）に分けて、根拠のプロジェクトとともに記載しています。
-updated: 2026-09-27
+description: 使える技術を、自分で書いて作ったもの・AI と開発する仕組み・学習中の 3 つに分け、確かめられる場所（リポジトリ）と一緒に載せています。
+updated: 2026-10-07
 ---
 
-**区分は混ぜません**：商用実務（業務で担当。コードを書く仕事ではない）／個人開発（自分のリポジトリで設計・実装）／理解確認済み（確認問題・自分の言葉での説明で確認。実装の根拠はまだ薄い）／学習中（判定できる根拠がまだない）。
-判定は非公開の学習ログを根拠に手で行い、将来は [skill-matrix](/projects/skill-matrix) から自動生成する予定です。
+**3 つに分けています**：自分で書いて作った（自分でコードを書いた作品があるもの）／AI と開発する仕組み（AI に開発を任せるための道具を、自分で作ったもの）／学習中（勉強中で、作品で示せるところまではまだ届いていないもの）。
+AI がコードを書いたアプリ（[skill-matrix](/projects/skill-matrix) など）は、技術の根拠に数えていません。仕事でやってきたことは [Journey](/journey) にあります。
 
-## 商用実務（約 10 年）
-
-コードを書く力ではなく、**業務を理解し、仕様に落とし、関係者と進め、検証する力**がここに入ります。
-
-- **要件整理・仕様化・設計書**：インフラ製品の導入設計、移行計画、テスト計画、本番作業のタイムチャート
-- **テスト工程**：結合テスト・システムテスト・運用テストの計画とリード
-- **関係者調整・チームリード**：顧客折衝、7〜8 名のアサイン・教育・ドキュメントレビュー、見積、プリセールス
-- **インフラ基礎**：IT 資産管理製品（SKYSEA Client View）の導入設計・構築を約 5 年、ネットワーク・セキュリティ・可用性の基礎、仮想基盤の保守、Linux 操作（LinuC レベル 1）
-- **既存コードの読解**：稼働中の Java アプリケーションを読んで設定変更・障害対応・バグの原因調査を行った（機能追加・改修は未経験）
-- **課題管理**：不確実で引き継ぎが弱い状況でも、課題を切り出して前へ進める
-
-## 個人開発（根拠のあるもの）
+## 自分で書いて作った
 
 ### バックエンド：Java / Spring Boot — [OrgFlow](/projects/orgflow)
 
@@ -34,41 +23,34 @@ updated: 2026-09-27
 | テスト | 単体は Mockito、DB を伴う検証は Testcontainers（PostgreSQL） |
 | 設計判断の記録 | ADR 36 本（1 ファイル 1 決定）、実装対応表、ドキュメント入口 |
 
-### データベース：PostgreSQL
+### データベース：PostgreSQL — [OrgFlow](/projects/orgflow)
 
 - OrgFlow の DDL・制約設計（CHECK 制約、複合外部キー、text + CHECK による状態列）
 - ORACLE MASTER Silver SQL 2019
 
-### CI / CD・開発フロー
+### CI・ブランチ運用：GitHub Actions — [OrgFlow](/projects/orgflow)
 
-- GitHub Actions：OrgFlow（Java / Maven）で CI を構築。lint / test / build と秘密情報スキャン
+- OrgFlow（Java / Maven）の CI。lint / test / build と秘密情報スキャン
 - ブランチ保護（Ruleset）を自分で設定し、`gh api` で保存値を検証
-- PR 経由の squash マージ運用、Vercel の自動デプロイ
-- Docker Compose でローカル DB
+- PR 経由の squash マージ、Docker Compose でローカル DB
 
-### AI 協働開発の仕組み — [claude-plugins](/projects/claude-plugins)
+## AI と開発する仕組み
 
-- Claude Code のフック（秘密情報のコミット阻止、編集直後の型チェック、起動時の進捗表）とスキル（引き継ぎ、PR フロー）をシェルスクリプトで実装
-- マージ前に差分を「完了条件」と仕様に照らす読み取り専用のレビュー用エージェントを定義
-- PLAN / SPEC / TODO / KNOWLEDGE / HANDOFF / 判断台帳という文書体系で複数のアプリを並行運用（[Systems](/systems/ai-assisted-development)）
-- AI エージェントに実装を任せ、自分は要件・設計選択・レビュー・動作検証を担う練習として [AI Study Coach](/projects/ai-study-coach) を公開まで通した（React / Supabase の実力の根拠には数えない）
+### Claude Code のプラグイン — [claude-plugins](/projects/claude-plugins)
 
-### 静的サイト・ツール
+- 秘密情報のコミットを止めるフック、編集直後の型チェック、起動時の進捗表
+- 引き継ぎと、PR の作成からマージまでの手順を書いたスキル
+- マージ前に、差分を「完了条件」と仕様に照らして検品する読み取り専用のレビュー役
 
-- Jekyll + GitHub Pages（[Reading Log](/projects/reading-log)）、Astro（このサイト）
-- Python / シェルによる検証スクリプト（家計 CSV の検算、機密数字のブロック）
+### 文書で AI と分担する — [AI-assisted Development Workflow](/systems/ai-assisted-development)
 
-## 理解確認済み・学習中
+- PLAN / SPEC / TODO / KNOWLEDGE / HANDOFF / 判断台帳の 6 つの文書を、どのアプリにも同じ形で置く
+- [AI Study Coach](/projects/ai-study-coach) は、実装を AI エージェントに任せ、自分は要件・設計の選択・動作の確認を受け持って公開まで進めた練習（React / Supabase の根拠には数えない）
 
-- **Go**：基本構文、struct / slice / map / ポインタ、メソッドまで学習し、現在は一時停止中。インターフェース、エラー処理、並行処理、`net/http`、テストは未着手。skill-matrix のバックエンドは Go を採用しているが AI エージェントとの協働で実装しており、Go の実力の根拠には数えない
-- **React**：起動フロー、JSX、state / props / データフロー、Thinking in React の部品分けまで理解を確認。hooks、データ取得、ルーティングはこれから。AI Study Coach と skill-matrix のフロントエンドは AI 協働で実装しており、根拠には数えない
-- **AWS**：Solutions Architect - Associate を学習中
-- **Supabase の認証・RLS**：動作は確認済み。仕組みの言語化はまだ
-- **課金（Stripe）**：未着手
+## 学習中
 
-## 商用実務で扱っていないもの（誤解を避けるため）
+- **React**：JSX、state / props、データの流れ、画面を部品に分ける考え方まで。hooks、データ取得、ルーティングはこれから
+- **Go**：基本の文法、struct / slice / map / ポインタ、メソッドまで学んで一時停止中。インターフェース、エラー処理、並行処理、テストはこれから
+- **AWS**：Solutions Architect - Associate の試験に向けて勉強中
 
-- Web バックエンドの新規機能の実装・改修（Java / Go とも。既存コードの読解は上の「商用実務」）
-- チーム開発でのコードレビュー・デプロイの一連の経験
-
-これらを個人開発と公開リポジトリで補っている段階です。
+将来は、このページを [skill-matrix](/projects/skill-matrix)（学習の理解度を記録している自作ツール）から自動で作る予定です。

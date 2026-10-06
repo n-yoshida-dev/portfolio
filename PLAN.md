@@ -20,7 +20,7 @@
 - **Projects**：何を作ったか（学習用の OrgFlow、生活や学習で使う skill-matrix / Reading Log / AI Study Coach / claude-plugins。その他は Other にまとめる）
 - **Systems**：それらをどう組み合わせて、開発・学習・生活改善を仕組み化しているか
   （Personal AI Context / Learning System / Reading System / AI-assisted Development Workflow）
-- **Skills**：技術名の羅列ではなく、何を作り・設計し・判断したか。「商用実務」「個人開発」「理解確認済み」「学習中」を混ぜない
+- **Skills**：どの技術をどこまで使えるかと、それを確かめられる場所。「自分で書いて作った」「AI と開発する仕組み」「学習中」を混ぜない。仕事の経験は Journey
 - **Journey / Articles / Ask AI / llms.txt**
 
 ## やらないこと（Phase 1）

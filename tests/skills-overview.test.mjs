@@ -27,7 +27,7 @@ describe('skills.md のカード', async () => {
     for (const c of cards) {
       expect(c.items.length, `${c.title} の項目`).toBeGreaterThan(0);
       for (const item of c.items) {
-        // 括弧は項目名そのものに入ることがある（「課金（Stripe）」）ので見ない。落とすのは太字の無い箇条書きだけ（下の規則のテスト）
+        // 括弧は項目名そのものに入ることがあるので見ない。落とすのは太字の無い箇条書きだけ（下の規則のテスト）
         expect(item, `${c.title} の項目名`).not.toMatch(/[*\[\]]/);
         expect(item.length).toBeGreaterThan(0);
       }
@@ -59,6 +59,8 @@ describe('skillOverview の規則', () => {
     '',
     '### 分類：項目 2 — [根拠](/projects/x)',
     '',
+    '### 分類：項目 2b — [根拠](/projects/x)',
+    '',
     '## B・C',
     '',
     '- **項目 3**：説明',
@@ -78,8 +80,14 @@ describe('skillOverview の規則', () => {
     ]);
   });
 
-  it('項目名は ### → 太字 → 箇条書きの本文（括弧の前まで）の順に取り、### のリンクを根拠にする', () => {
-    expect(cards.map((c) => c.items)).toEqual([['項目 1'], ['項目 2'], ['項目 3'], ['項目 4']]);
+  it('項目名は ### → 太字 → 箇条書きの本文（括弧の前まで）の順に取り、### のリンクを重ねずに根拠にする', () => {
+    expect(cards.map((c) => c.items)).toEqual([
+      ['項目 1'],
+      ['項目 2', '項目 2b'],
+      ['項目 3'],
+      ['項目 4'],
+    ]);
+    // 同じリンクを根拠にする見出しが続いても、根拠は 1 つにまとめる
     expect(cards[1].evidence).toEqual([{ label: '根拠', href: '/projects/x' }]);
   });
 

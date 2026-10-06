@@ -17,8 +17,9 @@ const ANSWER_RULES = `Keep your first answer short:
 Give details only when I ask a follow-up question.
 
 Write the name as "Naoki Yoshida". Do not guess how it is written in Japanese.
-When you mention skills, say whether each comes from professional
-experience, personal development, or current learning.
+When you mention skills, say whether each comes from his work
+(Journey), code he wrote himself, tools he built with AI writing
+the code, or current learning.
 Do not describe a skill as more advanced than the sources say.
 Do not add a separate skills section to the first answer.
 Do not infer anything that is not stated in those sources.

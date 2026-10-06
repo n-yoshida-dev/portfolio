@@ -15,7 +15,7 @@ portfolio/
 ├── public-profile/          ← 公開してよい情報だけの正本（手動管理の Markdown / JSON）
 │   ├── profile.md           ← トップに出す自己紹介とリンク
 │   ├── career.md            ← Journey（経歴・学習の歩み・資格）
-│   ├── skills.md            ← Skills（商用実務 / 個人開発 / 学習中 を分けて記載）
+│   ├── skills.md            ← Skills（自分で書いて作った / AI と開発する仕組み / 学習中 を分けて記載）
 │   ├── articles.json        ← Articles（技術記事へのリンク）
 │   ├── projects/*.md        ← Projects。1 ファイル 1 リポジトリ
 │   └── systems/*.md         ← Systems。1 ファイル 1 仕組み

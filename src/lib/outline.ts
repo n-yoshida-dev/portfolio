@@ -18,7 +18,7 @@ export interface InlineSegment {
 
 /** Skills ページのカード 1 枚（`##` 見出し 1 つ分） */
 export interface SkillCard {
-  /** 見出しのまま（「商用実務（約 10 年）」） */
+  /** 見出しのまま（「自分で書いて作った」） */
   title: string;
   /** 冒頭の区分の定義から引いた説明。見出しが「・」で区分をつなぐときは「／」でつなぐ。見つからなければ空 */
   definition: string;
@@ -45,17 +45,17 @@ export interface TimelineRow {
 
 /** トップの Skills 節のカード 1 枚（Skills ページのカードから、項目名のある区分だけを取ったもの） */
 export interface TopSkillCard {
-  /** 区分名（見出しの括弧書きを除く）。「商用実務」 */
+  /** 区分名（見出しの括弧書きを除く）。「自分で書いて作った」 */
   name: string;
   /**
-   * 見出しの括弧書きのうち、期間（数字を含むもの）。「商用実務（約 10 年）」→「約 10 年」。
-   * 「個人開発（根拠のあるもの）」のような期間でない括弧書きは出さない（見本 C の形）。無ければ空
+   * 見出しの括弧書きのうち、期間（数字を含むもの）。「区分（約 10 年）」→「約 10 年」。
+   * 「区分（根拠のあるもの）」のような期間でない括弧書きは出さない（見本 C の形）。無ければ空
    */
   span: string;
   definition: string;
   items: string[];
   evidence: SkillCard['evidence'];
-  /** 実装の根拠がまだない区分（理解確認済み・学習中）。トップでは破線の枠で描く */
+  /** 作品で示せる根拠がまだない区分（学習中）。トップでは破線の枠で描く */
   tentative: boolean;
 }
 
@@ -77,8 +77,8 @@ export interface ArticleCalendar {
   latest?: CalendarArticle & { series: string };
 }
 
-/** 実装の根拠がまだない区分の名前。CLAUDE.md「守ること」の区分（商用実務 / 個人開発 / 理解確認済み / 学習中）のうち後ろの 2 つ */
-const TENTATIVE_KINDS = ['理解確認済み', '学習中'];
+/** 作品で示せる根拠がまだない区分の名前。CLAUDE.md「守ること」の区分（自分で書いて作った / AI と開発する仕組み / 学習中）のうち最後の 1 つ */
+const TENTATIVE_KINDS = ['学習中'];
 
 /** 連載の無い記事をまとめる名前（content.ts の groupArticlesBySeries と同じ） */
 const NO_SERIES = 'その他';
@@ -88,12 +88,12 @@ function stripLinks(text: string): string {
   return text.replace(/\[([^\]]+)\]\([^)]*\)/g, '$1');
 }
 
-/** 見出しから括弧書き（全角・半角）を外す。「商用実務（約 10 年）」→「商用実務」 */
+/** 見出しから括弧書き（全角・半角）を外す。「区分（約 10 年）」→「区分」 */
 function stripParen(text: string): string {
   return text.replace(/\s*[（(].*?[）)]\s*$/, '').trim();
 }
 
-/** 見出しの末尾の括弧書きの中身。「商用実務（約 10 年）」→「約 10 年」。無ければ空 */
+/** 見出しの末尾の括弧書きの中身。「区分（約 10 年）」→「約 10 年」。無ければ空 */
 function parenOf(text: string): string {
   return text.match(/[（(]([^（）()]*)[）)]\s*$/)?.[1].trim() ?? '';
 }
@@ -107,7 +107,7 @@ function itemNameFromHeading(text: string): string {
 
 /**
  * skills.md の本文を「区分 → 項目名」に畳む。
- * 項目名は `###` 見出しがあればそれ、無ければ箇条書き先頭の `**太字**`。どちらも無い区分は出さない（「商用実務で扱っていないもの」など）
+ * 項目名は `###` 見出しがあればそれ、無ければ箇条書き先頭の `**太字**`。どちらも無い区分は出さない（箇条書きの本文だけの区分など）
  */
 export function skillGroups(body: string): SkillGroup[] {
   const groups: SkillGroup[] = [];
@@ -175,7 +175,7 @@ export function skillOverview(body: string): SkillOverview {
   }
   const note = defIndex === -1 ? [] : inlineSegments(intro.slice(defIndex + 1).join(''));
 
-  /** 区分名（括弧書きを除いた見出し）から定義を引く。「理解確認済み・学習中」は 2 つをつなぐ */
+  /** 区分名（括弧書きを除いた見出し）から定義を引く。「A・B」のように 2 つをつなぐ見出しは、2 つの定義をつなぐ */
   const definitionOf = (name: string): string => {
     if (definitions.has(name)) return definitions.get(name) ?? '';
     const parts = name.split('・');
@@ -215,8 +215,11 @@ export function skillOverview(body: string): SkillOverview {
     const h3 = line.match(/^### (.+)$/);
     if (h3) {
       current.h3.push(itemNameFromHeading(h3[1]));
+      // 同じ作品を根拠にする見出しが続いても、根拠のリンクは 1 つにする
       for (const s of inlineSegments(h3[1])) {
-        if (s.href) current.evidence.push({ label: s.text, href: s.href });
+        if (s.href && !current.evidence.some((e) => e.href === s.href)) {
+          current.evidence.push({ label: s.text, href: s.href });
+        }
       }
       continue;
     }
@@ -240,7 +243,7 @@ export function highlightLine(h: { label: string; title: string; detail?: string
 /**
  * skills.md の本文から、トップの Skills 節のカードを作る。
  * Skills ページのカード（skillOverview）のうち、トップの短い版（skillGroups）に出る区分だけを残す
- * （「商用実務で扱っていないもの」のような項目名の無い区分はトップに出さない）
+ * （箇条書きの本文だけで項目名の無い区分はトップに出さない）
  */
 export function topSkillCards(body: string): TopSkillCard[] {
   const shown = new Set(skillGroups(body).map((g) => g.name));
