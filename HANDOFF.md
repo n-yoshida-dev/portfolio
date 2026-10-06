@@ -38,7 +38,7 @@
   2 つとも `career.md` を変えるので、先にマージしたほうに合わせてもう一方を rebase する
 - 作業フォルダ：`../portfolio-wt-skills`・`../portfolio-wt-journey`（PR #49・#50）と、マージ済みの `../portfolio-wt-verbs` が残っている（`KNOWLEDGE.md` 2026-10-06）。マージ済みの作業フォルダとローカルブランチは片付けてよい
 - ユーザーに聞くこと 4 つは 1 ページにまとめてある（非公開の Artifact。URL は Beads ops-urz.31）：Q1 Skills の A・B／Q2 Journey の文案／Q3 OrgFlow を 1 枚目に残すか／Q4 AI がコードを書いた作品の書き方
-- サイトの読み手：IT の人向けに吉田を紹介するページで、転職を意識した書き方をしない（`logs/decisions.md` 2026-10-06）。公開文面では「回す」「解く」のような中身をぼかす動詞を使わない（ユーザーの求め。PR #48）
+- サイトの読み手と文面の決まりは `logs/decisions.md` 2026-10-06 の 3 件（転職を意識しない・要点 3 行・中身をぼかす動詞を使わない）
 - 文面のタスクは、ユーザーの事実を足さず、案を見せて選んでもらう。経歴の事実は personal-ai-context（手元は origin と食い違うので `git show origin/main:<path>` で読む）と公開中の `career.md` で確かめ、非公開の事実をコミット対象に書かない
 - 画面の確認は Playwright で撮る（`KNOWLEDGE.md`。動きを減らす設定で撮る）。見本や画像を見せるときは非公開の Artifact に載せて URL を渡す
 - ユーザー待ち：TODO「確認待ち」の 4 件（Beads ops-urz.29〜32）。別に ai-review の判断待ち ops-h49.4 が開いている
