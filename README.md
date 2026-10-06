@@ -108,7 +108,7 @@ OGP 画像を作り直すとき：`node scripts/generate-og.mjs`（文言は同�
 - **トップの文章を直す**：`profile.md` の frontmatter。`tagline`（名前の下の一言。1〜2 文）・`highlights`・`links` だけがトップに出る。
   `highlights` は 3 つまでで、1 つを `label`（小見出し）・`title`（太字の見出し）・`detail`（補足。省略可）に分けて書く（トップでは 1 つが 1 列）。
   `links` の `icon`（`code` / `pen` / `book` / `case` / `sprout`。省略可）はトップのリンクカードに添える線のアイコン（形は `src/lib/icons.ts`）。
-  本文（`## 何の人か` 以下）はトップには出ず、Markdown 版（`/profile.md`）と `/llms-full.txt` で AI と人間の両方が読める
+  本文（`## どんな人か` 以下）はトップには出ず、Markdown 版（`/profile.md`）と `/llms-full.txt` で AI と人間の両方が読める
 
 反映は `npm run build` が通れば完了。`main` へマージすると Vercel が自動でデプロイする。
 
