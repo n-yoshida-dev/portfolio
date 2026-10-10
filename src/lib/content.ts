@@ -96,6 +96,9 @@ export const statusLabel: Record<Project['data']['status'], string> = {
   archived: '終了',
 };
 
+/** コードを AI が書いた作品（frontmatter の vibeCoding: true）に添える備考。表示する場所はどこもこの文言を使う */
+export const VIBE_CODING_NOTE = '※バイブコーディング（コードは AI が書いた）';
+
 /**
  * プロジェクト 1 件を AI が読みやすい Markdown にする。
  * frontmatter の要点を冒頭に箇条書きで出し、本文をそのまま続ける。
@@ -114,6 +117,7 @@ export function projectToMarkdown(p: Project, site: URL | undefined): string {
   if (d.repo) lines.push(`- リポジトリ: ${d.repo}`);
   if (d.site) lines.push(`- サイト: ${d.site}`);
   if (d.stack.length) lines.push(`- 技術: ${d.stack.join(', ')}`);
+  if (d.vibeCoding) lines.push(`- 作り方: ${VIBE_CODING_NOTE}`);
   if (d.systems.length) {
     lines.push(
       `- 関連する仕組み: ${d.systems.map((s) => absoluteUrl(`/systems/${s}.md`, site)).join(', ')}`,

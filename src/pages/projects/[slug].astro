@@ -5,7 +5,7 @@ import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import FoldedBody from '../../components/FoldedBody.astro';
 import { getCollection } from 'astro:content';
-import { visibilityLabel, statusLabel } from '../../lib/content';
+import { visibilityLabel, statusLabel, VIBE_CODING_NOTE } from '../../lib/content';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects', (p) => (p.body ?? '').trim().length > 0);
@@ -28,6 +28,7 @@ const systems = await getCollection('systems', (s) => d.systems.includes(s.id));
     <span class="badge">{statusLabel[d.status]}</span>
   </h1>
   <p class="lead">{d.summary}</p>
+  {d.vibeCoding && <p class="meta">{VIBE_CODING_NOTE}</p>}
   <div class="entry-links">
     {d.repo && <a href={d.repo}>GitHub リポジトリ</a>}
     {d.site && <a href={d.site}>公開サイト</a>}

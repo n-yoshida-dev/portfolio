@@ -8,6 +8,7 @@ status: active
 period: 2026-08 〜
 stack: [Shell, Claude Code plugin, GitHub Actions, shellcheck]
 featured: true
+vibeCoding: true
 order: 5
 systems: [ai-assisted-development]
 highlights:

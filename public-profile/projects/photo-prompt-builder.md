@@ -8,6 +8,7 @@ status: paused
 period: 2026-09
 stack: [React, TypeScript, Vite]
 featured: false
+vibeCoding: true
 order: 23
 systems: [ai-assisted-development]
 ---

@@ -1115,6 +1115,11 @@ h1 .badge {
 .card .tag-list {
   margin-top: 0.2rem;
 }
+/* コードを AI が書いた作品の備考（一文の下の薄い 1 行） */
+.card .card-note {
+  color: var(--fg-muted);
+  font-size: 0.8rem;
+}
 .card-links {
   display: flex;
   flex-wrap: wrap;

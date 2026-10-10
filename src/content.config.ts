@@ -55,6 +55,11 @@ const projects = defineCollection({
      * 行をちょうど埋めるための枠で、featured: false のものに付ける（SPEC.md §4）
      */
     homeWide: z.boolean().default(false),
+    /**
+     * true ならコードを AI が書いた作品（バイブコーディング）。カード・詳細ページ・Markdown 版・llms.txt に同じ備考を 1 行出す。
+     * こうした作品は Skills の根拠に数えず、作品集（Projects）として載せる（logs/decisions.md 2026-10-10）
+     */
+    vibeCoding: z.boolean().default(false),
     /** 並び順。小さいほど先 */
     order: z.number().default(100),
     /** 関連する Systems の slug */

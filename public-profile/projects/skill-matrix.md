@@ -8,6 +8,7 @@ status: active
 period: 2026-08 〜
 stack: [Go, TypeScript, React, Vite, JSON, GitHub Actions, GitHub Pages]
 featured: true
+vibeCoding: true
 order: 2
 systems: [learning-system, ai-assisted-development]
 highlights:

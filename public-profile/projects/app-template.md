@@ -8,6 +8,7 @@ status: active
 period: 2026-09 〜
 stack: [GitHub template, GitHub Actions]
 featured: false
+vibeCoding: true
 order: 25
 systems: [ai-assisted-development]
 ---

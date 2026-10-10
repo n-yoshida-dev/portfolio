@@ -37,3 +37,12 @@ describe('詳細ページの本文の長さ', () => {
     });
   }
 });
+
+describe('コードを AI が書いた作品の備考（vibeCoding）', () => {
+  it('自分で実装している OrgFlow には付けず、AI が実装した skill-matrix には付ける', async () => {
+    const orgflow = await readEntry(path.join(root, 'projects', 'orgflow.md'));
+    const skillMatrix = await readEntry(path.join(root, 'projects', 'skill-matrix.md'));
+    expect(/^vibeCoding: true$/m.test(orgflow.frontmatter)).toBe(false);
+    expect(/^vibeCoding: true$/m.test(skillMatrix.frontmatter)).toBe(true);
+  });
+});

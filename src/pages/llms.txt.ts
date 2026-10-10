@@ -8,10 +8,14 @@ import {
   getSystems,
   getPage,
   getArticles,
+  VIBE_CODING_NOTE,
 } from '../lib/content';
 
 export const GET: APIRoute = async ({ site }) => {
   const url = (path: string) => absoluteUrl(path, site);
+  /** プロジェクトの要約。コードを AI が書いた作品には備考を続ける */
+  const summaryOf = (p: { data: { summary: string; vibeCoding: boolean } }) =>
+    p.data.vibeCoding ? `${p.data.summary}${VIBE_CODING_NOTE}` : p.data.summary;
   const profile = await getPage('profile');
   const featured = await getFeaturedProjects();
   const others = await getOtherProjects();
@@ -40,16 +44,14 @@ export const GET: APIRoute = async ({ site }) => {
     '',
     '## Projects',
     '',
-    ...featured.map(
-      (p) => `- [${p.data.title}](${url(`/projects/${p.id}.md`)}): ${p.data.summary}`,
-    ),
+    ...featured.map((p) => `- [${p.data.title}](${url(`/projects/${p.id}.md`)}): ${summaryOf(p)}`),
     '',
     '## Other projects',
     '',
     ...others.map((p) =>
       (p.body ?? '').trim()
-        ? `- [${p.data.title}](${url(`/projects/${p.id}.md`)}): ${p.data.summary}`
-        : `- ${p.data.title}: ${p.data.summary}`,
+        ? `- [${p.data.title}](${url(`/projects/${p.id}.md`)}): ${summaryOf(p)}`
+        : `- ${p.data.title}: ${summaryOf(p)}`,
     ),
     '',
     '## Systems',
