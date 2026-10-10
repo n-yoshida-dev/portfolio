@@ -9,7 +9,7 @@
 
 | コレクション | 場所 | 主な項目 | 用途 |
 |---|---|---|---|
-| `projects` | `projects/*.md` | title / tagline / summary / repo / site / visibility（public・private・archived）/ status（active・paused・done・archived）/ period / stack / featured / homeWide / order / systems / highlights | Projects 一覧・詳細。`featured: false` は Other / Experiments。`homeWide: true` はトップのカードが 3 列の広い画面だけ、主なプロジェクトの後ろに足す（§4）。本文が空なら詳細ページを作らない |
+| `projects` | `projects/*.md` | title / tagline / summary / repo / site / visibility（public・private・archived）/ status（active・paused・done・archived）/ period / stack / featured / homeWide / vibeCoding / order / systems / highlights | Projects 一覧・詳細。`featured: false` は Other / Experiments。`homeWide: true` はトップのカードが 3 列の広い画面だけ、主なプロジェクトの後ろに足す（§4）。`vibeCoding: true` はコードを AI が書いた作品で、カード・詳細ページ・Markdown 版・llms.txt に同じ備考を 1 行出す（Skills の根拠には数えない。`logs/decisions.md` 2026-10-10）。本文が空なら詳細ページを作らない |
 | `systems` | `systems/*.md` | title / tagline / summary / order / components / highlights | Systems 一覧・詳細 |
 | `pages` | `profile.md` `career.md` `skills.md` | title / description / updated / links・tagline・highlights（profile のみ。highlights は 3 行まで） | Home / Journey / Skills |
 | `articles` | `articles.json` | id / title / url / platform / publishedAt / tags / series / summary | Articles。連載（series）ごとにまとめ、連載内は古い順 |
@@ -94,7 +94,7 @@
   追従ボタンとトップの節のボタンは同じ言葉「Ask AI about this portfolio」（`src/site.ts` の `ASK_BUTTON_LABEL`。2026-09-27 ユーザーが選択。`logs/decisions.md`）
 - **ボタンは青を使わず、文字色で描く**（2026-09-27 ユーザーが見本 4 案から選択。`logs/decisions.md`）。青はリンク専用（例外：年表の点。2026-09-28 ユーザーが青を選択）。
   塗る（文字色の地 + 背景色の文字）のは主なボタン（`.button-primary`）と追従ボタン（`.ask-fab`）だけで、ほかのボタンは線だけ。角は 4px の角丸
-- 一覧は**薄枠のカード**（地色 `--bg-subtle`、線 `--line`。PC 2 列、375px で 1 列）。年・区分・題名・一文・リンクを定位置に置く。
+- 一覧は**薄枠のカード**（地色 `--bg-subtle`、線 `--line`。PC 2 列、375px で 1 列）。年・区分・題名・一文・リンクを定位置に置く（コードを AI が書いた作品は、一文の下に薄い文字で備考を 1 行）。
   経歴は年を左端に置いた年表（例外：トップの Journey 節は PC で横の年表、年が上。上の「トップの About・Skills・Journey・Articles の見せ方」）。
   グラデーション・影は使わない。アニメーションはトップの表紙の動き（上の「トップの表紙」）だけ。色は足さず、リンク色だけを効かせる
 - **HTML は人間向けに短く、Markdown 版・llms.txt は AI 向けに詳しく。** 同じ文章を両方に同じ量で出さない。

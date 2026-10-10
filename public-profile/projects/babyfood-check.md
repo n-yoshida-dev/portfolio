@@ -8,6 +8,7 @@ status: paused
 period: 2026-08
 stack: [Go, React, TypeScript, PostgreSQL, Docker Compose]
 featured: false
+vibeCoding: true
 order: 21
 systems: [ai-assisted-development]
 ---

@@ -8,6 +8,7 @@ status: paused
 period: 2026-08
 stack: [Go, PostGIS, GeoJSON, React, MapLibre]
 featured: false
+vibeCoding: true
 order: 22
 systems: [ai-assisted-development]
 ---

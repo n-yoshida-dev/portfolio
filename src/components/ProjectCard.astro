@@ -1,9 +1,10 @@
 ---
 // 一覧に出すプロジェクト 1 件のカード（SPEC.md §4）。上段に期間と区分、続けて題名・一文、下端にリンクを定位置に置く。
 // 一文は tagline。summary（1〜2 文）は詳細ページと Markdown 版に任せ、カードには出さない。
+// コードを AI が書いた作品（vibeCoding）は、一文の下に備考を 1 行添える。
 // 親は <ul class="card-grid">。
 import type { Project } from '../lib/content';
-import { visibilityLabel, statusLabel } from '../lib/content';
+import { visibilityLabel, statusLabel, VIBE_CODING_NOTE } from '../lib/content';
 
 interface Props {
   project: Project;
@@ -27,6 +28,7 @@ const hasDetail = (project.body ?? '').trim().length > 0;
   </div>
   <h3>{hasDetail ? <a href={`/projects/${project.id}`}>{d.title}</a> : d.title}</h3>
   <p>{d.tagline}</p>
+  {d.vibeCoding && <p class="card-note">{VIBE_CODING_NOTE}</p>}
   {!compact && d.stack.length > 0 && (
     <ul class="tag-list" aria-label="主要技術">
       {d.stack.map((s) => (

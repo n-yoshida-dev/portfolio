@@ -9,6 +9,7 @@ status: paused
 period: 2026-07 〜 2026-08
 stack: [React 19, TypeScript, Vite, Supabase, PostgreSQL, Vitest, Oxlint, GitHub Actions, Vercel]
 featured: false
+vibeCoding: true
 order: 4
 systems: [ai-assisted-development, learning-system]
 highlights:
