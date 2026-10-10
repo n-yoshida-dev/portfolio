@@ -158,7 +158,9 @@ function skillIcon(card: TopSkillCard): IconName {
   </HomeSection>
 
   <HomeSection id="skills">
-    <p class="section-lead">根拠の種類で {skills.length} つに分けています。区分は混ぜません。</p>
+    <p class="section-lead">
+      何で身につけたか（仕事・個人開発・学習）で {skills.length} つに分けています。
+    </p>
     <ul class="skill-grid">
       {skills.map((c) => (
         <li class:list={['skill-card', { 'is-tentative': c.tentative }]}>
