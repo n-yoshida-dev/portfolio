@@ -91,7 +91,7 @@ OGP 画像を作り直すとき：`node scripts/generate-og.mjs`（文言は同�
 
 - **プロジェクトを足す**：`public-profile/projects/<slug>.md` を作る。frontmatter の項目は `src/content.config.ts` を参照。
   `featured: true` で主要プロジェクト、`false` で Other / Experiments。本文が空なら詳細ページは作られない（一覧だけに出る）。
-  `homeWide: true`（`featured: false` のものに付ける）は、トップの Projects がカード 3 列になる広い画面（1600px 以上）のときだけ主要プロジェクトの後ろに足される。行をちょうど埋めるための 2 件
+  `homeWide: true`（`featured: false` のものに付ける）は、トップの Projects がカード 3 列になる広い画面（1600px 以上）のときだけ主要プロジェクトの後ろに足される。行をちょうど埋めるための 2 件。
   `vibeCoding: true` はコードを AI が書いた作品に付ける。カード・詳細ページ・Markdown 版・llms.txt に「※バイブコーディング（コードは AI が書いた）」の備考が出る（文言は `src/lib/content.ts` の `VIBE_CODING_NOTE`）
 - **仕組みを足す**：`public-profile/systems/<slug>.md` を作る。`order` で並び順
 - **一覧のカードの一文**（projects / systems 共通）：`tagline` に一文で書く（句点「。」なし・60 字以内。破ると `npm run build` が落ちる）。

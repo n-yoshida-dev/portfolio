@@ -27,7 +27,7 @@ Claude が実装中に選んだ技術的な選択とハマりどころは `KNOWL
 **論点**: 2026-09-26「AI 協働で作ったものは Skills の根拠に数えない」のもとで、AI がコードを書いた作品をどう書くか（確認ページの Q4。対象として `profile.md` 本文の「コードが要る部分は AI（Claude Code）が書いています」と、表紙の要点の「AI に開発を任せるための道具を、自分で作っている」を見せた）
 **結論**: Skills には載せない。Projects（作品集）には載せ、「※バイブコーディング」の備考を 1 行付ける。
 （以下は Claude の選択で、ユーザーは個別には答えていない：備考の文言は「※バイブコーディング（コードは AI が書いた）」。付けるのは、コミットの記録で AI との共著がほとんどの 8 件〔skill-matrix・claude-plugins・life-plan-simulator・ops・photo-prompt-builder・app-template・babyfood-check・home-site-finder〕と、2026-09-26 の判断で「AI エージェントに実装を任せた」と確かめた AI Study Coach の計 9 件。
-OrgFlow〔自分で実装〕と Reading Log〔ChatGPT が書く記録が中心でアプリのコードがほぼ無い〕には付けない。frontmatter の `vibeCoding: true` で選び、カード・詳細ページ・Markdown 版・llms.txt に同じ文言を出す。表紙と `profile.md` 本文の言い方は変えていない）
+OrgFlow〔自分で実装〕と Reading Log〔ChatGPT が書く記録が中心でアプリのコードがほぼ無い〕と、過去の練習用リポジトリをまとめた Archive〔リポジトリの個別の記載が無い〕には付けない。今の Skills の「AI 協働開発の仕組み — claude-plugins」の節は外した。frontmatter の `vibeCoding: true` で選び、カード・詳細ページ・Markdown 版・llms.txt に同じ文言を出す。表紙と `profile.md` 本文の言い方は変えていない）
 **理由**: ユーザーの回答（原文）「別にSkillsには載せなくていいよ。単に作品集として載せればいいじゃん。単に、「※バイブコーディング」みたいな備考を一行入れておけばいいんじゃないの？」
 **却下した代替案**: なし（Claude は「AI 向けの本文には AI が書いたとはっきり残し、表紙はこのまま」を推していた。ユーザーの答えはそれより簡単な形）
 **確信度**: 高

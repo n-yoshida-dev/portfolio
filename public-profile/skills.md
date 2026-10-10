@@ -1,7 +1,7 @@
 ---
 title: Skills
 description: 技術スキルを 4 つの区分（商用実務 / 個人開発 / 理解確認済み / 学習中）に分けて、根拠のプロジェクトとともに記載しています。
-updated: 2026-09-27
+updated: 2026-10-10
 ---
 
 **区分は混ぜません**：商用実務（業務で担当。コードを書く仕事ではない）／個人開発（自分のリポジトリで設計・実装）／理解確認済み（確認問題・自分の言葉での説明で確認。実装の根拠はまだ薄い）／学習中（判定できる根拠がまだない）。
@@ -45,13 +45,6 @@ updated: 2026-09-27
 - ブランチ保護（Ruleset）を自分で設定し、`gh api` で保存値を検証
 - PR 経由の squash マージ運用、Vercel の自動デプロイ
 - Docker Compose でローカル DB
-
-### AI 協働開発の仕組み — [claude-plugins](/projects/claude-plugins)
-
-- Claude Code のフック（秘密情報のコミット阻止、編集直後の型チェック、起動時の進捗表）とスキル（引き継ぎ、PR フロー）をシェルスクリプトで実装
-- マージ前に差分を「完了条件」と仕様に照らす読み取り専用のレビュー用エージェントを定義
-- PLAN / SPEC / TODO / KNOWLEDGE / HANDOFF / 判断台帳という文書体系で複数のアプリを並行運用（[Systems](/systems/ai-assisted-development)）
-- AI エージェントに実装を任せ、自分は要件・設計選択・レビュー・動作検証を担う練習として [AI Study Coach](/projects/ai-study-coach) を公開まで通した（React / Supabase の実力の根拠には数えない）
 
 ### 静的サイト・ツール
 
