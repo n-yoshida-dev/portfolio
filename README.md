@@ -102,7 +102,7 @@ OGP 画像を作り直すとき：`node scripts/generate-og.mjs`（文言は同�
 - **記事を足す**：`public-profile/articles.json` に 1 要素足す。`series` で連載ごとにまとまる。
   トップの Articles 節の図（連載 × 公開月）は `series` と `publishedAt` から作られる
 - **経歴・スキルを直す**：`career.md` / `skills.md` を編集し、frontmatter の `updated` を更新する。
-  本文がそのまま HTML にも Markdown 版にも出るので、表のセルは 1 フレーズ・体言止め（句点を入れると `npm run test` が落ちる）。
+  本文がそのまま HTML にも Markdown 版にも出るので、表のセルは 1 セル 1 文まで（句点を入れると `npm run test` が落ちる。決まりは `SPEC.md` §4）。
   `skills.md` は、`/skills` の区分のカードとトップの Skills 節が本文から作られる。カードに出るのは `##` 見出し、冒頭の「区分（定義）／区分（定義）」の行、
   `###` 見出し（「分類：項目名 — [根拠](/projects/…)」）か箇条書き先頭の `**太字**`。どちらも無い節は、箇条書きの本文の括弧の手前まで（括弧書きはカードに出ない）。
   この形を崩すと `npm run test` が落ちる。トップの Journey 節には `career.md` の経歴表の 3 列（時期・役割・主な担当）がそのまま出る

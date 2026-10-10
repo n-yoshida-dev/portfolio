@@ -1,5 +1,5 @@
 // 本文がそのまま HTML に出るページ（Skills / Journey）の表を短く保つ。
-// 表のセルは 1 セル 1 フレーズ・体言止めにし、句点（。）で文を重ねない決まり（SPEC.md §4）。
+// 表のセルは 1 セル 1 文までにし、句点（。）で文を重ねない決まり（SPEC.md §4）。
 import { describe, it, expect } from 'vitest';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
