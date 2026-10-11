@@ -9,7 +9,7 @@
 
 | コレクション | 場所 | 主な項目 | 用途 |
 |---|---|---|---|
-| `projects` | `projects/*.md` | title / tagline / summary / repo / site / visibility（public・private・archived）/ status（active・paused・done・archived）/ period / stack / featured / homeWide / vibeCoding / order / systems / highlights | Projects 一覧・詳細。`featured: false` は Other / Experiments。`homeWide: true` はトップのカードが 3 列の広い画面だけ、主なプロジェクトの後ろに足す（§4）。`vibeCoding: true` はコードを AI が書いた作品で、カード・詳細ページ・Markdown 版・llms.txt に同じ備考を 1 行出す（Skills の根拠には数えない。`logs/decisions.md` 2026-10-10）。本文が空なら詳細ページを作らない |
+| `projects` | `projects/*.md` | title / tagline / summary / repo / site / visibility（public・private・archived）/ status（active・paused・done・archived）/ period / stack / featured / homeWide / vibeCoding / order / systems / highlights | Projects 一覧・詳細。`featured: false` は Other / Experiments。`homeWide: true` はトップのカードが 3 列の広い画面だけ、主なプロジェクトの後ろに足す（§4）。`vibeCoding: true` はコードを AI が書いた作品で、カード・詳細ページ・Markdown 版・llms.txt に同じ備考を 1 行出す（Skills の根拠には数えない。`logs/decisions.md` 2026-10-10）。`site` は作品の公開サイトで、カード・詳細ページ・Markdown 版・llms.txt にリンクを出す。本文が空なら詳細ページを作らない |
 | `systems` | `systems/*.md` | title / tagline / summary / order / components / highlights | Systems 一覧・詳細 |
 | `pages` | `profile.md` `career.md` `skills.md` | title / description / updated / links・tagline・highlights（profile のみ。highlights は 3 行まで） | Home / Journey / Skills |
 | `articles` | `articles.json` | id / title / url / platform / publishedAt / tags / series / summary | Articles。連載（series）ごとにまとめ、連載内は古い順 |

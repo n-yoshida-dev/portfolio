@@ -355,3 +355,9 @@ Playwright で、読み込みを 1.5 秒遅らせても全文つきで写せる�
 そこで `git worktree add ../portfolio-wt-<名前> -b <ブランチ> origin/main` で作業フォルダを分け、`node_modules` はメインの作業フォルダへのシンボリックリンクにした（検査とビルドはそのまま動く）。
 リンクは追跡されないファイルとして残り、`gh pr create` が「1 uncommitted change」と出すが、コミットしなければ害はない。
 TODO の確認待ちや途中経過は、答え待ちの PR に入れるとマージまで main に出ず、ダッシュボードの「あなた待ち」にも数えられない。引き継ぎの PR で main に入れる
+
+### 2026-10-11：作品の公開サイトの URL は、llms.txt では作品の行に続けて出す
+
+`site:` はカード・詳細ページ・Markdown 版には出ていたが、llms.txt は作品の行に Markdown 版へのリンクと要約しか出していなかった（Reading Log の URL が出ていたのは、`profile.md` の `links` から来た外部リンク欄だけ）。
+`src/pages/llms.txt.ts` の要約に「 Live site: URL」を続ける形にした。`site:` を書けば全出力に出る、という作りに揃えるため。
+`profile.md` の `links` に足す案は、トップの表紙のリンク欄（人間向けの画面）まで変わるので選ばなかった

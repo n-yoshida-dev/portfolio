@@ -302,11 +302,13 @@ Claude が portfolio を先にし、試行 2 はフェーズ4 が落ち着いて
 
 ユーザーの発言「skill-matrix の公開 URL（https://n-yoshida-dev.github.io/skill-matrix/）を作品のリンクに足すこともやりたい。あと、skillsの欄にも入れようかな。」から切り出した 2 件。
 
-- [ ] skill-matrix の公開 URL を作品のリンクに足す：skill-matrix 側の付箋 Beads ops-dhj.25（portfolio に URL が入ったら Claude が閉じる）。
+- [x] skill-matrix の公開 URL を作品のリンクに足す：skill-matrix 側の付箋 Beads ops-dhj.25（portfolio に URL が入ったら Claude が閉じる）。
   Claude が確かめたこと（2026-10-11）：URL は 200 で返る。作品の frontmatter には公開 URL 用の `site:` がすでにある（`reading-log.md`・`ai-study-coach.md` が使っている）。
   skill-matrix のリポジトリは Public になっている（`gh repo view`）が、`projects/skill-matrix.md` は `visibility: private` のままで、highlights に「v1 を実装中。完成後に Public 化し…」とある。
   この 2 点も公開した事実に合わせて同じ PR で直す（Claude の案。直す言葉は skill-matrix の README・HANDOFF で確かめ、事実を足さない）
   完了条件：Projects の一覧と `/projects/skill-matrix` に公開 URL のリンクがあり、押すと skill-matrix が開く。Markdown 版と llms.txt にも URL が出る。Public / Private の表示と highlights が今の公開状態と合っている
+  （2026-10-11。`site:` を足し、`visibility` を public に、highlights の 3 行目と本文の「状態」節を「2026-10-11 に v1 を GitHub Pages で公開」に直した。
+  llms.txt は作品の行に公開サイトの URL を出していなかったので、`site:` のある作品の行に「Live site: URL」を続けるようにした〔Reading Log・AI Study Coach にも出る〕。Beads ops-dhj.25 はマージ後に閉じる）
 - [ ] Skills の欄に skill-matrix を入れる：何をどこに入れるか（公開 URL へのリンクをトップの Skills 節や `/skills` に置く、など）は、ユーザーはまだ言っていない。
   案を見せて選んでもらう（保留節の「skill-matrix → `skills.md` の自動生成」とは別。こちらはリンクを置くだけの想定〔Claude の推定〕）
   完了条件：ユーザーが選んだ形で、Skills（トップの Skills 節か `/skills`）に skill-matrix が入っている。`/skills.md` の情報が減っていない
