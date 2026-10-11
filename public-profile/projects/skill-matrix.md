@@ -3,7 +3,8 @@ title: skill-matrix
 tagline: 学習ログを AI に読ませて理解度を判定し、マトリクスとして可視化する個人用システム
 summary: 学習ログを AI に読ませて「分野 × 詳細項目」の理解度を判定し、マトリクスとして可視化する個人用システム。自己申告ではなく根拠で理解度を決める。
 repo: https://github.com/n-yoshida-dev/skill-matrix
-visibility: private
+site: https://n-yoshida-dev.github.io/skill-matrix/
+visibility: public
 status: active
 period: 2026-08 〜
 stack: [Go, TypeScript, React, Vite, JSON, GitHub Actions, GitHub Pages]
@@ -14,7 +15,7 @@ systems: [learning-system, ai-assisted-development]
 highlights:
   - 理解度は 5 段階。AI の判定をそのまま信用せず、Go の CLI の検証ルールと CI で二重に検査する
   - 2026-09-23 に「公開する Web サービス」から「自分専用のツール」へ絞り込んだ（6 週間、画面が 0 件だったため）
-  - v1 を実装中。完成後に Public 化し、このサイトの Skills も将来ここから生成する想定
+  - 2026-10-11 に v1 を GitHub Pages で公開した。このサイトの Skills も将来ここから生成する想定
 ---
 
 ## 解きたい課題
@@ -52,5 +53,6 @@ data/state.json  ← 項目ごとの理解度（導出値）
 
 ## 状態
 
-設計の見直し中で、v1 の実装を進めています。v1 完成後に Public 化し、画面とデータ（判定の履歴）を公開する予定です。
+2026-10-11 に v1 を [GitHub Pages](https://n-yoshida-dev.github.io/skill-matrix/) で公開しました。リポジトリも Public で、画面とデータ（判定の履歴）を見られます。
+今は少しずつ改善しています。
 このサイトの [Skills](/skills) ページは、将来このシステムから自動生成する想定です。

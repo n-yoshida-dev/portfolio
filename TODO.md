@@ -302,11 +302,13 @@ Claude が portfolio を先にし、試行 2 はフェーズ4 が落ち着いて
 
 ユーザーの発言「skill-matrix の公開 URL（https://n-yoshida-dev.github.io/skill-matrix/）を作品のリンクに足すこともやりたい。あと、skillsの欄にも入れようかな。」から切り出した 2 件。
 
-- [ ] skill-matrix の公開 URL を作品のリンクに足す：skill-matrix 側の付箋 Beads ops-dhj.25（portfolio に URL が入ったら Claude が閉じる）。
+- [x] skill-matrix の公開 URL を作品のリンクに足す：skill-matrix 側の付箋 Beads ops-dhj.25（portfolio に URL が入ったら Claude が閉じる）。
   Claude が確かめたこと（2026-10-11）：URL は 200 で返る。作品の frontmatter には公開 URL 用の `site:` がすでにある（`reading-log.md`・`ai-study-coach.md` が使っている）。
   skill-matrix のリポジトリは Public になっている（`gh repo view`）が、`projects/skill-matrix.md` は `visibility: private` のままで、highlights に「v1 を実装中。完成後に Public 化し…」とある。
   この 2 点も公開した事実に合わせて同じ PR で直す（Claude の案。直す言葉は skill-matrix の README・HANDOFF で確かめ、事実を足さない）
   完了条件：Projects の一覧と `/projects/skill-matrix` に公開 URL のリンクがあり、押すと skill-matrix が開く。Markdown 版と llms.txt にも URL が出る。Public / Private の表示と highlights が今の公開状態と合っている
+  （2026-10-11。`site:` を足し、`visibility` を public に、highlights の 3 行目と本文の「状態」節を「2026-10-11 に v1 を GitHub Pages で公開」に直した。
+  llms.txt は作品の行に公開サイトの URL を出していなかったので、`site:` のある作品の行に「Live site: URL」を続けるようにした〔Reading Log・AI Study Coach にも出る〕。Beads ops-dhj.25 はマージ後に閉じる）
 - [ ] Skills の欄に skill-matrix を入れる：何をどこに入れるか（公開 URL へのリンクをトップの Skills 節や `/skills` に置く、など）は、ユーザーはまだ言っていない。
   案を見せて選んでもらう（保留節の「skill-matrix → `skills.md` の自動生成」とは別。こちらはリンクを置くだけの想定〔Claude の推定〕）
   完了条件：ユーザーが選んだ形で、Skills（トップの Skills 節か `/skills`）に skill-matrix が入っている。`/skills.md` の情報が減っていない
@@ -400,6 +402,13 @@ Claude が portfolio を先にし、試行 2 はフェーズ4 が落ち着いて
 - [ ] Skills の区分の数が 2 か所で違う：`skills.md` の description は「4 つの区分（商用実務 / 個人開発 / 理解確認済み / 学習中）」、トップの Skills 節の一言は「何で身につけたか（仕事・個人開発・学習）で 3 つに分けています」〔2026-10-10 に「根拠の種類で 3 つに分けています」から直した〕
   （トップは「理解確認済み・学習中」を 1 枚のカードにまとめているため。2026-10-04 にコンペの見本の点検役が見つけた）。上の「理解確認済み・学習中」のカードの件と一緒に決めるのがよい（Claude の見立て）
   完了条件：トップの一言と `skills.md` の description の区分の数が、同じものを数えた言い方になっている
+- [ ] llms.txt の作品の行（要約・バイブコーディングの備考・Live site）を出す処理にテストが無い（`src/pages/llms.txt.ts` の `summaryOf`。2026-10-11 PR #56 の受け入れレビューの指摘〔低〕）
+  完了条件：`summaryOf` を `src/lib/content.ts` に移し、`site` と `vibeCoding` のある・無いの出力を Vitest で確かめている
+- [ ] skill-matrix の判定が動き始めた事実に、Learning System の記述が追い付いていない：`systems/learning-system.md` のフロー図は「今は手動の台帳、将来は skill-matrix が AI 判定 + 検証ルールで自動化」。
+  skill-matrix は 2026-10-11 に公開され、`/judge-log` による判定が動いている（skill-matrix の README・HANDOFF。PR #56 の受け入れレビューが見つけた）
+  完了条件：Learning System の記述が、skill-matrix の今の動き（何が自動で、何が手動か）を skill-matrix の README で確かめた言葉で書いている
+- [ ] skill-matrix の「理解度は 5 段階」（`projects/skill-matrix.md` の highlights と本文）が、skill-matrix の README の「0〜5 の 6 段」と言い方が違う（PR #56 の受け入れレビューが見つけた）
+  完了条件：段の数の言い方が skill-matrix の README と食い違わない
 
 - [x] Projects 一覧の summary を一文にする（taniarascia.com/projects の「題名 + 一文」。今は 1〜2 文・約 30〜120 字）（2026-09-27 フェーズ3「カード」のタスクに統合。SPEC §4 の「一文」は決定の PR で先に直した）
   完了条件：一覧に出る summary がすべて 1 文。詳細ページと Markdown 版の情報は減らない。SPEC §4 の「一覧の 1 件は題名 + 1〜2 文」も直っている
