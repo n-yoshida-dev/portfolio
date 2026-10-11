@@ -309,9 +309,11 @@ Claude が portfolio を先にし、試行 2 はフェーズ4 が落ち着いて
   完了条件：Projects の一覧と `/projects/skill-matrix` に公開 URL のリンクがあり、押すと skill-matrix が開く。Markdown 版と llms.txt にも URL が出る。Public / Private の表示と highlights が今の公開状態と合っている
   （2026-10-11。`site:` を足し、`visibility` を public に、highlights の 3 行目と本文の「状態」節を「2026-10-11 に v1 を GitHub Pages で公開」に直した。
   llms.txt は作品の行に公開サイトの URL を出していなかったので、`site:` のある作品の行に「Live site: URL」を続けるようにした〔Reading Log・AI Study Coach にも出る〕。Beads ops-dhj.25 はマージ後に閉じる）
-- [ ] Skills の欄に skill-matrix を入れる：何をどこに入れるか（公開 URL へのリンクをトップの Skills 節や `/skills` に置く、など）は、ユーザーはまだ言っていない。
+- [x] Skills の欄に skill-matrix を入れる：何をどこに入れるか（公開 URL へのリンクをトップの Skills 節や `/skills` に置く、など）は、ユーザーはまだ言っていない。
   案を見せて選んでもらう（保留節の「skill-matrix → `skills.md` の自動生成」とは別。こちらはリンクを置くだけの想定〔Claude の推定〕）
   完了条件：ユーザーが選んだ形で、Skills（トップの Skills 節か `/skills`）に skill-matrix が入っている。`/skills.md` の情報が減っていない
+  （2026-10-11。Claude が A〔`/skills` だけ。冒頭の文にリンクを 1 文足す〕・B〔トップの Skills 節にも〕・C〔入れない〕を見せ、ユーザーの回答「Aで」。
+  `skills.md` の冒頭に「学習の項目ごとの理解度は、skill-matrix の公開画面で見られます。」とリンクを足した。カードの「根拠」には入れていない〔2026-10-10 の決定でバイブコーディングの作品は根拠に数えない〕）
 
 ## 確認待ち（ユーザーの回答が要るもの）
 
