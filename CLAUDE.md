@@ -9,7 +9,7 @@ Astro の静的サイトで、コンテンツは `public-profile/` の Markdown 
 2. **設計・方針を提案する前に `logs/decisions.md` を読む** — ユーザーと合意済みの判断。蒸し返さない
 
 未完タスクは SessionStart フックが `TODO.md` から自動で提示する。
-セッションの区切りには `/apps-workflow:handoff` を実行して引き継ぎを書く。
+引き継ぎは、区切りごとに Claude が `apps-workflow:handoff` をユーザーに聞かずに呼んで書く（`../CLAUDE.md`）。
 
 ## ドキュメントの役割
 
@@ -42,18 +42,10 @@ Astro の静的サイトで、コンテンツは `public-profile/` の Markdown 
 ## Claude Code の設定
 
 共通のフック・スキル・エージェントは [apps-workflow プラグイン](https://github.com/n-yoshida-dev/claude-plugins)から来る（`.claude/settings.json` の `enabledPlugins`）。
-**`enabledPlugins` だけでは install されない。project スコープで install が要る**（手順は `../CLAUDE.md`「新しいアプリを作るとき」）。
+部品の一覧はプラグインの [README](https://github.com/n-yoshida-dev/claude-plugins/blob/main/plugins/apps-workflow/README.md) にあり、ここには写さない（写すと古くなる）。
+`enabledPlugins` に書くだけでは入らず、アプリごとに project スコープの install が要る（手順は `../app-template/SETUP.md` §2）。
 
-| 種別 | 中身 | 出どころ |
-|---|---|---|
-| `/apps-workflow:progress` | TODO.md からフェーズ別の進捗表を出す | プラグイン |
-| `/apps-workflow:handoff` | HANDOFF / TODO / KNOWLEDGE / `logs/decisions.md` を更新して次のセッションへ渡す | プラグイン |
-| `/apps-workflow:pr-check` | CI と同じ検査をローカルでまとめて実行する | プラグイン（`frontend/` が無いので、代わりに README の「CI と同じ検査」を回す） |
-| `/apps-workflow:pr-flow` | PR の作成からマージまでの手順 | プラグイン |
-| `/decide` | 議論で決めたことを `logs/decisions.md` に 1 件追記する | ユーザー設定 |
-| `apps-workflow:acceptance-reviewer` | マージ前に差分を「完了条件：」・SPEC.md・「守ること」に照らして検品する読み取り専用エージェント | プラグイン |
-| `guard-secrets.sh` | 秘密情報・ローカル専用ファイルのコミットを阻止（PreToolUse） | プラグイン |
-| `session-briefing.sh` | 進捗表と TODO.md の未完タスクを起動時に提示（SessionStart） | プラグイン |
+`/apps-workflow:pr-check` は `frontend/` が無いので使えない。代わりに README の「CI と同じ検査」を回す。
 
 ## 開発ダッシュボード（`dashboard/`）
 
