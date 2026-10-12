@@ -2,6 +2,7 @@
 // ページ側にロジックを持たせず、ここに集めておく（Phase 2 で自動生成に置き換えるときの境界）。
 import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
 import { highlightLine } from './outline';
+import { VIBE_CODING_NOTE } from './project-summary';
 
 export type Project = CollectionEntry<'projects'>;
 export type System = CollectionEntry<'systems'>;
@@ -96,8 +97,8 @@ export const statusLabel: Record<Project['data']['status'], string> = {
   archived: '終了',
 };
 
-/** コードを AI が書いた作品（frontmatter の vibeCoding: true）に添える備考。表示する場所はどこもこの文言を使う */
-export const VIBE_CODING_NOTE = '※バイブコーディング（コードは AI が書いた）';
+// 備考の文言の正本は project-summary.ts。カードや詳細ページはこれまでどおりここから読む
+export { VIBE_CODING_NOTE };
 
 /**
  * プロジェクト 1 件を AI が読みやすい Markdown にする。

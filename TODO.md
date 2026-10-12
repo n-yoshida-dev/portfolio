@@ -404,8 +404,10 @@ Claude が portfolio を先にし、試行 2 はフェーズ4 が落ち着いて
 - [ ] Skills の区分の数が 2 か所で違う：`skills.md` の description は「4 つの区分（商用実務 / 個人開発 / 理解確認済み / 学習中）」、トップの Skills 節の一言は「何で身につけたか（仕事・個人開発・学習）で 3 つに分けています」〔2026-10-10 に「根拠の種類で 3 つに分けています」から直した〕
   （トップは「理解確認済み・学習中」を 1 枚のカードにまとめているため。2026-10-04 にコンペの見本の点検役が見つけた）。上の「理解確認済み・学習中」のカードの件と一緒に決めるのがよい（Claude の見立て）
   完了条件：トップの一言と `skills.md` の description の区分の数が、同じものを数えた言い方になっている
-- [ ] llms.txt の作品の行（要約・バイブコーディングの備考・Live site）を出す処理にテストが無い（`src/pages/llms.txt.ts` の `summaryOf`。2026-10-11 PR #56 の受け入れレビューの指摘〔低〕）
+- [x] llms.txt の作品の行（要約・バイブコーディングの備考・Live site）を出す処理にテストが無い（`src/pages/llms.txt.ts` の `summaryOf`。2026-10-11 PR #56 の受け入れレビューの指摘〔低〕）
   完了条件：`summaryOf` を `src/lib/content.ts` に移し、`site` と `vibeCoding` のある・無いの出力を Vitest で確かめている
+  （2026-10-12。`content.ts` は `astro:content` を読み込むので Vitest から読めない。移し先を Astro に依存しない `src/lib/project-summary.ts` に変え〔Claude の判断。完了条件の文言も Claude が書いたもの〕、
+  `VIBE_CODING_NOTE` もそこへ移して `content.ts` から再公開した。`tests/project-summary.test.mjs` で 4 通りを確かめ、ビルドした llms.txt が直す前と同じことも確かめた）
 - [ ] skill-matrix の判定が動き始めた事実に、Learning System の記述が追い付いていない：`systems/learning-system.md` のフロー図は「今は手動の台帳、将来は skill-matrix が AI 判定 + 検証ルールで自動化」。
   skill-matrix は 2026-10-11 に公開され、`/judge-log` による判定が動いている（skill-matrix の README・HANDOFF。PR #56 の受け入れレビューが見つけた）
   完了条件：Learning System の記述が、skill-matrix の今の動き（何が自動で、何が手動か）を skill-matrix の README で確かめた言葉で書いている

@@ -8,16 +8,14 @@ import {
   getSystems,
   getPage,
   getArticles,
-  VIBE_CODING_NOTE,
 } from '../lib/content';
+import { projectIndexSummary } from '../lib/project-summary';
 
 export const GET: APIRoute = async ({ site }) => {
   const url = (path: string) => absoluteUrl(path, site);
-  /** プロジェクトの要約。コードを AI が書いた作品には備考を、公開サイトのある作品にはその URL を続ける */
-  const summaryOf = (p: { data: { summary: string; vibeCoding: boolean; site?: string } }) => {
-    const summary = p.data.vibeCoding ? `${p.data.summary}${VIBE_CODING_NOTE}` : p.data.summary;
-    return p.data.site ? `${summary} Live site: ${p.data.site}` : summary;
-  };
+  /** プロジェクトの要約（備考・公開サイトの URL つき） */
+  const summaryOf = (p: { data: Parameters<typeof projectIndexSummary>[0] }) =>
+    projectIndexSummary(p.data);
   const profile = await getPage('profile');
   const featured = await getFeaturedProjects();
   const others = await getOtherProjects();
