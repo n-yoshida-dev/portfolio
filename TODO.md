@@ -416,8 +416,10 @@ Claude が portfolio を先にし、試行 2 はフェーズ4 が落ち着いて
 - [ ] Skills ページの「判定は非公開の学習ログを根拠に手で行い」が、横断台帳を 2026-09-27 に止めて習熟度の正本を skill-matrix に移した事実と合っていないかもしれない
   （2026-10-12 に Learning System を直したときに見つけた。Skills の文面は 2026-10-10 に「今の中身のまま」と決まっているので、Claude は直していない。Skills の中身を今どう決めているかは、ユーザーに確かめていない）
   完了条件：ユーザーが今の Skills の決め方を確かめ、`skills.md` の冒頭の文がそれと合っている
-- [ ] skill-matrix の「理解度は 5 段階」（`projects/skill-matrix.md` の highlights と本文）が、skill-matrix の README の「0〜5 の 6 段」と言い方が違う（PR #56 の受け入れレビューが見つけた）
+- [x] skill-matrix の「理解度は 5 段階」（`projects/skill-matrix.md` の highlights と本文）が、skill-matrix の README の「0〜5 の 6 段」と言い方が違う（PR #56 の受け入れレビューが見つけた）
   完了条件：段の数の言い方が skill-matrix の README と食い違わない
+  （2026-10-12。2 か所を「0（未着手）〜5 の 6 段」に直し、本文には「1〜5 に名前がある」と 5 つの名前を残した〔skill-matrix の `docs/spec-guide.md`・`data/roadmap.json` の levels で確認〕。
+  Learning System の「5 段階の習熟度」は study の台帳の段の話なので変えていない）
 
 - [x] Projects 一覧の summary を一文にする（taniarascia.com/projects の「題名 + 一文」。今は 1〜2 文・約 30〜120 字）（2026-09-27 フェーズ3「カード」のタスクに統合。SPEC §4 の「一文」は決定の PR で先に直した）
   完了条件：一覧に出る summary がすべて 1 文。詳細ページと Markdown 版の情報は減らない。SPEC §4 の「一覧の 1 件は題名 + 1〜2 文」も直っている
