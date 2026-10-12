@@ -421,9 +421,11 @@ Claude が portfolio を先にし、試行 2 はフェーズ4 が落ち着いて
   完了条件：Learning System の記述が、skill-matrix の今の動き（何が自動で、何が手動か）を skill-matrix の README で確かめた言葉で書いている
   （2026-10-12。フロー図の判定の行を「skill-matrix：AI が判定し、CLI の検証ルールと CI で検査する。人が差分を読んでからコミット」に、「使っているもの」の台帳と skill-matrix の 2 行を直した。
   study の横断台帳〔`learner-profile/skill-map.md`〕は冒頭に「2026-09-27 以降更新停止。現在の習熟度の正本は skill-matrix」とあり、その事実だけを書いた）
-- [ ] Skills ページの「判定は非公開の学習ログを根拠に手で行い」が、横断台帳を 2026-09-27 に止めて習熟度の正本を skill-matrix に移した事実と合っていないかもしれない
+- [x] Skills ページの「判定は非公開の学習ログを根拠に手で行い」が、横断台帳を 2026-09-27 に止めて習熟度の正本を skill-matrix に移した事実と合っていないかもしれない
   （2026-10-12 に Learning System を直したときに見つけた。Skills の文面は 2026-10-10 に「今の中身のまま」と決まっているので、Claude は直していない。Skills の中身を今どう決めているかは、ユーザーに確かめていない）
   完了条件：ユーザーが今の Skills の決め方を確かめ、`skills.md` の冒頭の文がそれと合っている
+  （2026-10-12。Claude が「このページは手で書いています。学習の項目の理解度は、2026-09-27 から skill-matrix で判定していて、将来はこのページもそこから自動生成する予定です。」の案を見せ、ユーザーの回答「OK」。
+  ページの中身が skill-matrix の判定と一致しているかは確かめていないので、「skill-matrix をもとに書いている」とは書いていない）
 - [x] skill-matrix の「理解度は 5 段階」（`projects/skill-matrix.md` の highlights と本文）が、skill-matrix の README の「0〜5 の 6 段」と言い方が違う（PR #56 の受け入れレビューが見つけた）
   完了条件：段の数の言い方が skill-matrix の README と食い違わない
   （2026-10-12。2 か所を「0（未着手）〜5 の 6 段」に直し、本文には「1〜5 に名前がある」と 5 つの名前を残した〔skill-matrix の `docs/spec-guide.md`・`data/roadmap.json` の levels で確認〕。
