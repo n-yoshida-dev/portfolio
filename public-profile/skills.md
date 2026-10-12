@@ -1,6 +1,6 @@
 ---
 title: Skills
-description: 技術スキルを 4 つの区分（商用実務 / 個人開発 / 理解確認済み / 学習中）に分けて、根拠のプロジェクトとともに記載しています。
+description: 技術スキルを 4 つの区分（商用実務 / 個人開発 / 理解確認済み / 学習中）に分けて、根拠のプロジェクトとともに記載しています。理解確認済みと学習中は 1 つの節にまとめ、項目ごとに区分を添えています。
 updated: 2026-10-11
 ---
 
@@ -49,11 +49,11 @@ updated: 2026-10-11
 
 ## 理解確認済み・学習中
 
-- **Go**：基本構文、struct / slice / map / ポインタ、メソッドまで学習し、現在は一時停止中。インターフェース、エラー処理、並行処理、`net/http`、テストは未着手。skill-matrix のバックエンドは Go を採用しているが AI エージェントとの協働で実装しており、Go の実力の根拠には数えない
-- **React**：起動フロー、JSX、state / props / データフロー、Thinking in React の部品分けまで理解を確認。hooks、データ取得、ルーティングはこれから。AI Study Coach と skill-matrix のフロントエンドは AI 協働で実装しており、根拠には数えない
-- **AWS**：Solutions Architect - Associate を学習中
-- **Supabase の認証・RLS**：動作は確認済み。仕組みの言語化はまだ
-- **課金（Stripe）**：未着手
+- **React（理解確認済み）**：起動フロー、JSX、state / props / データフロー、Thinking in React の部品分けまで理解を確認。hooks、データ取得、ルーティングはこれから。AI Study Coach と skill-matrix のフロントエンドは AI 協働で実装しており、根拠には数えない
+- **Go（学習中）**：基本構文、struct / slice / map / ポインタ、メソッドまで学習し、現在は一時停止中。インターフェース、エラー処理、並行処理、`net/http`、テストは未着手。skill-matrix のバックエンドは Go を採用しているが AI エージェントとの協働で実装しており、Go の実力の根拠には数えない
+- **AWS（学習中）**：Solutions Architect - Associate を学習中
+- **Supabase の認証・RLS（学習中）**：動作は確認済み。仕組みの言語化はまだ
+- **課金（Stripe）（未着手）**
 
 ## 商用実務で扱っていないもの（誤解を避けるため）
 
