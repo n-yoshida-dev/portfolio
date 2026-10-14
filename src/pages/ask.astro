@@ -1,18 +1,19 @@
 ---
-// Ask AI about me。自前のチャットは持たず、訪問者自身の AI にプロンプトを渡す。
+// Ask AI。自前のチャットは持たず、訪問者自身の AI にプロンプトを渡す。
+// 見出しとタブの題名は、ここへ来るボタンと同じ言葉（ASK_BUTTON_LABEL）にする
 import Base from '../layouts/Base.astro';
 import { buildAskPrompt, chatLinks } from '../lib/ask';
-import { SITE } from '../site';
+import { ASK_BUTTON_LABEL, SITE } from '../site';
 
 const prompt = buildAskPrompt(Astro.site);
 const links = chatLinks(Astro.site);
 ---
 
 <Base
-  title="Ask AI about me"
+  title={ASK_BUTTON_LABEL}
   description="あなたの ChatGPT / Claude / Gemini に、このサイトと公開リポジトリを読ませて Naoki Yoshida について質問するためのプロンプト。"
 >
-  <h1>Ask AI about {SITE.name}</h1>
+  <h1>{ASK_BUTTON_LABEL}</h1>
   <p class="lead">
     このサイトに AI チャットはありません。代わりに、あなたが普段使っている AI
     にこのサイトを読ませて質問できます。
