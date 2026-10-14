@@ -28,7 +28,7 @@ updated: 2026-10-10
 | 2026-07 | 学習用リポジトリを 1 つに統合して Claude Code へ移行、習熟度台帳の運用開始 |
 | 2026-08 | OrgFlow に申請作成 API・単体テスト・Testcontainers・CI を追加、ADR を 1 ファイル 1 決定に再構成 |
 | 2026-08 | [AI Study Coach](/projects/ai-study-coach) を Vercel で公開（Supabase 認証・RLS）、[Reading Log](/projects/reading-log) と個人 AI コンテキストを開始 |
-| 2026-09 | [Claude Code プラグイン](/projects/claude-plugins)を整備、[skill-matrix](/projects/skill-matrix) を自分専用ツールに再設計、このポートフォリオを作成 |
+| 2026-09 | [Claude Code プラグイン](/projects/claude-plugins)を整備、[skill-matrix](/projects/skill-matrix) を自分専用ツールに再設計、このサイトを作成 |
 
 ## 資格
 

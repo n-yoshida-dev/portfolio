@@ -50,7 +50,7 @@ ChatGPT / Claude.ai / Claude Code / Gemini
 4. 方針転換なら「以前 / 現在 / 変更理由」を履歴に追記する
 5. 不確実な情報は「未確認事項」へ分ける
 
-## このポートフォリオとの関係
+## このサイトとの関係
 
 このサイトの [public-profile](https://github.com/n-yoshida-dev/portfolio/tree/main/public-profile) は、
 非公開の正本群から「公開してよい情報だけ」を手で抜き出した公開用のビューです。
