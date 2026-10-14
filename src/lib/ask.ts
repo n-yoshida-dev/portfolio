@@ -39,7 +39,7 @@ export function buildAskPrompt(site: URL | undefined): string {
 Then introduce ${SITE.name}, a software engineer building
 personal software and AI-assisted development systems.
 
-Use the portfolio, GitHub projects, technical articles,
+Use this site, GitHub projects, technical articles,
 and other sources linked from llms.txt.
 
 ${ANSWER_RULES}`;
@@ -51,7 +51,7 @@ ${ANSWER_RULES}`;
  */
 export function buildPastedPrompt(site: URL | undefined): string {
   return `The text after the line "---" is ${siteBase(site)}${PASTE_SOURCE},
-the portfolio of ${SITE.name}, a software engineer building
+the personal site of ${SITE.name}, a software engineer building
 personal software and AI-assisted development systems.
 Use only this text. You do not need to open any URL.
 

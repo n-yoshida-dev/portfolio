@@ -14,4 +14,4 @@ systems: [ai-assisted-development]
 ---
 
 PLAN / SPEC / TODO / KNOWLEDGE / HANDOFF / 判断台帳の雛形と、`frontend/` `backend/` の有無を見て自動でジョブを出し分ける CI、
-秘密情報の混入を検査するジョブを持ちます。このポートフォリオもこのテンプレートから作りました。
+秘密情報の混入を検査するジョブを持ちます。このサイトもこのテンプレートから作りました。

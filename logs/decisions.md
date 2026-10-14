@@ -22,6 +22,21 @@ Claude が実装中に選んだ技術的な選択とハマりどころは `KNOWL
 
 ---
 
+## 2026-10-14 「portfolio」をやめ、Ask AI の言葉は「Ask AI about this site」に揃える
+
+**論点**: `/ask` の見出し・タブの題名とボタンの言葉のずれ（TODO の保留）を揃える案を Claude が出したところ、ユーザーの発言（原文）「そもそも、ボタンも「Ask AI about this portfolio」のportfolioはやめておこうかな。だって、ポートフォリオじゃないし。ただの吉田についてのポータルサイトだし。」
+**結論**: ボタン（トップの Ask AI 節・右下の追従ボタン）と `/ask` の見出し・タブの題名を「Ask AI about this site」に揃える。
+Claude が出した A「Ask AI about this site」（Claude の推奨）・B「Ask AI about Naoki」・C「Ask your AI about me」・D「Ask AI who I am」から、ユーザーの回答「Aで」。
+あわせて、サイト名（タブの題名の末尾・OGP の site_name）を「Naoki Yoshida — Portfolio」から「Naoki Yoshida」に、AI への依頼文の「the portfolio」を「this site」「the personal site」に直す。
+この 2 つは Claude の案で、ユーザーの回答は「Ask AI about Naoki Yoshida ←これだけ変えたいかも。Naoki Yoshida じゃなくて、別の言い回しないかな？これ以外はぜんぶOK」。
+本文でこのサイトを「このポートフォリオ」と呼んでいた 3 か所（`career.md`・`projects/app-template.md`・`systems/personal-ai-context.md` の見出し）も「このサイト」に直した（受け入れレビューの指摘を受けた Claude の判断で、ユーザーは未確認）
+**理由**: ユーザーの理由は上の発言（ポートフォリオではなく、吉田についてのポータルサイト）。A を勧めた Claude の理由：聞く対象が人よりサイト全体で、作品・仕組み・経歴のどれを聞いてもよいと読める
+**却下した代替案**: 「Ask AI about Naoki Yoshida」（ユーザーが「別の言い回し」を求めた）。B・C・D（選ばれなかった。C と D は 2026-09-27 に疑問が出た「me」「I」を含む）
+**確信度**: 中
+**見直す条件**: （Claude の案。ユーザーには聞いていない）サイトの呼び方（ポータルサイト・個人サイトなど）を決め直したら、ボタンの言葉も見直す。2026-09-27「Ask AI の 2 つのボタンの言葉は「Ask AI about this portfolio」」はこの判断で置き換えた。リポジトリ名 `portfolio` と URL は変えていない
+
+---
+
 ## 2026-10-12 Skills の「理解確認済み・学習中」は 1 つの節のまま、項目ごとに区分を添える
 
 **論点**: TODO の保留 2 件。トップは「3 つに分けています」、`/skills` は「4 つの区分」で数が食い違い、「理解確認済み・学習中」のカードではどの項目がどちらの区分か分からなかった（原因は 2 区分を 1 節にまとめていること）
@@ -383,6 +398,7 @@ Claude が C を推した理由：Bootstrap らしさの元は「彩度の高い
 **論点**: トップの Ask AI 節の「プロンプトを開く」と右下の追従ボタンの「AI に聞く」は、何を聞くのかが分からない
 （ユーザーの発言「「何を？」ってならない？」「「プロンプトを開く」が分かりづらい気がする。」）。何という言葉にするか
 **結論**: 2 つとも「Ask AI about this portfolio」。言葉は `src/site.ts` の 1 か所に置き、2 つのボタンがそれを読む
+（→ 2026-10-14「「portfolio」をやめ、Ask AI の言葉は「Ask AI about this site」に揃える」で置き換えた。言葉を 1 か所に置く形は今も同じ）
 **理由**: ユーザーは「ボタンの言葉は「Ask AI about me」みたいな感じが良いけど、このページを訪れた人からしたら「me」って変じゃないかな？」と発言した。
 Claude は「ボタンは押す人の言葉として読まれる習慣があり、me が訪問者自身とも読める」と答えて「Ask AI about Naoki」を勧めた。
 ユーザーは「名前じゃなくて、別の表現できる？ もしくは「Ask AI about Naoki Yoshida」」と返し、Claude が出した 4 案から「Ask AI about this portfolio」（Claude の推奨）を選んだ。

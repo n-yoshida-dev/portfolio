@@ -54,7 +54,7 @@ portfolio/
 | `/llms-full.txt`   | 主要ページの Markdown を 1 ファイルに連結                                                                                                                              | —                     |
 
 どのページにも左の目次（375px 幅では上部に横並び）があり、トップの各節（`/#projects` など）へ飛べる。詳しい版のページでは、今いる節の項目が太字になる。
-`/ask` 以外のページの右下には、追従ボタン「Ask AI about this portfolio」がある。押すと（PC はマウスを乗せても）ChatGPT / Claude / Gemini と `/ask` を選ぶメニューが開く。
+`/ask` 以外のページの右下には、追従ボタン「Ask AI about this site」がある。押すと（PC はマウスを乗せても）ChatGPT / Claude / Gemini と `/ask` を選ぶメニューが開く。
 トップだけは先頭に画面 1 つ分の表紙（名前・一言・要点 3 行・目次）があり、左の目次と右下のボタンは表紙を過ぎてから出る（375px 幅のトップは表紙の中の目次だけ）。
 
 ## 開発

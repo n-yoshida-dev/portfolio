@@ -4,7 +4,7 @@ import type { IconName } from './lib/icons';
 export const SITE = {
   name: 'Naoki Yoshida',
   /** <title> の末尾と OGP の site_name */
-  title: 'Naoki Yoshida — Portfolio',
+  title: 'Naoki Yoshida',
   description:
     'Software engineer building personal software and AI-assisted development systems. 自作アプリと、AI・GitHub・自作ツールを組み合わせた開発・学習の仕組みを公開しています。',
   github: 'n-yoshida-dev',
@@ -15,10 +15,10 @@ export const SITE = {
 } as const;
 
 /**
- * Ask AI（/ask）への入口のボタンの言葉。トップの Ask AI 節と右下の追従ボタンで同じ言葉を使う。
- * 名前も「me」も使わずに、何について聞くかが分かる言葉（2026-09-27 ユーザーが選択。logs/decisions.md）
+ * Ask AI（/ask）への入口のボタンの言葉。トップの Ask AI 節・右下の追従ボタン・/ask の見出しとタブで同じ言葉を使う。
+ * このサイトはポートフォリオではないので「portfolio」を使わない（2026-10-14 ユーザーが選択。logs/decisions.md）
  */
-export const ASK_BUTTON_LABEL = 'Ask AI about this portfolio';
+export const ASK_BUTTON_LABEL = 'Ask AI about this site';
 
 /**
  * 左の目次の下に並べるリンク（アイコン付き）。2026-10-06 ユーザーが見本 B を選択（logs/decisions.md）：
